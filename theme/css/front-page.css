@@ -1,0 +1,128 @@
+:root {
+    --star-sz: 1rem;
+}
+
+.animated-title {
+    background: var(--color-light);
+    color: var(--color-white);
+    border-radius: var(--br-xs);
+    padding: .5rem;
+    min-width: 10rem;
+}
+.typing-animation {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;    
+}
+.typing-animation SPAN.typing-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: 1s typing steps(10, end);
+    animation-play-state: paused;
+}
+.typing-animation.in-viewport SPAN.typing-text {
+    animation-play-state: running;
+}
+.typing-animation SPAN.typing-caret {
+    display: inline-block;
+    animation: 1s blink step-end infinite;
+}
+
+.zunami-animation-holder {
+
+}
+.zunami-animation-top-stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin-top: 3rem;
+}
+.zunami-animation-bottom-stars {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+    padding: 1rem;
+    margin-left: -5rem;
+    margin-bottom: 3rem;
+}
+
+
+.zunami-rotating-star {
+    display: inline-flex;
+    height: calc(2 * var(--star-sz));
+    justify-content: center;
+    gap: var(--star-sz);
+    align-items: center;
+    border-radius: var(--star-sz);
+    flex-wrap: nowrap;
+    background: var(--color-white);
+    padding: 0 var(--star-sz);
+}
+.zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
+    margin-top: -2rem;
+}
+.zunami-rotating-star IMG {
+    height: 70%;
+    animation: 6s star-rotate infinite;
+}
+.zunami-rotating-star__caption {
+
+}
+
+.contact-form-block .wp-block-heading {
+    margin-top: 0;
+}
+
+@media (min-width: 1600px) {
+    .home-main-anim-holder {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 1199px) {
+    .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
+        margin-top: -1rem;
+    }
+    .zunami-animation-bottom-stars {
+        margin-left: 0;
+        padding: 5rem 3rem 0 1rem;
+    }
+    .zunami-rotating-star__caption {
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 959px) {
+    :root {
+        --star-sz: 2rem;
+    }
+    .zunami-animation-bottom-stars {
+        padding-top: 0;
+    }
+    .zunami-rotating-star__caption {
+        font-size: 3.5rem;
+    }
+    .home-main-anim-holder {
+        gap: 1rem;
+    }
+}
+@media (max-width: 639px) {
+    :root {
+        --star-sz: 3rem;
+    }
+    .zunami-animation-bottom-stars {
+        margin-left: 0;
+        padding: 5rem 3rem 0 1rem;
+    }
+    .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
+        margin-top: 0;
+    }
+    .home-main-anim-holder.wp-block-columns.is-not-stacked-on-mobile > .wp-block-column {
+        /*flex: 1 0 45rem;*/
+    }
+    .home-main-anim-holder .wp-block-heading {
+        text-align: center;
+        font-size: 7rem;
+    }
+}

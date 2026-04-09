@@ -1,0 +1,25 @@
+.mobile-menu-sidebar .widget {
+  margin-bottom: 1.5rem;
+}
+
+.mobile-menu-sidebar p {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.mobile-menu-sidebar strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.article-share-links {
+  margin-top: 2rem;
+}
+
+.article-share-links a,
+.article-share-links a:hover,
+.article-share-links a:active,
+.article-share-links a:visited {
+  color: var(--color-alt-link);
+  text-decoration: none;
+}

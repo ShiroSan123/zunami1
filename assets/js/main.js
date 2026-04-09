@@ -10,16 +10,16 @@ const toSitePath = (route = "") => {
 };
 
 const selectors = {
-  body: document.body,
   header: document.getElementById("masthead"),
   mobileToggle: document.getElementById("mobile_menu_open"),
   mobileMenu: document.getElementById("mobile_menu"),
   searchOpen: document.getElementById("search_popup_open"),
   searchClose: document.getElementById("search_popup_close"),
   searchPopup: document.getElementById("search_popup"),
+  searchResults: document.getElementById("search_popup_results"),
+  searchResultsText: document.getElementById("search_popup_results_text"),
   searchForm: document.getElementById("search_form"),
   searchInput: document.getElementById("search_input"),
-  searchResults: document.getElementById("search_popup_results_text"),
   modal: document.getElementById("modal_request"),
   modalOpen: document.getElementById("open_main_popup"),
   loadMore: document.getElementById("load_more_posts"),
@@ -28,42 +28,45 @@ const selectors = {
 let searchIndex = null;
 let mapLoader = null;
 
-const setBodyLock = (value) => {
-  selectors.body.classList.toggle("is-locked", value);
-};
+const normalizeSearchValue = (value) => value.toLowerCase().replace(/\s+/g, " ").trim();
 
 const toggleMobileMenu = (forceState) => {
-  if (!selectors.header || !selectors.mobileMenu) {
+  if (!selectors.header) {
     return;
   }
 
   const nextState = typeof forceState === "boolean"
     ? forceState
-    : !selectors.header.classList.contains("is-open");
+    : !selectors.header.classList.contains("menu-open");
 
-  selectors.header.classList.toggle("is-open", nextState);
-  selectors.mobileMenu.hidden = !nextState;
+  selectors.header.classList.toggle("menu-open", nextState);
 };
 
 const toggleSearchPopup = (forceState) => {
-  if (!selectors.searchPopup) {
+  if (!selectors.searchPopup || !selectors.searchResults) {
     return;
   }
 
   const nextState = typeof forceState === "boolean"
     ? forceState
-    : selectors.searchPopup.hidden;
+    : !selectors.searchPopup.classList.contains("search-popup_open");
 
-  selectors.searchPopup.hidden = !nextState;
-  setBodyLock(nextState);
+  selectors.searchPopup.classList.toggle("search-popup_open", nextState);
+  selectors.searchResults.classList.toggle(
+    "search-popup-results_open",
+    nextState && !!selectors.searchResultsText?.innerHTML.trim(),
+  );
 
-  if (nextState && selectors.searchInput) {
-    selectors.searchInput.focus();
+  if (nextState) {
+    selectors.searchInput?.focus();
+    return;
   }
 
-  if (!nextState && selectors.searchInput) {
+  if (selectors.searchInput) {
     selectors.searchInput.value = "";
-    renderSearchResults([]);
+  }
+  if (selectors.searchResultsText) {
+    selectors.searchResultsText.innerHTML = "";
   }
 };
 
@@ -74,40 +77,41 @@ const toggleModal = (forceState) => {
 
   const nextState = typeof forceState === "boolean"
     ? forceState
-    : selectors.modal.hidden;
+    : !selectors.modal.classList.contains("modal-open");
 
-  selectors.modal.hidden = !nextState;
-  setBodyLock(nextState);
+  selectors.modal.classList.toggle("modal-open", nextState);
 };
 
-const renderSearchResults = (results) => {
-  if (!selectors.searchResults) {
+const renderSearchResults = (results, query) => {
+  if (!selectors.searchResults || !selectors.searchResultsText) {
+    return;
+  }
+
+  if (!query) {
+    selectors.searchResultsText.innerHTML = "";
+    selectors.searchResults.classList.remove("search-popup-results_open");
     return;
   }
 
   if (!results.length) {
-    selectors.searchResults.innerHTML = `
-      <div class="search-popup-results__count">Ничего не найдено</div>
+    selectors.searchResultsText.innerHTML = `
+      <div class="search-res-count">Ничего не найдено</div>
     `;
+    selectors.searchResults.classList.add("search-popup-results_open");
     return;
   }
 
   const items = results.map((item) => {
     const href = toSitePath(item.route);
-    const excerpt = item.excerpt ? `<div class="search-res-excerpt">${item.excerpt}</div>` : "";
-    return `<a class="search-res-post" href="${href}"><strong>${item.title}</strong>${excerpt}</a>`;
+    return `<a class="search-res-post" href="${href}">${item.title}</a>`;
   }).join("");
 
-  selectors.searchResults.innerHTML = `
-    <div class="search-popup-results__count">Результатов: <strong>${results.length}</strong></div>
+  selectors.searchResultsText.innerHTML = `
+    <div class="search-res-count">Результатов: <strong>${results.length}</strong></div>
     ${items}
   `;
+  selectors.searchResults.classList.add("search-popup-results_open");
 };
-
-const normalizeSearchValue = (value) => value
-  .toLowerCase()
-  .replace(/\s+/g, " ")
-  .trim();
 
 const ensureSearchIndex = async () => {
   if (searchIndex) {
@@ -124,7 +128,7 @@ const ensureSearchIndex = async () => {
 };
 
 const handleSearch = async (event) => {
-  event.preventDefault();
+  event?.preventDefault();
 
   if (!selectors.searchInput) {
     return;
@@ -132,7 +136,7 @@ const handleSearch = async (event) => {
 
   const query = normalizeSearchValue(selectors.searchInput.value);
   if (!query) {
-    renderSearchResults([]);
+    renderSearchResults([], "");
     return;
   }
 
@@ -143,11 +147,12 @@ const handleSearch = async (event) => {
       return haystack.includes(query);
     }).slice(0, 12);
 
-    renderSearchResults(results);
+    renderSearchResults(results, query);
   } catch (error) {
-    selectors.searchResults.innerHTML = `
-      <div class="search-popup-results__count">Не удалось выполнить поиск</div>
+    selectors.searchResultsText.innerHTML = `
+      <div class="search-res-count">Не удалось выполнить поиск</div>
     `;
+    selectors.searchResults?.classList.add("search-popup-results_open");
   }
 };
 
@@ -157,20 +162,24 @@ const initLoadMore = () => {
   }
 
   selectors.loadMore.addEventListener("click", () => {
-    const hiddenCards = Array.from(document.querySelectorAll("[data-is-hidden]"));
+    const hiddenCards = Array.from(document.querySelectorAll("article[data-is-hidden]"));
     hiddenCards.slice(0, 9).forEach((card) => {
       card.removeAttribute("data-is-hidden");
-      card.classList.remove("is-hidden");
     });
 
-    if (document.querySelectorAll("[data-is-hidden]").length === 0) {
+    if (!document.querySelector("article[data-is-hidden]")) {
       selectors.loadMore.closest(".load-more-holder")?.setAttribute("hidden", "hidden");
     }
   });
 };
 
 const initAccordions = () => {
-  document.querySelectorAll(".wp-block-accordion-item").forEach((item) => {
+  const items = document.querySelectorAll(".wp-block-accordion-item");
+  if (!items.length) {
+    return;
+  }
+
+  items.forEach((item) => {
     const button = item.querySelector(".wp-block-accordion-heading__toggle");
     if (!button) {
       return;
@@ -179,7 +188,7 @@ const initAccordions = () => {
     button.addEventListener("click", () => {
       const isOpen = item.classList.contains("is-open");
 
-      document.querySelectorAll(".wp-block-accordion-item.is-open").forEach((openedItem) => {
+      items.forEach((openedItem) => {
         if (openedItem !== item) {
           openedItem.classList.remove("is-open");
         }
@@ -190,55 +199,33 @@ const initAccordions = () => {
   });
 };
 
-const animateCount = (element) => {
-  if (!element || element.dataset.animated === "true") {
+const markInViewport = (element) => {
+  if (!element || element.classList.contains("in-viewport")) {
     return;
   }
 
-  const from = Number(element.dataset.from || 0);
-  const to = Number(element.dataset.to || 0);
-  const valueNode = element.querySelector(".zunami-countdown__value");
-
-  if (!valueNode) {
-    return;
-  }
-
-  element.dataset.animated = "true";
-  const duration = 1200;
-  const startTime = performance.now();
-
-  const tick = (now) => {
-    const progress = Math.min(1, (now - startTime) / duration);
-    const value = Math.round(from + (to - from) * progress);
-    valueNode.textContent = String(value);
-
-    if (progress < 1) {
-      requestAnimationFrame(tick);
-    }
-  };
-
-  requestAnimationFrame(tick);
+  element.classList.add("in-viewport");
 };
 
-const initCountups = () => {
-  const nodes = document.querySelectorAll(".js-countdown");
+const initViewportAnimations = () => {
+  const nodes = Array.from(document.querySelectorAll("[animate-on-visible]"));
   if (!nodes.length) {
     return;
   }
 
   if (!("IntersectionObserver" in window)) {
-    nodes.forEach(animateCount);
+    nodes.forEach(markInViewport);
     return;
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        animateCount(entry.target);
+        markInViewport(entry.target);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.35 });
+  }, { threshold: 0.2 });
 
   nodes.forEach((node) => observer.observe(node));
 };
@@ -247,8 +234,23 @@ const initForms = () => {
   document.querySelectorAll(".js-static-form").forEach((form) => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      form.classList.remove("invalid", "unaccepted");
 
-      if (!form.reportValidity()) {
+      const requiredCheckboxes = Array.from(form.querySelectorAll('input[type="checkbox"][required]'));
+      if (requiredCheckboxes.some((checkbox) => !checkbox.checked)) {
+        form.classList.add("unaccepted");
+      }
+
+      const textFields = Array.from(form.querySelectorAll("input, textarea"));
+      textFields.forEach((field) => {
+        field.classList.toggle("wpcf7-not-valid", !field.checkValidity());
+      });
+
+      if (textFields.some((field) => !field.checkValidity())) {
+        form.classList.add("invalid");
+      }
+
+      if (!form.reportValidity() || form.classList.contains("unaccepted")) {
         return;
       }
 
@@ -320,14 +322,30 @@ const initMaps = async () => {
   }
 };
 
+const initShareLinks = () => {
+  document.querySelectorAll("[data-share-vk]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const shareUrl = new URL("https://vk.com/share.php");
+      shareUrl.searchParams.set("url", window.location.href);
+      shareUrl.searchParams.set("title", document.title);
+      shareUrl.searchParams.set("noparse", "true");
+      window.open(shareUrl.toString(), "_blank", "noopener,noreferrer,width=700,height=500");
+    });
+  });
+};
+
 const initEvents = () => {
   selectors.mobileToggle?.addEventListener("click", () => toggleMobileMenu());
   selectors.searchOpen?.addEventListener("click", () => toggleSearchPopup(true));
   selectors.searchClose?.addEventListener("click", () => toggleSearchPopup(false));
   selectors.searchForm?.addEventListener("submit", handleSearch);
-  selectors.searchInput?.addEventListener("input", handleSearch);
+  selectors.searchInput?.addEventListener("input", () => {
+    if (!selectors.searchInput?.value.trim()) {
+      renderSearchResults([], "");
+    }
+  });
   selectors.modalOpen?.addEventListener("click", () => toggleModal(true));
-
   selectors.modal?.querySelector("[data-modal-close]")?.addEventListener("click", () => toggleModal(false));
 
   document.addEventListener("click", (event) => {
@@ -339,6 +357,10 @@ const initEvents = () => {
     if (target.closest('a[href="#main_popup"]') || target.closest('button[data-href="#main_popup"]')) {
       event.preventDefault();
       toggleModal(true);
+    }
+
+    if (target.closest("#mobile_menu .menu a")) {
+      toggleMobileMenu(false);
     }
   });
 
@@ -354,6 +376,7 @@ const initEvents = () => {
 initEvents();
 initLoadMore();
 initAccordions();
-initCountups();
+initViewportAnimations();
 initForms();
 initMaps();
+initShareLinks();

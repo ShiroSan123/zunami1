@@ -5,227 +5,282 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Блог | Zunami</title>
   <meta name="description" content="Новости и материалы страхового брокера Zunami.">
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon.png" media="(prefers-color-scheme: light)">
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon_black.png" media="(prefers-color-scheme: dark)">
-  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
-  <link rel="apple-touch-icon" href="../assets/icons/favicon.png">
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="../theme/icons/favicon.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="32x32" href="../theme/icons/favicon_black.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="../theme/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="../theme/icons/favicon.png">
+  <link rel="stylesheet" href="../theme/style.css">
+  <link rel="stylesheet" href="../theme/css/variables.css">
+  <link rel="stylesheet" href="../theme/css/font.css">
+  <link rel="stylesheet" href="../theme/css/main.css">
+  <link rel="stylesheet" href="../theme/css/header.css">
+  <link rel="stylesheet" href="../theme/css/page.css">
+  <link rel="stylesheet" href="../theme/css/footer.css">
+  <link rel="stylesheet" href="../theme/css/animation.css">
+  <link rel="stylesheet" href="../theme/css/front-page.css">
+  <link rel="stylesheet" href="../theme/css/elements.css">
+  <link rel="stylesheet" href="../theme/css/animate.min.css">
+  <link rel="stylesheet" href="../theme/css/elements/article-box.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-iconbox.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-button.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-post-grid.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-hblock.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-animation.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-step-block.css">
+  <link rel="stylesheet" href="../theme/css/elements/parralax-container.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-history-block.css">
+  <link rel="stylesheet" href="../theme/css/elements/accordion.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-countdown.css">
+  <link rel="stylesheet" href="../theme/css/elements/form-field.css">
+  <link rel="stylesheet" href="../theme/css/elements/entry-breadcrumps.css">
+  <link rel="stylesheet" href="../theme/css/elements/modal-window.css">
+  <link rel="stylesheet" href="../theme/css/elements/search-popup.css">
+  <link rel="stylesheet" href="../theme/css/elements/zunami-item-with-num.css">
+  <link rel="stylesheet" href="../theme/css/elements/hscroll-bar.css">
+  <link rel="stylesheet" href="../assets/css/static-overrides.css">
 </head>
-<body class="page page--blog blog">
-  <div class="site-shell">
-    <div class="search-popup" id="search_popup" hidden>
-  <div class="search-popup__panel">
-    <form class="search-popup__form" id="search_form">
-      <label class="search-field">
-        <span class="search-field__icon" aria-hidden="true"></span>
-        <input type="search" id="search_input" class="search-field__input" placeholder="Поиск по сайту" autocomplete="off">
-      </label>
-      <button type="button" class="search-popup__close" id="search_popup_close" aria-label="Закрыть поиск"></button>
+<body class="page page-id-68 no-sidebar blog page-template-default page-blog">
+  <div id="page" class="site">
+    <a class="skip-link screen-reader-text" href="#primary">Skip to content</a>
+    <div class="search-popup" id="search_popup">
+  <div class="search-popup-inner">
+    <form id="search_form">
+      <div class="form-field form-field_has-icon">
+        <div class="form-field__icon">
+          <img src="../theme/icons/search.svg" alt="Поиск">
+        </div>
+        <input class="search-input" type="text" id="search_input" placeholder="Поиск" autocomplete="off">
+      </div>
     </form>
-    <div class="search-popup-results" id="search_popup_results">
-      <div class="search-popup-results__inner" id="search_popup_results_text"></div>
-    </div>
+    <button class="close-button" id="search_popup_close" aria-label="Закрыть поиск" type="button">
+      <img src="../theme/icons/icon-close.svg" alt="Закрыть">
+    </button>
+  </div>
+</div>
+<div class="search-popup-results" id="search_popup_results">
+  <div class="search-popup-inner" id="search_popup_results_text">
   </div>
 </div>
     <header id="masthead" class="site-header-holder">
   <div class="site-header">
-    <a class="site-logo" href="../" aria-label="На главную">
-      <img src="../wp-content/uploads/2025/12/zunami-logo.svg" alt="Логотип Zunami">
-    </a>
-    <nav class="main-navigation" aria-label="Основная навигация">
-      <ul class="menu">
-        <li class="menu__item"><a href="../company/">О компании</a></li>
-<li class="menu__item"><a href="../uslugi/">Услуги</a></li>
-<li class="menu__item is-current"><a href="../blog/">Блог</a></li>
-<li class="menu__item"><a href="../contacts/">Контакты</a></li>
-      </ul>
+    <div class="site-branding">
+      <a class="custom-logo-link" href="../" rel="home" aria-label="Zunami">
+        <img class="custom-logo" src="../wp-content/uploads/2025/12/zunami-logo.svg" alt="Логотип Zunami">
+      </a>
+    </div>
+    <nav id="site-navigation" class="main-navigation animate__animated animate__fadeInDown" aria-label="Основная навигация">
+      <div class="menu-primary-container">
+        <ul id="primary-menu" class="menu">
+          <li class="menu-item"><a href="../company/">О компании</a></li>
+<li class="menu-item"><a href="../uslugi/">Услуги</a></li>
+<li class="menu-item current_page_item"><a href="../blog/">Блог</a></li>
+<li class="menu-item"><a href="../contacts/">Контакты</a></li>
+        </ul>
+      </div>
     </nav>
     <div class="top-icons">
-      <button class="top-icon search-button" id="search_popup_open" type="button" aria-label="Поиск"></button>
-      <button class="top-icon mobile-menu-button" id="mobile_menu_open" type="button" aria-label="Меню"></button>
+      <button class="top-icon search-button" id="search_popup_open" type="button" aria-label="Поиск">
+        <img src="../theme/icons/search.svg" alt="Поиск">
+      </button>
+      <button class="top-icon mobile-menu-button" id="mobile_menu_open" type="button" aria-label="Меню">
+        <img src="../theme/icons/icon-menu.svg" alt="Меню">
+      </button>
       <button class="zunami-button" id="open_main_popup" type="button">Отправить заявку <span class="button-arrow"></span></button>
     </div>
   </div>
-  <div class="mobile-menu-holder" id="mobile_menu" hidden>
-    <nav class="mobile-navigation" aria-label="Мобильная навигация">
+  <div class="mobile-menu-holder" id="mobile_menu">
+    <div></div>
+    <nav id="site-navigation-mobile" class="mobile-navigation" aria-label="Мобильная навигация">
       <ul class="menu">
-        <li class="menu__item"><a href="../company/">О компании</a></li>
-<li class="menu__item"><a href="../uslugi/">Услуги</a></li>
-<li class="menu__item is-current"><a href="../blog/">Блог</a></li>
-<li class="menu__item"><a href="../contacts/">Контакты</a></li>
+        <li class="menu-item"><a href="../company/">О компании</a></li>
+<li class="menu-item"><a href="../uslugi/">Услуги</a></li>
+<li class="menu-item current_page_item"><a href="../blog/">Блог</a></li>
+<li class="menu-item"><a href="../contacts/">Контакты</a></li>
       </ul>
     </nav>
+    <div class="mobile-menu-sidebar">
+      <div class="widget">
+        <p><strong>Центральный офис:</strong><br>236040, Калининградская обл.<br>г. о. город Калининград,<br>г. Калининград, пл. Победы, д. 10, офис 518А</p>
+      </div>
+      <div class="widget">
+        <div class="mobile-soc-icons">
+          <a href="#" aria-label="VK">
+            <img class="mobile-soc-icon" src="../theme/icons/vk.svg" alt="VK">
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
-    <main id="primary" class="site-main site-main--blog">
+    <main id="primary" class="site-main">
       <article class="entry entry--blog"><header class="entry-header">
   <h1 class="entry-title">Блог</h1>
   <div class="entry-breadcrumps">
-    <a href="../">главная</a> / <span class="bc_current">Блог</span>
+    <a href="../">главная</a> / <a class="bc_current" href="../blog/">Блог</a>
   </div>
-</header><div class="zunami-post-grid"><article class="article-card">
+</header><div class="zunami-post-grid"><article id="post-65" class="post post-65 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../pma5zhb131-sovet-professionalov-po-tsepyam-postavok/">
-    <img src="../wp-content/uploads/2025/12/pma5zhb131.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/pma5zhb131.webp" alt="Совет профессионалов по цепям поставок и Страховой Брокер «Цунами» объявили о партнерстве" loading="lazy">
     <h3 class="article-box-title">Совет профессионалов по цепям поставок и Страховой Брокер «Цунами» объявили о партнерстве</h3>
     <div class="article-box-content">Новое партнерство Страхового Брокера «Цунами» и Совета профессионалов по цепям п…</div>
     <div class="article-box-date">11.09.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-62" class="post post-62 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../cjatjxeuz1-kak-povisit-protsent-vikupa-na-marketple/">
-    <img src="../wp-content/uploads/2025/12/cjatjxeuz1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/cjatjxeuz1.webp" alt="Как повысить процент выкупа на маркетплейсах" loading="lazy">
     <h3 class="article-box-title">Как повысить процент выкупа на маркетплейсах</h3>
     <div class="article-box-content">Процент выкупа напрямую влияет на прибыльность селлера: каждый невыкупленный зак…</div>
     <div class="article-box-date">01.09.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-59" class="post post-59 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../4cu15ljai1-kak-uchest-strahovanie-v-raschete-marzhi/">
-    <img src="../wp-content/uploads/2025/12/4cu15ljai1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/4cu15ljai1.webp" alt="Как учесть страхование в расчете маржинальности на маркетплейсе" loading="lazy">
     <h3 class="article-box-title">Как учесть страхование в расчете маржинальности на маркетплейсе</h3>
     <div class="article-box-content">Селлеры часто считают маржинальность, не закладывая потери от повреждений и возв…</div>
     <div class="article-box-date">21.08.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-56" class="post post-56 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../85ek3iijf1-logistika-dlya-biznesa-instruktsiya-po-v/">
-    <img src="../wp-content/uploads/2025/12/85ek3iijf1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/85ek3iijf1.webp" alt="Логистика для бизнеса: инструкция по выбору компании. Гайд от Zunami Брокера" loading="lazy">
     <h3 class="article-box-title">Логистика для бизнеса: инструкция по выбору компании. Гайд от Zunami Брокера</h3>
     <div class="article-box-content">Потерянные сроки, испорченный товар, разгневанные клиенты, финансовые убытки и п…</div>
     <div class="article-box-date">03.08.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-375" class="post post-375 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../y0nvv0yd41-obem-zastrahovannih-srokov-i-gruzov-viro/">
-    <img src="../wp-content/uploads/2026/03/y0nvv0yd41.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2026/03/y0nvv0yd41.webp" alt="Объем застрахованных сроков и грузов вырос на 14,3%" loading="lazy">
     <h3 class="article-box-title">Объем застрахованных сроков и грузов вырос на 14,3%</h3>
     <div class="article-box-content">Грузоперевозчики стали чаще страховать сроки и грузы – в первом полугодии 2025 г…</div>
     <div class="article-box-date">21.07.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-53" class="post post-53 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../drbbaju571-kto-takoi-strahovschik-i-strahovatel-slo/">
-    <img src="../wp-content/uploads/2025/12/drbbaju571.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/drbbaju571.webp" alt="Кто такой страховщик и страхователь: словарь для селлера — разбираемся в терминах за 5 минут" loading="lazy">
     <h3 class="article-box-title">Кто такой страховщик и страхователь: словарь для селлера — разбираемся в терминах за 5 минут</h3>
     <div class="article-box-content">«Страховщик», «выгодоприобретатель», «страховые риски»... Оформляя страховку на…</div>
     <div class="article-box-date">20.07.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-50" class="post post-50 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../z66sxe9c91-mifi-i-realnost-strahovaniya-tovarov-na/">
-    <img src="../wp-content/uploads/2025/12/z66sxe9c91.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/z66sxe9c91.webp" alt="Мифы и реальность страхования товаров на маркетплейсах: факты о страховом покрытии" loading="lazy">
     <h3 class="article-box-title">Мифы и реальность страхования товаров на маркетплейсах: факты о страховом покрытии</h3>
     <div class="article-box-content">Страхование — привычный инструмент защиты бизнеса, но на маркетплейсах вокруг эт…</div>
     <div class="article-box-date">01.07.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-47" class="post post-47 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../x5kkcgvfg1-yunit-ekonomika-na-marketpleise-pochemu/">
-    <img src="../wp-content/uploads/2025/12/x5kkcgvfg1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/x5kkcgvfg1.webp" alt="Юнит-экономика на маркетплейсе: почему расчет важен для масштабирования бизнеса" loading="lazy">
     <h3 class="article-box-title">Юнит-экономика на маркетплейсе: почему расчет важен для масштабирования бизнеса</h3>
     <div class="article-box-content">Большой оборот ещё не значит прибыльный бизнес. За яркими цифрами заказов могут…</div>
     <div class="article-box-date">24.06.2025</div>
   </a>
 </article>
-<article class="article-card">
+<article id="post-44" class="post post-44 type-post status-publish format-standard hentry has-post-thumbnail">
   <a class="article-box" href="../csyv8bl3r1-podmena-tovara-na-marketpleisah-posledst/">
-    <img src="../wp-content/uploads/2025/12/csyv8bl3r1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/csyv8bl3r1.webp" alt="Подмена товара на маркетплейсах: последствия для селлеров" loading="lazy">
     <h3 class="article-box-title">Подмена товара на маркетплейсах: последствия для селлеров</h3>
     <div class="article-box-content">Подмена — одна из самых острых проблем на маркетплейсах. Клиент может вернуть не…</div>
     <div class="article-box-date">17.06.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-41" class="post post-41 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../h0t0jbdcu1-kak-prodavtsu-rabotat-s-vozvratami-tovar/">
-    <img src="../wp-content/uploads/2025/12/h0t0jbdcu1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/h0t0jbdcu1.webp" alt="Как продавцу работать с возвратами товара на маркетплейсах и защититься от убытков" loading="lazy">
     <h3 class="article-box-title">Как продавцу работать с возвратами товара на маркетплейсах и защититься от убытков</h3>
     <div class="article-box-content">Возвраты товаров — один из главных источников потерь для продавцов на маркетплей…</div>
     <div class="article-box-date">08.06.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-38" class="post post-38 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../ppj3npx821-buduschee-strahovaniya-kak-razvivaetsya/">
-    <img src="../wp-content/uploads/2025/12/ppj3npx821.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/ppj3npx821.webp" alt="Будущее страхования: как развивается страховой рынок и что ждёт клиентов" loading="lazy">
     <h3 class="article-box-title">Будущее страхования: как развивается страховой рынок и что ждёт клиентов</h3>
     <div class="article-box-content">Еще недавно предложение страховщиков для компаний малого и среднего бизнеса было…</div>
     <div class="article-box-date">01.06.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-35" class="post post-35 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../uyfoph8i11-strahovoi-broker-i-strahovoi-agent-kto-e/">
-    <img src="../wp-content/uploads/2025/12/uyfoph8i11.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/uyfoph8i11.webp" alt="Страховой брокер и страховой агент: кто это, чем отличаются и кто поможет с выбором страхования" loading="lazy">
     <h3 class="article-box-title">Страховой брокер и страховой агент: кто это, чем отличаются и кто поможет с выбором страхования</h3>
     <div class="article-box-content">Выбирая страхование для бизнеса, можно пойти двумя путями: обратиться напрямую в…</div>
     <div class="article-box-date">25.05.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-32" class="post post-32 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../7ixjtxktx1-kak-izbezhat-7-glavnih-riskov-predprinim/">
-    <img src="../wp-content/uploads/2025/12/7ixjtxktx1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/7ixjtxktx1.webp" alt="Как избежать 7 главных рисков предпринимателей для бизнеса на маркетплейсах" loading="lazy">
     <h3 class="article-box-title">Как избежать 7 главных рисков предпринимателей для бизнеса на маркетплейсах</h3>
     <div class="article-box-content">Около 84% россиян пользуются маркетплейсами, что позволяет найти свою целевую ау…</div>
     <div class="article-box-date">12.05.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-29" class="post post-29 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../oncf2yine1-kak-prodavtsu-zaschititsya-ot-moshenniko/">
-    <img src="../wp-content/uploads/2025/12/oncf2yine1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/oncf2yine1.webp" alt="Как продавцу защититься от мошенников на маркетплейсе" loading="lazy">
     <h3 class="article-box-title">Как продавцу защититься от мошенников на маркетплейсе</h3>
     <div class="article-box-content">Маркетплейсы открыли мир большого бизнеса для всех категорий предпринимателей. С…</div>
     <div class="article-box-date">04.05.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-26" class="post post-26 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../9k8f7aeve1-eksperti-iz-zunami-broker-razveyali-mifi/">
-    <img src="../wp-content/uploads/2025/12/9k8f7aeve1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/9k8f7aeve1.webp" alt="Эксперты из Zunami Брокер развеяли мифы селлеров на mpstats.conf" loading="lazy">
     <h3 class="article-box-title">Эксперты из Zunami Брокер развеяли мифы селлеров на mpstats.conf</h3>
     <div class="article-box-content">Представители Zunami Брокер рассказали о том, как цифровое страхование может обе…</div>
     <div class="article-box-date">20.04.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-23" class="post post-23 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../fx140g8981-strahovoi-broker-tsunami-sovmestno-s-alf/">
-    <img src="../wp-content/uploads/2025/12/fx140g8981.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/fx140g8981.webp" alt="Страховой брокер «Цунами» совместно с «АльфаСтрахованием» и Wildberries объявляет о тестировании сервиса страхования для селлеров" loading="lazy">
     <h3 class="article-box-title">Страховой брокер «Цунами» совместно с «АльфаСтрахованием» и Wildberries объявляет о тестировании сервиса страхования для селлеров</h3>
     <div class="article-box-content">Решение создано специально под нужды продавцов Wildberries и работает на базе пл…</div>
     <div class="article-box-date">11.02.2025</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-20" class="post post-20 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../m49gykra11-strahovoi-broker-zunami-otchitalsya-o-ro/">
-    <img src="../wp-content/uploads/2025/12/m49gykra11.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/m49gykra11.webp" alt="Страховой брокер Zunami отчитался о росте подписанной страховой премии на 42,8% в первом полугодии 2024 года" loading="lazy">
     <h3 class="article-box-title">Страховой брокер Zunami отчитался о росте подписанной страховой премии на 42,8% в первом полугодии 2024 года</h3>
     <div class="article-box-content">Страховой брокер Zunami, специализирующийся на предоставлении страховых услуг ло…</div>
     <div class="article-box-date">25.10.2024</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-17" class="post post-17 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../efvorj5o31-viruchka-strahovogo-brokera-zunami-viros/">
-    <img src="../wp-content/uploads/2025/12/efvorj5o31.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/efvorj5o31.webp" alt="Выручка Страхового брокера Zunami выросла на 40% в 2023 году" loading="lazy">
     <h3 class="article-box-title">Выручка Страхового брокера Zunami выросла на 40% в 2023 году</h3>
     <div class="article-box-content">Страховой брокер Zunami, специализирующийся на предоставлении страховых услуг ло…</div>
     <div class="article-box-date">29.07.2024</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-14" class="post post-14 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../7erj10za91-strahovoi-broker-zunami-prinyal-uchastie/">
-    <img src="../wp-content/uploads/2025/12/7erj10za91.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/7erj10za91.webp" alt="«Страховой брокер Zunami» принял участие в международной логистической выставке TransRussia 2024" loading="lazy">
     <h3 class="article-box-title">«Страховой брокер Zunami» принял участие в международной логистической выставке TransRussia 2024</h3>
     <div class="article-box-content">С 19 по 21 марта в Москве прошла крупнейшая в России международная выставка тран…</div>
     <div class="article-box-date">25.03.2024</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-11" class="post post-11 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../d605oi3lb1-strahovoi-broker-dlya-logisticheskoi-otr/">
-    <img src="../wp-content/uploads/2025/12/d605oi3lb1.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2025/12/d605oi3lb1.webp" alt="Страховой брокер для логистической отрасли «Цунами»: итоги полугодия 2023 года" loading="lazy">
     <h3 class="article-box-title">Страховой брокер для логистической отрасли «Цунами»: итоги полугодия 2023 года</h3>
     <div class="article-box-content">Страховой брокер «Цунами», предоставляющий полный спектр страховых услуг предпри…</div>
     <div class="article-box-date">22.08.2023</div>
   </a>
 </article>
-<article class="article-card is-hidden" data-is-hidden>
+<article id="post-6" class="post post-6 type-post status-publish format-standard hentry has-post-thumbnail" data-is-hidden>
   <a class="article-box" href="../3o0gfgtp81-strahovoi-broker-tsunami-podnyalsya-na-o/">
-    <img src="../wp-content/uploads/2023/05/3o0gfgtp81.webp" alt="" class="article-box__image" loading="lazy">
+    <img src="../wp-content/uploads/2023/05/3o0gfgtp81.webp" alt="Страховой брокер «Цунами» поднялся на одну строчку в рейтинге страховых брокеров по заработанному брокерскому вознаграждению" loading="lazy">
     <h3 class="article-box-title">Страховой брокер «Цунами» поднялся на одну строчку в рейтинге страховых брокеров по заработанному брокерскому вознаграждению</h3>
     <div class="article-box-content">Согласно статистике АПСБ, опубликованной на официальном сайте, страховой брокер…</div>
     <div class="article-box-date">30.05.2023</div>
@@ -234,62 +289,97 @@
     </main>
     <footer id="colophon" class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <a class="site-logo site-logo--footer" href="../" aria-label="На главную">
-        <img src="../wp-content/uploads/2025/12/zunami-logo.svg" alt="Логотип Zunami">
-      </a>
-      <p class="footer-text">Страховой брокер для логистики и маркетплейсов.</p>
+    <div class="footer-row">
+      <div class="footer-column">
+        <div class="site-branding">
+          <a class="custom-logo-link" href="../" rel="home" aria-label="Zunami">
+            <img class="custom-logo" src="../wp-content/uploads/2025/12/zunami-logo.svg" alt="Логотип Zunami">
+          </a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget widget_nav_menu">
+          <ul class="menu">
+            <li class="menu-item"><a href="../company/">О компании</a></li>
+<li class="menu-item"><a href="../uslugi/">Услуги</a></li>
+<li class="menu-item"><a href="../blog/">Блог</a></li>
+<li class="menu-item"><a href="../contacts/">Контакты</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <p>Лицензии ЦБ РФ на осуществление страхования:<br>СБ № 4369 выдана 11.07.2022 бессрочно</p>
+        </div>
+        <div class="widget">
+          <p>© 2023-2025 ООО «Страховой брокер "Цунами"»<br>Все права защищены</p>
+        </div>
+      </div>
     </div>
-    <div class="footer-nav">
-      <ul class="footer-links">
-        <li><a href="../company/">О компании</a></li>
-<li><a href="../uslugi/">Услуги</a></li>
-<li><a href="../blog/">Блог</a></li>
-<li><a href="../contacts/">Контакты</a></li>
-      </ul>
-      <ul class="footer-links footer-links--muted">
-        <li><a href="../politica/">Политика</a></li>
-<li><a href="../approval/">Согласие на ПД</a></li>
-<li><a href="../addapproval/">Рассылка</a></li>
-      </ul>
-    </div>
-    <div class="footer-meta">
-      <p class="footer-text"><a href="tel:+74012391938">+7 (4012) 39-19-38</a></p>
-      <p class="footer-text"><a href="mailto:info@zunami.pro">info@zunami.pro</a></p>
-      <p class="footer-copy">© 2026 Zunami</p>
+    <div class="footer-row">
+      <div class="footer-column">
+        <div class="widget">
+          <p>ПН – ПТ с 10:00 до 19:00<br>Перерыв: с 13:00 до 14:00</p>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <p><a href="tel:+74012391938">+7 (4012) 39-19-38</a><br><a href="mailto:info@zunami.pro">info@zunami.pro</a></p>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <h4 class="wp-block-heading">Наш адрес</h4>
+          <p>236040, Калининградская обл., г. о. город Калининград, г. Калининград, пл. Победы, д. 10, офис 518А</p>
+        </div>
+        <div class="widget widget_nav_menu">
+          <ul class="menu">
+            <li class="menu-item"><a href="../politica/">Политика в отношении обработки персональных данных</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
   </div>
-  <div class="modal-window" id="modal_request" hidden>
+  <div class="modal-window" id="modal_request">
   <div class="modal-background" data-modal-close></div>
   <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal_request_title">
     <div class="modal-content">
       <div class="modal-body">
         <h4 id="modal_request_title">Создание заявки</h4>
-        <form class="static-form static-form--modal js-static-form" data-success-url="../successfully/" novalidate>
-  <div class="form-field is-required">
+        <div class="wpcf7">
+  <form class="wpcf7-form js-static-form static-form--modal" data-success-url="../successfully/" novalidate>
+    <div class="form-field">
   <input type="text" name="your-name" placeholder="Имя" required>
 </div>
-<div class="form-field is-required">
+<div class="form-field">
   <input type="tel" name="your-tel" placeholder="+7 (000) 000-00-00" inputmode="tel" required>
 </div>
-<div class="form-field is-required">
+<div class="form-field">
   <input type="email" name="your-email" placeholder="e-mail" required>
+</div>
+<div class="form-field">
+  <input type="text" name="your-business" placeholder="Р’РёРґ Р±РёР·РЅРµСЃР°" required>
 </div>
 <div class="form-field">
   <input type="text" name="your-company" placeholder="Ваша компания">
 </div>
-  <label class="form-field form-field--checkbox">
-    <input type="checkbox" name="acceptance-pd" required>
-    <span>Я даю <a href="../approval/">согласие</a> на обработку персональных данных в соответствии с <a href="../politica/">Политикой обработки и обеспечения безопасности персональных данных</a></span>
-  </label>
-  <label class="form-field form-field--checkbox">
-    <input type="checkbox" name="acceptance-ad" required>
-    <span>Я даю <a href="../addapproval/">согласие</a> на получение рекламной и информационной рассылки</span>
-  </label>
-  <button class="zunami-button zunami-button_simple" type="submit">Отправить<span class="button-arrow"></span></button>
-</form>
+    <div class="form-field form-field_acceptance">
+      <label>
+        <input type="checkbox" name="acceptance-pd" required>
+        <span>Я даю <a href="../approval/">согласие</a> на обработку персональных данных в соответствии с <a href="../politica/">Политикой обработки и обеспечения безопасности персональных данных</a></span>
+      </label>
+    </div>
+    <div class="form-field form-field_acceptance">
+      <label>
+        <input type="checkbox" name="acceptance-ad" required>
+        <span>Я даю <a href="../addapproval/">согласие</a> на получение рекламной и информационной рассылки</span>
+      </label>
+    </div>
+    <button class="zunami-button zunami-button_simple" type="submit">Отправить<span class="button-arrow"></span></button>
+  </form>
+</div>
       </div>
     </div>
   </div>

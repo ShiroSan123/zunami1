@@ -1,0 +1,60 @@
+.accordion-group {
+    border-bottom: 1px solid #558dff;
+}
+.wp-block-accordion-item {
+    border-top: 1px solid #558dff;
+}
+
+.wp-block-accordion-heading {
+	padding: 2rem 0;
+}
+.wp-block-accordion-heading__toggle::after {
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: url(/wp-content/themes/zunami/icons/accordion-icon.svg) center center no-repeat;
+    background-size: contain;
+    transition: var(--tr);
+}
+
+.wp-block-accordion-item.is-open .wp-block-accordion-heading__toggle::after {
+    transform: rotate(45deg);
+}
+.wp-block-accordion-item .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon {
+    visibility: hidden;
+}
+.wp-block-accordion-heading:hover .wp-block-accordion-heading__toggle::after {
+	opacity: .9;
+}
+
+.wp-block-accordion-heading__toggle-title {
+	font-size: var(--fs-md);
+	line-height: var(--lh-md);
+	font-weight: 500;
+}
+
+.wp-block-accordion-heading .wp-block-accordion-heading__toggle:hover .wp-block-accordion-heading__toggle-title {
+	text-decoration: none;
+}
+
+.wp-block-accordion-panel {
+    max-height: 50rem;
+    transition: var(--tr);
+}
+.wp-block-accordion-panel P {
+	margin-top: 0;
+	margin-bottom: 2rem;
+}
+.wp-block-accordion-panel[aria-hidden=true], .wp-block-accordion-panel[inert] {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+}
+
+@media (max-width: 639px) {
+    .wp-block-accordion-heading__toggle::after {
+        width: 5rem;
+        height: 5rem;
+    }
+}

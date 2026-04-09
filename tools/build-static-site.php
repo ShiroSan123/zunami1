@@ -381,6 +381,7 @@ function buildFormDefinitions(): array
                 ['type' => 'text', 'name' => 'your-name', 'placeholder' => 'Имя', 'required' => true],
                 ['type' => 'tel', 'name' => 'your-tel', 'placeholder' => '+7 (000) 000-00-00', 'required' => true],
                 ['type' => 'email', 'name' => 'your-email', 'placeholder' => 'e-mail', 'required' => true],
+                ['type' => 'text', 'name' => 'your-business', 'placeholder' => 'Р’РёРґ Р±РёР·РЅРµСЃР°', 'required' => true],
                 ['type' => 'text', 'name' => 'your-company', 'placeholder' => 'Ваша компания', 'required' => false],
             ],
         ],
@@ -391,6 +392,7 @@ function buildFormDefinitions(): array
                 ['type' => 'text', 'name' => 'your-name', 'placeholder' => 'Имя', 'required' => true],
                 ['type' => 'tel', 'name' => 'your-tel', 'placeholder' => '+7 (000) 000-00-00', 'required' => true],
                 ['type' => 'email', 'name' => 'your-email', 'placeholder' => 'e-mail', 'required' => true],
+                ['type' => 'text', 'name' => 'your-business', 'placeholder' => 'Р’РёРґ Р±РёР·РЅРµСЃР°', 'required' => true],
                 ['type' => 'text', 'name' => 'your-company', 'placeholder' => 'Ваша компания', 'required' => false],
             ],
         ],
@@ -414,16 +416,37 @@ function decoratePosts(array $posts, array $attachments, array $postMeta): array
 
 function copyThemeAssets(string $extractedRoot, string $projectRoot): void
 {
+    $themeSource = $extractedRoot . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . 'zunami';
+    $themeTarget = $projectRoot . DIRECTORY_SEPARATOR . 'theme';
+
     copyRecursive(
         $extractedRoot . DIRECTORY_SEPARATOR . 'uploads',
         $projectRoot . DIRECTORY_SEPARATOR . 'wp-content' . DIRECTORY_SEPARATOR . 'uploads'
     );
+    if (is_file($themeSource . DIRECTORY_SEPARATOR . 'style.css')) {
+        safeWrite(
+            $themeTarget . DIRECTORY_SEPARATOR . 'style.css',
+            (string) file_get_contents($themeSource . DIRECTORY_SEPARATOR . 'style.css')
+        );
+    }
     copyRecursive(
-        $extractedRoot . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . 'zunami' . DIRECTORY_SEPARATOR . 'icons',
+        $themeSource . DIRECTORY_SEPARATOR . 'css',
+        $themeTarget . DIRECTORY_SEPARATOR . 'css'
+    );
+    copyRecursive(
+        $themeSource . DIRECTORY_SEPARATOR . 'fonts',
+        $themeTarget . DIRECTORY_SEPARATOR . 'fonts'
+    );
+    copyRecursive(
+        $themeSource . DIRECTORY_SEPARATOR . 'icons',
+        $themeTarget . DIRECTORY_SEPARATOR . 'icons'
+    );
+    copyRecursive(
+        $themeSource . DIRECTORY_SEPARATOR . 'icons',
         $projectRoot . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'icons'
     );
     copyRecursive(
-        $extractedRoot . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . 'zunami' . DIRECTORY_SEPARATOR . 'fonts',
+        $themeSource . DIRECTORY_SEPARATOR . 'fonts',
         $projectRoot . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'fonts'
     );
 }
@@ -471,8 +494,8 @@ function renderHomePage(
             'route' => $route,
             'title' => 'Zunami — страховой брокер',
             'description' => makeExcerpt((string) $page['post_content'], 160),
-            'bodyClass' => 'home',
-            'mainClass' => 'site-main site-main--home',
+            'bodyClass' => buildPageBodyClasses((int) $page['ID'], $route, true, false, false),
+            'mainClass' => 'site-main',
             'mainContent' => "<article class=\"entry entry--home\"><div class=\"entry-content\">{$content}</div></article>",
             'mainMenu' => $mainMenu,
             'activeMenu' => 'home',
@@ -514,8 +537,8 @@ function renderBlogPage(
             'route' => $route,
             'title' => 'Блог | Zunami',
             'description' => 'Новости и материалы страхового брокера Zunami.',
-            'bodyClass' => 'page page--blog blog',
-            'mainClass' => 'site-main site-main--blog',
+            'bodyClass' => buildPageBodyClasses((int) $page['ID'], $route, false, true, false),
+            'mainClass' => 'site-main',
             'mainContent' => "<article class=\"entry entry--blog\">{$content}</article>",
             'mainMenu' => $mainMenu,
             'activeMenu' => 'blog',
@@ -560,8 +583,8 @@ function renderPage(
             'route' => $route,
             'title' => $title,
             'description' => makeExcerpt((string) $page['post_content'], 160),
-            'bodyClass' => 'page page--' . slugifyRoute($route),
-            'mainClass' => 'site-main site-main--page',
+            'bodyClass' => buildPageBodyClasses((int) $page['ID'], $route, false, false, $template === 'page-bc'),
+            'mainClass' => 'site-main',
             'mainContent' => "<article class=\"entry entry--page entry--{$template}\">{$entryContent}</article>",
             'mainMenu' => $mainMenu,
             'activeMenu' => $activeMenu,
@@ -598,21 +621,31 @@ function renderPost(
     $date = formatDate((string) $post['post_date']);
     $readingTime = trim((string) ($postMeta[(int) $post['ID']]['reading_time'][0] ?? ''));
     $readingLine = $readingTime !== ''
-        ? '<span class="entry-meta__item">Время чтения: ' . h($readingTime) . '</span>'
+        ? '<div class="article-reading-time">Время чтения: ' . h($readingTime) . '</div>'
         : '';
 
     $content = transformContent((string) $post['post_content'], $route, $latestPosts, $sortedPosts, $pageRoutes, $formDefinitions);
-    $header = '<header class="post-header">'
-        . '<div class="entry-breadcrumps"><a href="' . h(linkToRoute($route, '')) . '">главная</a> / <a href="' . h(linkToRoute($route, 'blog')) . '">блог</a> / <span class="bc_current">' . h((string) $post['post_title']) . '</span></div>'
-        . '<h1 class="entry-title">' . h((string) $post['post_title']) . '</h1>'
-        . '<div class="entry-meta"><span class="entry-meta__item">' . h($date) . '</span>' . $readingLine . '</div>'
-        . '</header>';
+    $articleClasses = implode(
+        ' ',
+        [
+            'post',
+            'post-' . (int) $post['ID'],
+            'type-post',
+            'status-publish',
+            'format-standard',
+            'hentry',
+        ]
+    );
+    if ($thumbnail !== '') {
+        $articleClasses .= ' has-post-thumbnail';
+    }
 
-    $mainContent = '<article class="entry entry--post">'
-        . $header
+    $mainContent = '<article id="post-' . (int) $post['ID'] . '" class="' . h($articleClasses) . '">'
+        . '<h1>' . h((string) $post['post_title']) . '</h1>'
+        . '<div class="article-box-meta"><div class="article-box-date">' . h($date) . '</div>' . $readingLine . '</div>'
         . $thumbnail
         . '<div class="entry-content">' . $content . '</div>'
-        . '<div class="post-share"><a class="zunami-button zunami-button_simple" href="' . h(linkToRoute($route, 'blog')) . '">Ко всем статьям</a></div>'
+        . '<div class="article-share-links"><a href="#" data-share-vk>Поделиться в ВК</a></div>'
         . '</article>';
 
     $html = renderDocument(
@@ -620,8 +653,8 @@ function renderPost(
             'route' => $route,
             'title' => (string) $post['post_title'] . ' | Zunami',
             'description' => makeExcerpt((string) $post['post_content'], 160),
-            'bodyClass' => 'post post--' . slugifyRoute($route),
-            'mainClass' => 'site-main site-main--post',
+            'bodyClass' => buildPostBodyClasses((int) $post['ID']),
+            'mainClass' => 'site-main',
             'mainContent' => $mainContent,
             'mainMenu' => $mainMenu,
             'activeMenu' => 'blog',
@@ -645,8 +678,8 @@ function render404Page(string $projectRoot, array $mainMenu, string $customLogoP
             'route' => '404.html',
             'title' => '404 | Zunami',
             'description' => 'Страница не найдена.',
-            'bodyClass' => 'error404',
-            'mainClass' => 'site-main site-main--404',
+            'bodyClass' => 'error404 no-sidebar',
+            'mainClass' => 'site-main',
             'mainContent' => $mainContent,
             'mainMenu' => $mainMenu,
             'activeMenu' => '',
@@ -669,13 +702,13 @@ function renderDocument(array $view): string
     $logoPath = prefixRootPath($rootPrefix, (string) $view['customLogoPath']);
     $menu = renderHeader($route, (array) $view['mainMenu'], (string) $view['activeMenu'], $logoPath);
     $footer = renderFooter($route, $logoPath, (array) $view['mainMenu']);
-    $searchPopup = renderSearchPopup();
+    $searchPopup = renderSearchPopup($route);
     $modal = renderModalWindow($route, (array) $view['formDefinitions']);
-    $stylesheetHref = prefixRootPath($rootPrefix, 'assets/css/styles.css');
     $scriptHref = prefixRootPath($rootPrefix, 'assets/js/main.js');
-    $faviconSvg = prefixRootPath($rootPrefix, 'assets/icons/favicon.svg');
-    $faviconPng = prefixRootPath($rootPrefix, 'assets/icons/favicon.png');
-    $faviconDark = prefixRootPath($rootPrefix, 'assets/icons/favicon_black.png');
+    $faviconSvg = prefixRootPath($rootPrefix, 'theme/icons/favicon.svg');
+    $faviconPng = prefixRootPath($rootPrefix, 'theme/icons/favicon.png');
+    $faviconDark = prefixRootPath($rootPrefix, 'theme/icons/favicon_black.png');
+    $stylesheets = renderThemeStylesheets($rootPrefix);
 
     return <<<HTML
 <!doctype html>
@@ -689,10 +722,11 @@ function renderDocument(array $view): string
   <link rel="icon" type="image/png" sizes="32x32" href="{$faviconDark}" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/svg+xml" href="{$faviconSvg}">
   <link rel="apple-touch-icon" href="{$faviconPng}">
-  <link rel="stylesheet" href="{$stylesheetHref}">
+  {$stylesheets}
 </head>
 <body class="{$bodyClass}">
-  <div class="site-shell">
+  <div id="page" class="site">
+    <a class="skip-link screen-reader-text" href="#primary">Skip to content</a>
     {$searchPopup}
     {$menu}
     <main id="primary" class="{$mainClass}">
@@ -707,21 +741,29 @@ function renderDocument(array $view): string
 HTML;
 }
 
-function renderSearchPopup(): string
+function renderSearchPopup(string $route): string
 {
+    $searchIcon = h(themeAssetPath($route, 'icons/search.svg'));
+    $closeIcon = h(themeAssetPath($route, 'icons/icon-close.svg'));
+
     return <<<HTML
-<div class="search-popup" id="search_popup" hidden>
-  <div class="search-popup__panel">
-    <form class="search-popup__form" id="search_form">
-      <label class="search-field">
-        <span class="search-field__icon" aria-hidden="true"></span>
-        <input type="search" id="search_input" class="search-field__input" placeholder="Поиск по сайту" autocomplete="off">
-      </label>
-      <button type="button" class="search-popup__close" id="search_popup_close" aria-label="Закрыть поиск"></button>
+<div class="search-popup" id="search_popup">
+  <div class="search-popup-inner">
+    <form id="search_form">
+      <div class="form-field form-field_has-icon">
+        <div class="form-field__icon">
+          <img src="{$searchIcon}" alt="Поиск">
+        </div>
+        <input class="search-input" type="text" id="search_input" placeholder="Поиск" autocomplete="off">
+      </div>
     </form>
-    <div class="search-popup-results" id="search_popup_results">
-      <div class="search-popup-results__inner" id="search_popup_results_text"></div>
-    </div>
+    <button class="close-button" id="search_popup_close" aria-label="Закрыть поиск" type="button">
+      <img src="{$closeIcon}" alt="Закрыть">
+    </button>
+  </div>
+</div>
+<div class="search-popup-results" id="search_popup_results">
+  <div class="search-popup-inner" id="search_popup_results_text">
   </div>
 </div>
 HTML;
@@ -733,7 +775,7 @@ function renderHeader(string $currentRoute, array $mainMenu, string $activeMenu,
     foreach ($mainMenu as $item) {
         $route = (string) $item['route'];
         $isActive = isMenuItemActive($currentRoute, $route, $activeMenu);
-        $className = $isActive ? 'menu__item is-current' : 'menu__item';
+        $className = $isActive ? 'menu-item current_page_item' : 'menu-item';
         $href = h(linkToRoute($currentRoute, $route));
         $label = h((string) $item['label']);
         $desktopItems[] = "<li class=\"{$className}\"><a href=\"{$href}\">{$label}</a></li>";
@@ -741,30 +783,54 @@ function renderHeader(string $currentRoute, array $mainMenu, string $activeMenu,
 
     $menuMarkup = implode("\n", $desktopItems);
     $homeHref = h(linkToRoute($currentRoute, ''));
+    $searchIcon = h(themeAssetPath($currentRoute, 'icons/search.svg'));
+    $menuIcon = h(themeAssetPath($currentRoute, 'icons/icon-menu.svg'));
+    $vkIcon = h(themeAssetPath($currentRoute, 'icons/vk.svg'));
 
     return <<<HTML
 <header id="masthead" class="site-header-holder">
   <div class="site-header">
-    <a class="site-logo" href="{$homeHref}" aria-label="На главную">
-      <img src="{$logoPath}" alt="Логотип Zunami">
-    </a>
-    <nav class="main-navigation" aria-label="Основная навигация">
-      <ul class="menu">
-        {$menuMarkup}
-      </ul>
+    <div class="site-branding">
+      <a class="custom-logo-link" href="{$homeHref}" rel="home" aria-label="Zunami">
+        <img class="custom-logo" src="{$logoPath}" alt="Логотип Zunami">
+      </a>
+    </div>
+    <nav id="site-navigation" class="main-navigation animate__animated animate__fadeInDown" aria-label="Основная навигация">
+      <div class="menu-primary-container">
+        <ul id="primary-menu" class="menu">
+          {$menuMarkup}
+        </ul>
+      </div>
     </nav>
     <div class="top-icons">
-      <button class="top-icon search-button" id="search_popup_open" type="button" aria-label="Поиск"></button>
-      <button class="top-icon mobile-menu-button" id="mobile_menu_open" type="button" aria-label="Меню"></button>
+      <button class="top-icon search-button" id="search_popup_open" type="button" aria-label="Поиск">
+        <img src="{$searchIcon}" alt="Поиск">
+      </button>
+      <button class="top-icon mobile-menu-button" id="mobile_menu_open" type="button" aria-label="Меню">
+        <img src="{$menuIcon}" alt="Меню">
+      </button>
       <button class="zunami-button" id="open_main_popup" type="button">Отправить заявку <span class="button-arrow"></span></button>
     </div>
   </div>
-  <div class="mobile-menu-holder" id="mobile_menu" hidden>
-    <nav class="mobile-navigation" aria-label="Мобильная навигация">
+  <div class="mobile-menu-holder" id="mobile_menu">
+    <div></div>
+    <nav id="site-navigation-mobile" class="mobile-navigation" aria-label="Мобильная навигация">
       <ul class="menu">
         {$menuMarkup}
       </ul>
     </nav>
+    <div class="mobile-menu-sidebar">
+      <div class="widget">
+        <p><strong>Центральный офис:</strong><br>236040, Калининградская обл.<br>г. о. город Калининград,<br>г. Калининград, пл. Победы, д. 10, офис 518А</p>
+      </div>
+      <div class="widget">
+        <div class="mobile-soc-icons">
+          <a href="#" aria-label="VK">
+            <img class="mobile-soc-icon" src="{$vkIcon}" alt="VK">
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 HTML;
@@ -772,52 +838,66 @@ HTML;
 
 function renderFooter(string $currentRoute, string $logoPath, array $mainMenu): string
 {
-    $legalLinks = [
-        ['label' => 'Политика', 'route' => 'politica'],
-        ['label' => 'Согласие на ПД', 'route' => 'approval'],
-        ['label' => 'Рассылка', 'route' => 'addapproval'],
-    ];
-
     $menuItems = [];
     foreach ($mainMenu as $item) {
         $href = h(linkToRoute($currentRoute, (string) $item['route']));
         $label = h((string) $item['label']);
-        $menuItems[] = "<li><a href=\"{$href}\">{$label}</a></li>";
+        $menuItems[] = "<li class=\"menu-item\"><a href=\"{$href}\">{$label}</a></li>";
     }
 
-    $legalItems = [];
-    foreach ($legalLinks as $item) {
-        $href = h(linkToRoute($currentRoute, (string) $item['route']));
-        $label = h((string) $item['label']);
-        $legalItems[] = "<li><a href=\"{$href}\">{$label}</a></li>";
-    }
-
-    $year = date('Y');
     $menuMarkup = implode("\n", $menuItems);
-    $legalMarkup = implode("\n", $legalItems);
     $homeHref = h(linkToRoute($currentRoute, ''));
+    $policyHref = h(linkToRoute($currentRoute, 'politica'));
 
     return <<<HTML
 <footer id="colophon" class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <a class="site-logo site-logo--footer" href="{$homeHref}" aria-label="На главную">
-        <img src="{$logoPath}" alt="Логотип Zunami">
-      </a>
-      <p class="footer-text">Страховой брокер для логистики и маркетплейсов.</p>
+    <div class="footer-row">
+      <div class="footer-column">
+        <div class="site-branding">
+          <a class="custom-logo-link" href="{$homeHref}" rel="home" aria-label="Zunami">
+            <img class="custom-logo" src="{$logoPath}" alt="Логотип Zunami">
+          </a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget widget_nav_menu">
+          <ul class="menu">
+            {$menuMarkup}
+          </ul>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <p>Лицензии ЦБ РФ на осуществление страхования:<br>СБ № 4369 выдана 11.07.2022 бессрочно</p>
+        </div>
+        <div class="widget">
+          <p>© 2023-2025 ООО «Страховой брокер "Цунами"»<br>Все права защищены</p>
+        </div>
+      </div>
     </div>
-    <div class="footer-nav">
-      <ul class="footer-links">
-        {$menuMarkup}
-      </ul>
-      <ul class="footer-links footer-links--muted">
-        {$legalMarkup}
-      </ul>
-    </div>
-    <div class="footer-meta">
-      <p class="footer-text"><a href="tel:+74012391938">+7 (4012) 39-19-38</a></p>
-      <p class="footer-text"><a href="mailto:info@zunami.pro">info@zunami.pro</a></p>
-      <p class="footer-copy">© {$year} Zunami</p>
+    <div class="footer-row">
+      <div class="footer-column">
+        <div class="widget">
+          <p>ПН – ПТ с 10:00 до 19:00<br>Перерыв: с 13:00 до 14:00</p>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <p><a href="tel:+74012391938">+7 (4012) 39-19-38</a><br><a href="mailto:info@zunami.pro">info@zunami.pro</a></p>
+        </div>
+      </div>
+      <div class="footer-column">
+        <div class="widget">
+          <h4 class="wp-block-heading">Наш адрес</h4>
+          <p>236040, Калининградская обл., г. о. город Калининград, г. Калининград, пл. Победы, д. 10, офис 518А</p>
+        </div>
+        <div class="widget widget_nav_menu">
+          <ul class="menu">
+            <li class="menu-item"><a href="{$policyHref}">Политика в отношении обработки персональных данных</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
@@ -829,7 +909,7 @@ function renderModalWindow(string $route, array $formDefinitions): string
     $form = renderStaticForm($route, $formDefinitions['modal'], 'modal');
 
     return <<<HTML
-<div class="modal-window" id="modal_request" hidden>
+<div class="modal-window" id="modal_request">
   <div class="modal-background" data-modal-close></div>
   <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal_request_title">
     <div class="modal-content">
@@ -848,13 +928,12 @@ function renderStaticForm(string $route, array $definition, string $variant): st
     $fieldsHtml = [];
     foreach ($definition['fields'] as $field) {
         $required = !empty($field['required']) ? ' required' : '';
-        $requiredClass = !empty($field['required']) ? ' is-required' : '';
         $placeholder = h((string) $field['placeholder']);
         $name = h((string) $field['name']);
 
         if ($field['type'] === 'textarea') {
             $fieldsHtml[] = <<<HTML
-<div class="form-field{$requiredClass}">
+<div class="form-field">
   <textarea name="{$name}" rows="4" placeholder="{$placeholder}"{$required}></textarea>
 </div>
 HTML;
@@ -864,7 +943,7 @@ HTML;
         $type = h((string) $field['type']);
         $inputMode = $type === 'tel' ? ' inputmode="tel"' : '';
         $fieldsHtml[] = <<<HTML
-<div class="form-field{$requiredClass}">
+<div class="form-field">
   <input type="{$type}" name="{$name}" placeholder="{$placeholder}"{$inputMode}{$required}>
 </div>
 HTML;
@@ -879,18 +958,24 @@ HTML;
     $fieldsMarkup = implode("\n", $fieldsHtml);
 
     return <<<HTML
-<form class="static-form static-form--{$variant} js-static-form" data-success-url="{$successHref}" novalidate>
-  {$fieldsMarkup}
-  <label class="form-field form-field--checkbox">
-    <input type="checkbox" name="acceptance-pd" required>
-    <span>Я даю <a href="{$approvalHref}">согласие</a> на обработку персональных данных в соответствии с <a href="{$politicaHref}">Политикой обработки и обеспечения безопасности персональных данных</a></span>
-  </label>
-  <label class="form-field form-field--checkbox">
-    <input type="checkbox" name="acceptance-ad" required>
-    <span>Я даю <a href="{$newsletterHref}">согласие</a> на получение рекламной и информационной рассылки</span>
-  </label>
-  <button class="{$buttonClass}" type="submit">{$submitLabel}<span class="button-arrow"></span></button>
-</form>
+<div class="wpcf7">
+  <form class="wpcf7-form js-static-form static-form--{$variant}" data-success-url="{$successHref}" novalidate>
+    {$fieldsMarkup}
+    <div class="form-field form-field_acceptance">
+      <label>
+        <input type="checkbox" name="acceptance-pd" required>
+        <span>Я даю <a href="{$approvalHref}">согласие</a> на обработку персональных данных в соответствии с <a href="{$politicaHref}">Политикой обработки и обеспечения безопасности персональных данных</a></span>
+      </label>
+    </div>
+    <div class="form-field form-field_acceptance">
+      <label>
+        <input type="checkbox" name="acceptance-ad" required>
+        <span>Я даю <a href="{$newsletterHref}">согласие</a> на получение рекламной и информационной рассылки</span>
+      </label>
+    </div>
+    <button class="{$buttonClass}" type="submit">{$submitLabel}<span class="button-arrow"></span></button>
+  </form>
+</div>
 HTML;
 }
 
@@ -926,15 +1011,14 @@ function replaceShortcodes(
             $tag = h($atts['tag'] ?? 'span');
             $class = h(trim(($atts['class'] ?? '') . ' typing-animation'));
             $text = h($atts['text'] ?? '');
-            $chars = max(1, u_strlen($atts['text'] ?? ''));
-            return "<{$tag} class=\"{$class}\" style=\"--chars:{$chars}\"><span class=\"typing-text\">{$text}</span><span class=\"typing-caret\" aria-hidden=\"true\"></span></{$tag}>";
+            return "<{$tag} class=\"{$class}\" animate-on-visible><span class=\"typing-text\">{$text}</span><span class=\"typing-caret\">|</span></{$tag}>";
         },
         '/\[rotating-star\s+([^\]]+)\]/' => static function (array $matches) use ($currentRoute): string {
             $atts = parseShortcodeAttributes($matches[1]);
-            $icon = h(prefixRootPath(rootPrefixForRoute($currentRoute), 'assets/icons/icon-star.svg'));
+            $icon = h(themeAssetPath($currentRoute, 'icons/icon-star.svg'));
             $caption = h($atts['caption'] ?? '');
             $class = h($atts['class'] ?? '');
-            return "<div class=\"zunami-rotating-star\"><img src=\"{$icon}\" alt=\"\"><span class=\"zunami-rotating-star__caption {$class}\">{$caption}</span></div>";
+            return "<div class=\"zunami-rotating-star\"><img src=\"{$icon}\" alt=\"Звезда\"><span class=\"zunami-rotating-star__caption {$class}\">{$caption}</span></div>";
         },
         '/\[zunami_iconbox\s+([^\]]+)\]/' => static function (array $matches) use ($currentRoute): string {
             $atts = parseShortcodeAttributes($matches[1]);
@@ -943,16 +1027,16 @@ function replaceShortcodes(
             $title = h($atts['title'] ?? '');
             $text = h($atts['text'] ?? '');
             $button = h($atts['button'] ?? '');
-            $arrow = h(prefixRootPath(rootPrefixForRoute($currentRoute), 'assets/icons/icon-iconbox-arrow.svg'));
+            $arrow = h(themeAssetPath($currentRoute, 'icons/icon-iconbox-arrow.svg'));
             return <<<HTML
 <div class="zunami-iconbox">
   <a class="zunami-iconbox__inner" href="{$href}">
-    <div class="zunami-iconbox__icon"><img src="{$icon}" alt=""></div>
+    <div class="zunami-iconbox__icon"><img src="{$icon}" alt="Иконка {$title}"></div>
     <div class="zunami-iconbox__content">
       <div class="zunami-iconbox__content-inner">
         <div class="zunami-iconbox__title"><h4>{$title}</h4></div>
         <div class="zunami-iconbox__text">{$text}</div>
-        <div class="zunami-iconbox__button"><span>{$button}</span><img src="{$arrow}" alt=""></div>
+        <div class="zunami-iconbox__button"><span>{$button}</span><img src="{$arrow}" alt="Получить"></div>
       </div>
     </div>
   </a>
@@ -966,14 +1050,14 @@ HTML;
             $text = h($atts['text'] ?? '');
             $button = h($atts['button'] ?? '');
             $href = isset($atts['href']) ? h(rewriteInternalPathForRoute($atts['href'], $currentRoute)) : '';
-            $icon = h(prefixRootPath(rootPrefixForRoute($currentRoute), 'assets/icons/icon-license.svg'));
+            $icon = h(themeAssetPath($currentRoute, 'icons/icon-license.svg'));
             $buttonHtml = $href !== '' ? '<div><a class="zunami-button zunami-button_simple" href="' . $href . '">' . $button . '</a></div>' : '';
             $textHtml = $text !== '' ? '<div class="zunami-hblock__text">' . $text . '</div>' : '';
             return <<<HTML
 <div class="zunami-hblock">
   <div class="zunami-hblock__left">
     <a class="zunami-hblock__link" href="{$url}">
-      <div class="zunami-hblock__icon"><img src="{$icon}" alt=""></div>
+      <div class="zunami-hblock__icon"><img src="{$icon}" alt="Иконка документа"></div>
       <div class="zunami-hblock__caption">{$caption}</div>
     </a>
   </div>
@@ -990,7 +1074,7 @@ HTML;
             $to = h($atts['to'] ?? '0');
             $before = h($atts['before'] ?? '');
             $after = h($atts['after'] ?? '');
-            return '<span class="zunami-countdown js-countdown" data-from="' . $from . '" data-to="' . $to . '" data-before="' . $before . '" data-after="' . $after . '"><span class="zunami-countdown__before">' . $before . '</span><span class="zunami-countdown__value">' . $from . '</span><span class="zunami-countdown__after">' . $after . '</span></span>';
+            return "<span class=\"zunami-countdown\" animate-on-visible style=\"--from:{$from}; --to:{$to};\">{$before}<span class=\"zunami-countdown__value\"></span>{$after}</span>";
         },
         '/\[item-with-num\s+([^\]]+)\]/' => static function (array $matches): string {
             $atts = parseShortcodeAttributes($matches[1]);
@@ -1000,8 +1084,9 @@ HTML;
         '/\[zunami_news(?:\s+([^\]]+))?\]/' => static function (array $matches) use ($latestPosts, $currentRoute): string {
             $atts = parseShortcodeAttributes($matches[1] ?? '');
             $extraClass = trim((string) ($atts['class'] ?? ''));
+            $limit = max(1, (int) ($atts['count'] ?? 3));
             $cards = [];
-            foreach ($latestPosts as $post) {
+            foreach (array_slice($latestPosts, 0, $limit) as $post) {
                 $cards[] = renderArticleCard($post, $currentRoute, false);
             }
             return '<div class="zunami-post-grid ' . h($extraClass) . '">' . implode("\n", $cards) . '</div>';
@@ -1012,7 +1097,11 @@ HTML;
             if (!isset($formDefinitions[$title])) {
                 return '';
             }
-            return renderStaticForm($currentRoute, $formDefinitions[$title], $title === 'Обратная связь' ? 'feedback' : 'request');
+            $variant = array_filter(
+                $formDefinitions[$title]['fields'],
+                static fn(array $field): bool => ($field['type'] ?? '') === 'textarea'
+            ) !== [] ? 'feedback' : 'request';
+            return renderStaticForm($currentRoute, $formDefinitions[$title], $variant);
         },
         '/\[ya-map\s+([^\]]+)\]/' => static function (array $matches): string {
             $atts = parseShortcodeAttributes($matches[1]);
@@ -1054,18 +1143,28 @@ function renderArticleCard(array $post, string $currentRoute, bool $isHidden): s
     $date = formatDate((string) $post['post_date']);
     $excerpt = h(makeExcerpt((string) $post['post_content'], 80));
     $title = h((string) $post['post_title']);
-    $articleClass = $isHidden ? 'article-card is-hidden' : 'article-card';
     $hiddenAttr = $isHidden ? ' data-is-hidden' : '';
     $href = $cardRoute !== '' ? h(linkToRoute($currentRoute, $cardRoute)) : './';
     $image = prefixRootPath(rootPrefixForRoute($currentRoute), (string) ($post['thumbnail_path'] ?? 'assets/icons/favicon.svg'));
-    $imageClass = isset($post['thumbnail_path']) && str_starts_with((string) $post['thumbnail_path'], 'wp-content/')
-        ? 'article-box__image'
-        : 'article-box__image article-box__image--placeholder';
+    $articleClasses = implode(
+        ' ',
+        [
+            'post',
+            'post-' . (int) $post['ID'],
+            'type-post',
+            'status-publish',
+            'format-standard',
+            'hentry',
+        ]
+    );
+    if (isset($post['thumbnail_path']) && str_starts_with((string) $post['thumbnail_path'], 'wp-content/')) {
+        $articleClasses .= ' has-post-thumbnail';
+    }
 
     return <<<HTML
-<article class="{$articleClass}"{$hiddenAttr}>
+<article id="post-{$post['ID']}" class="{$articleClasses}"{$hiddenAttr}>
   <a class="article-box" href="{$href}">
-    <img src="{$image}" alt="" class="{$imageClass}" loading="lazy">
+    <img src="{$image}" alt="{$title}" loading="lazy">
     <h3 class="article-box-title">{$title}</h3>
     <div class="article-box-content">{$excerpt}</div>
     <div class="article-box-date">{$date}</div>
@@ -1078,12 +1177,13 @@ function renderEntryHeader(string $currentRoute, string $title): string
 {
     $homeHref = h(linkToRoute($currentRoute, ''));
     $current = h($title);
+    $currentHref = h(linkToRoute($currentRoute, trim($currentRoute, '/')));
 
     return <<<HTML
 <header class="entry-header">
   <h1 class="entry-title">{$current}</h1>
   <div class="entry-breadcrumps">
-    <a href="{$homeHref}">главная</a> / <span class="bc_current">{$current}</span>
+    <a href="{$homeHref}">главная</a> / <a class="bc_current" href="{$currentHref}">{$current}</a>
   </div>
 </header>
 HTML;
@@ -1330,6 +1430,96 @@ function slugifyRoute(string $route): string
 {
     $slug = trim($route, '/');
     return $slug === '' ? 'home' : str_replace('/', '-', $slug);
+}
+
+function renderThemeStylesheets(string $rootPrefix): string
+{
+    $paths = [
+        'theme/style.css',
+        'theme/css/variables.css',
+        'theme/css/font.css',
+        'theme/css/main.css',
+        'theme/css/header.css',
+        'theme/css/page.css',
+        'theme/css/footer.css',
+        'theme/css/animation.css',
+        'theme/css/front-page.css',
+        'theme/css/elements.css',
+        'theme/css/animate.min.css',
+        'theme/css/elements/article-box.css',
+        'theme/css/elements/zunami-iconbox.css',
+        'theme/css/elements/zunami-button.css',
+        'theme/css/elements/zunami-post-grid.css',
+        'theme/css/elements/zunami-hblock.css',
+        'theme/css/elements/zunami-animation.css',
+        'theme/css/elements/zunami-step-block.css',
+        'theme/css/elements/parralax-container.css',
+        'theme/css/elements/zunami-history-block.css',
+        'theme/css/elements/accordion.css',
+        'theme/css/elements/zunami-countdown.css',
+        'theme/css/elements/form-field.css',
+        'theme/css/elements/entry-breadcrumps.css',
+        'theme/css/elements/modal-window.css',
+        'theme/css/elements/search-popup.css',
+        'theme/css/elements/zunami-item-with-num.css',
+        'theme/css/elements/hscroll-bar.css',
+        'assets/css/static-overrides.css',
+    ];
+
+    $links = [];
+    foreach ($paths as $path) {
+        $links[] = '<link rel="stylesheet" href="' . h(prefixRootPath($rootPrefix, $path)) . '">';
+    }
+
+    return implode("\n  ", $links);
+}
+
+function themeAssetPath(string $route, string $path): string
+{
+    return prefixRootPath(rootPrefixForRoute($route), 'theme/' . ltrim($path, '/'));
+}
+
+function buildPageBodyClasses(int $pageId, string $route, bool $isHome, bool $isBlog, bool $hasBreadcrumbTemplate): string
+{
+    $classes = ['page', 'page-id-' . $pageId, 'no-sidebar'];
+
+    if ($isHome) {
+        array_unshift($classes, 'home');
+    }
+
+    if ($isBlog) {
+        $classes[] = 'blog';
+    }
+
+    if ($hasBreadcrumbTemplate) {
+        $classes[] = 'page-template';
+        $classes[] = 'page-template-page-bc';
+        $classes[] = 'page-template-page-bc-php';
+    } else {
+        $classes[] = 'page-template-default';
+    }
+
+    $slugClass = slugifyRoute($route);
+    if ($slugClass !== 'home') {
+        $classes[] = 'page-' . $slugClass;
+    }
+
+    return implode(' ', array_unique($classes));
+}
+
+function buildPostBodyClasses(int $postId): string
+{
+    return implode(
+        ' ',
+        [
+            'post',
+            'single',
+            'single-post',
+            'postid-' . $postId,
+            'single-format-standard',
+            'no-sidebar',
+        ]
+    );
 }
 
 function h(string $value): string
