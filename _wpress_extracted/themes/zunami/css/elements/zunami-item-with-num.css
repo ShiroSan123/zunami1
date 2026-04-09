@@ -1,0 +1,33 @@
+.item-with-num {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	gap: 1rem;
+    font-size: var(--fs-md);
+    line-height: var(--lh-md);
+}
+
+.item-with-num SPAN {
+    white-space: nowrap;
+    color: var(--color-main);
+    font-weight: 500;
+}
+
+.item-with-num P {
+	margin-bottom: 2rem;
+}
+
+
+@media (max-width: 539px) {
+	.item-with-num {
+		gap: 4rem;
+		margin-bottom: 4rem;
+	}
+	.item-with-num P {
+	    font-size: 5rem;;
+	    line-height: var(--lh-md);
+	}
+
+}
+

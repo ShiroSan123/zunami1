@@ -1,0 +1,15 @@
+@import url('variables.css');
+@import url('font.css');
+@import url('main.css');
+@import url('header.css');
+@import url('page.css');
+@import url('footer.css');
+@import url('animation.css');
+@import url('front-page.css');
+
+@import url('elements.css');
+
+
+@import url('debug.css');
+
+@import url('animate.min.css');

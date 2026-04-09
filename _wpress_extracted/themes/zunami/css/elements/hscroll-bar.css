@@ -1,0 +1,44 @@
+.hscroll-bar {
+	background: url('../../icons/diagram-line.svg') left center repeat-x;
+    background-size: contain;
+    background-size: auto 100%;
+    height: 100%;
+    display: block;
+}
+
+.hscroll-bar-holder {
+	width: 100%;
+    overflow: hidden;
+    height: 8rem;
+    margin-bottom: 4rem;
+}
+
+.hscroll-bar-pin {
+
+}
+
+.hscroll-colomns {
+
+}
+.hscroll-colomns .wp-block-column:nth-child(1) {
+    border-right: 1px solid var(--color-alt);
+}
+
+
+@media (max-width: 1199px) {
+	.hscroll-colomns .wp-block-column:nth-child(1) {
+	    flex: 0;
+	}
+
+}
+
+
+@media (max-width: 539px) {
+	.hscroll-colomns.wp-block-columns {
+		gap: 0;
+	}
+	.hscroll-bar-holder {
+	    height: 20rem;
+	}
+
+}

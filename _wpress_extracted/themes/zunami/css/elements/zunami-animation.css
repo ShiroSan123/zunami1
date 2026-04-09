@@ -1,0 +1,78 @@
+@keyframes anim-zae1-stroke {
+    0% {
+        stroke-dashoffset: 428.367431640625px;
+        stroke-dasharray: 428.367431640625px;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        stroke-dasharray: 428.367431640625px;
+    }
+}
+
+@keyframes anim-zae1-fill {
+    0% {
+        fill: transparent;
+    }
+    100% {
+        fill: rgb(20, 95, 245);
+    }
+}
+
+.za-e1 {
+    animation: 
+    	anim-zae1-stroke 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s both, 
+    	anim-zae1-fill 1s cubic-bezier(0.47, 0, 0.745, 0.715) 1s both;
+}
+
+@keyframes anim-zae2-stroke {
+    0% {
+        stroke-dashoffset: 467.3994140625px;
+        stroke-dasharray: 467.3994140625px;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        stroke-dasharray: 467.3994140625px;
+    }
+}
+
+@keyframes anim-zae2-fill {
+    0% {
+    	fill: transparent;
+    }
+    100% {
+    	fill: rgb(46, 208, 255);
+    }
+}
+
+.za-e2 {
+    animation: 
+    	anim-zae2-stroke 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.12s both, 
+    	anim-zae2-fill 1s cubic-bezier(0.47, 0, 0.745, 0.715) 1.1s both;
+}
+
+@keyframes anim-zae3-stroke {
+    0% {
+        stroke-dashoffset: 533.0042114257812px;
+        stroke-dasharray: 533.0042114257812px;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        stroke-dasharray: 533.0042114257812px;
+    }
+}
+
+@keyframes anim-zae3-fill {
+    0% {
+        fill: transparent;
+    }
+
+    100% {
+        fill: rgb(255, 90, 0);
+    }
+}
+
+.za-e3 {
+    animation: 
+    	anim-zae3-stroke 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.24s both, 
+    	anim-zae3-fill 1s cubic-bezier(0.47, 0, 0.745, 0.715) 1.2s both;
+}

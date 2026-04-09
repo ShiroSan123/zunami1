@@ -1,0 +1,262 @@
+:root {
+	--top-icon-h: 1.4rem;
+	--logo-w: 7.5rem;
+	--fs-menu-item: var(--fs-xs);
+	--fs-header-btn: .91rem;
+}
+
+.site-header-holder {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.site-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1.25rem;
+	padding-bottom: 1.25rem;
+
+    padding-left: var(--site-pad-side);
+    padding-right: var(--site-pad-side);
+    backdrop-filter: blur(8px);
+    background: var(--color-bg);
+}
+
+
+
+.site-header .custom-logo-link {
+	display: block;
+	line-height: 0;
+}
+.site-header .custom-logo {
+	width: var(--logo-w);
+}
+
+
+.site-header .main-navigation {
+	width: auto;
+	padding-left: 5rem;
+}
+.main-navigation > DIV {
+	display: flex;
+	justify-content: center;
+}
+.main-navigation .menu {
+	gap: 3rem;
+}
+.main-navigation .menu-item {
+	--menu-item-color: var(--color-main);
+}
+.main-navigation .menu-item.current_page_item {
+	--menu-item-color: var(--color-alt);
+
+}
+.main-navigation .menu-item > A,
+.main-navigation .menu-item > A:visited,
+.main-navigation .menu-item > A:active,
+.main-navigation .menu-item > A:hover {
+	position: relative;
+	color: var(--menu-item-color);
+	font-size: var(--fs-menu-item);
+	font-weight: 500;
+
+	line-height: 1;
+    padding: .2rem;
+}
+.main-navigation .menu-item > A::after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 2px;
+	content: "";
+	display: block;
+
+	opacity: 0;
+
+	background-color: var(--menu-item-color);
+
+	transition: var(--tr);
+}
+.main-navigation .menu-item > A:hover::after {
+	bottom: -4px;
+	opacity: 1;
+}
+
+
+.top-icons {
+	display: flex;
+	gap: 1rem;
+}
+.top-icons .zunami-button {
+    --button-bgcolor: var(--color-main);
+    --button-color: var(--color-white);
+
+    --button-pad-h: 1.4rem;
+    --button-pad-v: .66rem;
+    --button-fs: var(--fs-header-btn);
+    --button-radius: 1;
+}
+.top-icons .zunami-button:hover {
+    --button-bgcolor: var(--color-white);
+    --button-color: var(--color-main);    
+}
+.top-icon {
+    border: none;
+    background: none;
+    padding: .5rem;
+    cursor: pointer;
+}
+.top-icon IMG {
+	height: var(--top-icon-h);
+}
+#mobile_menu_open {
+	display: none;
+}
+
+
+.mobile-menu-holder {
+	display: none;
+	flex-basis: 100%;
+}
+.site-header-holder.menu-open {
+	height: 100%;
+	background: var(--color-bg-main);
+    z-index: 20;
+}
+.site-header-holder.menu-open .site-header {
+	background: transparent;
+	backdrop-filter: none;
+}
+.site-header-holder.menu-open .mobile-menu-holder {
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.mobile-navigation  {
+	--fs-menu-item: 3rem;
+}
+.mobile-navigation .menu {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 3rem;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.mobile-navigation .menu-item {
+	--menu-item-color: var(--color-main);
+}
+.mobile-navigation .menu-item.current_page_item {
+	--menu-item-color: var(--color-alt);
+
+}
+.mobile-navigation .menu-item > A,
+.mobile-navigation .menu-item > A:visited,
+.mobile-navigation .menu-item > A:active,
+.mobile-navigation .menu-item > A:hover {
+	position: relative;
+	color: var(--menu-item-color);
+	font-size: var(--fs-menu-item);
+	font-weight: 500;
+
+	line-height: 1;
+    padding: .2rem;
+    text-decoration: none;
+}
+.mobile-menu-sidebar {
+	--fs-p: 1.5rem;
+	padding-bottom: 5rem;
+}
+
+.mobile-soc-icons {
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 1rem;
+	justify-content: center;
+	align-items: center;
+}
+.mobile-soc-icon {
+	width: 2rem;
+}
+
+@media (max-width: 1199px) {
+	:root {
+		--top-icon-h: 2.4rem;
+		--logo-w: 9.5rem;
+		--fs-header-btn: 1.8rem;
+	}
+	.site-header {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+	}
+	.site-header .main-navigation {
+		padding-left: 0;
+	}
+	.top-icons .zunami-button {
+	    --button-pad-h: 2rem;
+	    --button-pad-v: 2rem;
+	}
+}
+
+@media (max-width: 959px) {
+	:root {
+		--top-icon-h: 2.4rem;
+		--logo-w: 8rem;
+	}
+	.top-icons .zunami-button {
+		display: none;
+	}
+	#mobile_menu_open {
+		display: block;
+	}
+	#site-navigation {
+		display: none;
+	}
+	.site-header {
+		--color-bg: #f8f8f8;
+		padding-top: var(--site-pad-side);
+		padding-bottom: var(--site-pad-side);
+	}
+	.top-icons {
+		gap: 2rem;
+	}
+	.mobile-soc-icons {
+		gap: 2rem;
+	}
+	.mobile-soc-icon {
+		width: 3rem;
+	}
+}
+
+@media (max-width: 639px) {
+	:root {
+		--top-icon-h: 4.5rem;
+		--logo-w: 15rem;
+	}
+	.top-icons {
+		gap: 4rem;
+	}
+	.mobile-navigation {
+	    --fs-menu-item: 5rem;
+	}
+	.mobile-menu-sidebar {
+		--fs-p: 2.5rem;
+	}
+	.mobile-soc-icons {
+		gap: 4rem;
+	}
+	.mobile-soc-icon {
+		width: 5rem;
+	}
+}

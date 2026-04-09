@@ -1,0 +1,137 @@
+.form-field {
+	width: 100%;
+	border: 1px solid var(--color-main);
+	border-radius: var(--br-xs);
+	margin-bottom: 2rem;
+	padding: .8rem 1.8rem;
+	background: var(--color-white);
+	font-size: var(--fs-xxs);
+	display: flex;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.form-field.form-field_acceptance {
+	background: transparent;
+	border: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+.form-field LABEL {
+	position: relative;
+}
+.form-field LABEL INPUT[type="checkbox"] {
+	display: none;
+}
+.form-field LABEL INPUT[type="checkbox"] + SPAN::before {
+	content:'';
+	-webkit-appearance: none;
+	background-color: transparent;
+	border: 2px solid var(--color-main);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+	padding: 10px;
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-right: 5px;
+}
+.form-field LABEL INPUT[type="checkbox"]:checked + SPAN::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 2px;
+	left: 9px;
+	width: 6px;
+	height: 14px;
+	border: solid var(--color-main);
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.form-field.form-field_has-icon {
+	padding-left: 1.2rem;
+}
+.form-field__icon {
+
+}
+.form-field__icon IMG {
+
+}
+.form-field .wpcf7-not-valid-tip {
+	display: none;
+}
+
+.form-field P {
+	margin-bottom: 0;
+}
+.form-field A,
+.form-field A:hover,
+.form-field A:visited,
+.form-field A:active {
+	color: var(--color-main);
+}
+
+.form-field INPUT[type="text"],
+.form-field INPUT[type="email"],
+.form-field INPUT[type="tel"],
+.form-field INPUT[type="url"],
+.form-field TEXTAREA {
+	outline: none !important;
+	border: none !important;
+	border-radius: 0 !important;
+	width: 100%;
+	background: transparent !important;
+	resize: none;
+}
+
+.form-field TEXTAREA {
+	height: 5rem;
+}
+
+.page-id-83 .form-field {
+	margin-bottom: 1rem;
+	border-color: transparent;
+}
+
+.wpcf7-list-item {
+	margin-left: 0;
+}
+
+.wpcf7-form.invalid .form-field:has(.wpcf7-not-valid) {
+    border-color: red;
+}
+.wpcf7-response-output {
+	display: none;
+}
+.wpcf7-form.unaccepted .form-field.form-field_acceptance LABEL INPUT[type="checkbox"]:not(:checked) + SPAN::before,
+.wpcf7-form.invalid .form-field.form-field_acceptance LABEL INPUT[type="checkbox"]:not(:checked) + SPAN::before {
+	border-color: red;
+}
+
+
+@media (max-width: 1199px) {
+	.form-field {
+		padding: 1rem 2rem;
+	}
+	.page-id-83 .form-field {
+		margin-bottom: 2rem;
+	}
+}
+@media (max-width: 959px) {
+	.form-field {
+		padding: 2rem 3rem;
+	}
+	.page-id-83 .form-field {
+		margin-bottom: 2rem;
+	}
+}
+
+@media (max-width: 539px) {
+	.form-field {
+		padding: 3rem 5rem;
+	}
+	.page-id-83 .form-field {
+		margin-bottom: 4rem;
+	}
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" fill="none">
+  <mask id="mask0_280_27" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="500">
+    <path d="M500 0H0V500H500V0Z" fill="white"></path>
+  </mask>
+  <g mask="url(#mask0_280_27)">
+    <path d="M357.636 208H178C175.791 208 174 209.791 174 212V295.308C174 297.517 175.791 299.308 178 299.308H357.636C359.845 299.308 361.636 297.517 361.636 295.308V212C361.636 209.791 359.845 208 357.636 208Z" stroke="#145FF5" stroke-width="8"></path>
+    <path d="M197.31 221.379V286.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M232.563 221.379V286.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M267.818 221.379V286.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M303.072 221.379V286.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M338.327 221.379V286.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M401.636 116H222C219.791 116 218 117.791 218 120V203.308C218 205.517 219.791 207.308 222 207.308H401.636C403.845 207.308 405.636 205.517 405.636 203.308V120C405.636 117.791 403.845 116 401.636 116Z" stroke="#145FF5" stroke-width="8"></path>
+    <path d="M241.31 129.379V194.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M276.563 129.379V194.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M311.818 129.379V194.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M347.072 129.379V194.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M382.327 129.379V194.425" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M463 209H382C379.791 209 378 210.791 378 213V296C378 298.209 379.791 300 382 300H463C465.209 300 467 298.209 467 296V213C467 210.791 465.209 209 463 209Z" stroke="#145FF5" stroke-width="8"></path>
+    <path d="M422 213V296" stroke="#145FF5" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M53.9685 209H137C139.209 209 141 210.791 141 213V296C141 298.209 139.209 300 137 300H35.0309C32.4626 300 30.5598 297.614 31.1311 295.11L50.0687 212.11C50.4839 210.291 52.1022 209 53.9685 209Z" stroke="#FF5A00" stroke-width="8"></path>
+    <path d="M4.7478 311.57L60.4231 391.57C61.9187 393.719 64.3713 395 66.9895 395H443.615C446.659 395 449.44 393.272 450.788 390.543L490.299 310.543C492.925 305.226 489.056 299 483.126 299H11.3142C4.85193 299 1.05642 306.266 4.7478 311.57Z" fill="white" stroke="#FF5A00" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M45.5 237H101C105.418 237 109 240.582 109 245V249C109 253.418 105.418 257 101 257H42" stroke="#FF5A00" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M102 203V155C102 150.582 105.582 147 110 147H118C122.418 147 126 150.582 126 155V203" stroke="#FF5A00" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M29 343H209" stroke="#FF5A00" stroke-width="8" stroke-linecap="round"></path>
+    <path d="M3 460C19.6667 446.667 36.3333 446.667 53 460C69.6667 473.333 86.3333 473.333 103 460C119.667 446.667 136.333 446.667 153 460C169.667 473.333 186.333 473.333 203 460C219.667 446.667 236.333 446.667 253 460C269.667 473.333 286.333 473.333 303 460C319.667 446.667 336.333 446.667 353 460C369.667 473.333 386.333 473.333 403 460C419.667 446.667 436.333 446.667 453 460C469.667 473.333 486.333 473.333 503 460" stroke="#145FF5" stroke-width="8"></path>
+    <path d="M3 431C19.6667 417.667 36.3333 417.667 53 431C69.6667 444.333 86.3333 444.333 103 431C119.667 417.667 136.333 417.667 153 431C169.667 444.333 186.333 444.333 203 431C219.667 417.667 236.333 417.667 253 431C269.667 444.333 286.333 444.333 303 431C319.667 417.667 336.333 417.667 353 431C369.667 444.333 386.333 444.333 403 431C419.667 417.667 436.333 417.667 453 431C469.667 444.333 486.333 444.333 503 431" stroke="#145FF5" stroke-width="8"></path>
+  </g>
+</svg>

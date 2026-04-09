@@ -1,0 +1,26 @@
+.entry-breadcrumps {
+	font-size: var(--fs-xxs);
+	display: flex;
+	justify-content: center;
+	gap: .5rem;
+	padding-top: 1rem;
+}
+
+.entry-breadcrumps A,
+.entry-breadcrumps A:visited {
+	text-transform: lowercase;
+	text-decoration: none;
+	font-weight: 400;
+	color: var(--color-base);
+	transition: var(--tr);
+}
+
+.entry-breadcrumps A.bc_current,
+.entry-breadcrumps A.bc_current:visited {
+	color: var(--color-alt);
+}
+
+.entry-breadcrumps A:active,
+.entry-breadcrumps A:hover {
+	color: #9e9e9e !important;
+}

@@ -1,0 +1,148 @@
+/* colors  */
+:root {
+	--color-base: #000000;
+	--color-base-lighter: #00000080;
+	--color-main: #145ff5;
+	--color-main-lighter: #2B6EF5;
+	--color-alt: #ff5a00;
+	--color-alt-lighter: #FE6A19;
+	--color-alt-link: #ff8562;
+	--color-light: #3B82F6;
+	--color-white: #ffffff;
+	--color-bg: #f8f8f880;
+	--color-bg-main: #F5F6FC;
+	--color-footer-title: #558dff;
+
+	--lh-xs: 1;
+	--lh-sm: 1.1;
+	--lh-md: 1.25;
+	--lh-lg: 1.5;
+
+
+	--tr-sm: .3s;
+	--tr-md: .5s;
+	--tr: var(--tr-sm);
+}
+
+:root {
+	--fs-mpl: 1.321;
+
+	--fs-xxs: calc(var(--fs-mpl) * .75rem);		/* 12px */
+	--fs-xs:  calc(var(--fs-mpl) * .875rem);	/* 14px */
+	--fs-sm:  calc(var(--fs-mpl) * .9375rem);	/* 15px */
+	--fs-base: calc(var(--fs-mpl) * 1rem);		/* 16px */
+	--fs-md:  calc(var(--fs-mpl) * 1.125rem);	/* 18px */
+	--fs-lg:  calc(var(--fs-mpl) * 1.2rem);	/* 20px */
+	--fs-xl:  calc(var(--fs-mpl) * 1.5rem);		/* 24px */
+	--fs-xxl: calc(var(--fs-mpl) * 3.125rem);	/* 50px */
+
+	--fs-post-title:  calc(var(--fs-mpl) * 2.25rem);	/* 36px */
+
+	--fs-about-heading:  calc(var(--fs-mpl) * 1.625rem);	/* 26px */
+	--fs-home-heading:  calc(var(--fs-mpl) * 2.625rem);	/* 42px */
+}
+
+:root {
+	--mg-sm: 1rem;
+
+	--pad-xxl: 12rem;
+	--pad-xl: 8rem;
+	--pad-lg: 6rem;
+	--pad-md: 4rem;
+	--pad-sm: 2rem;
+	--pad-xs: 1rem;
+
+	--br-sm: 1rem;
+	--br-xs: .5rem;
+	--br-md: 2rem;
+
+	--site-pad-top: 11rem;
+
+	--site-pad-side: 6.5rem;
+	--site-pad-outerblock: 2.5rem;
+	--box-pad-md: 1.5rem;
+
+}
+
+
+
+
+:root {
+	--fs-h1: var(--fs-xxl);
+	--fw-h1: 500;
+	--color-h1: var(--color-main);
+
+	--fs-h2: var(--fs-xxl);
+	--fw-h2: 500;
+	--color-h2: var(--color-main);
+
+	--fs-h3: var(--fs-xxl);
+	--fw-h3: 500;
+	--color-h3: var(--color-main);
+
+	--fs-h4: var(--fs-md);
+	--fw-h4: 400;
+	--color-h4: var(--color-base);
+
+	--fs-h5: var(--fs-md);
+	--fw-h5: 500;
+	--color-h5: var(--color-base);
+
+	/*--fs-p: var(--fs-sm);*/
+	/*--fw-p: 400;*/
+	/*--color-p: var(--color-base);*/
+	--fs-p: inherit;
+	--fw-p: inherit;
+	--color-p: inherit;
+}
+
+@media (min-width: 1600px) {
+	:root {
+		--site-pad-top: 7rem;
+	}
+}
+
+@media (max-width: 1199px) {
+	:root {
+		--site-pad-side: 2.8rem;
+		--site-pad-outerblock: var(--site-pad-side);
+		--fs-home-heading: 4rem;
+		--br-xs: 1rem;
+		--br-sm: 1rem;
+		/*fixed*/
+		--br-md: 2rem;
+	
+		--fs-mpl: 2.3;
+		--fs-xxl: 5.5rem;
+		--box-pad-md: 2rem;
+
+		--fw-h5: 400;
+	}
+}
+@media (max-width: 959px) {
+	:root {
+		--site-pad-side: 2rem;
+		--site-pad-top: 13rem;
+		--fs-home-heading: 5rem;
+		/*--br-xs: 1rem;*/
+		/*fixed*/
+	
+		--fs-mpl: 2.6;
+	}
+}
+@media (max-width: 639px) {
+	:root {
+		--site-pad-side: 3rem;
+		--br-xs: 2rem;
+		--br-sm: 2rem;
+		/*fixed*/
+		--br-md: 4rem;
+
+		--fs-mpl: 5;
+		--site-pad-top: 20rem;
+
+		--box-pad-md: 4rem;
+		--site-pad-outerblock: 4rem;
+		--fs-xxl: 8.5rem;
+	}
+}

@@ -1,0 +1,60 @@
+.modal-window {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+}
+.modal-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background: rgba(0, 0, 0, .3);
+	z-index: 102;
+	backdrop-filter: blur(8px);
+}
+.modal-window.modal-open {
+	display: flex;
+}
+.modal-window.modal-open .modal-dialog {
+	transform: translateY(0);
+	opacity: 1;
+}
+.modal-dialog {
+	display: flex;
+	background: var(--color-bg-main);
+	padding: 2rem;
+    z-index: 104;
+    max-height: 100%;
+    overflow: auto;
+    width: 65rem;
+	transform: translateY(-100%);
+	opacity: 0;
+	transition: var(--tr);
+    border-radius: 1rem;
+}
+.modal-close {
+	float: right;
+	background: none;
+	opacity: .7;
+	padding: 0;
+}
+.modal-close:hover {
+	background: none;
+	opacity: 1;
+}
+
+@media (max-width: 639px) {
+	.modal-dialog {
+		padding: 4rem;
+	    width: 90rem;
+	}
+}
