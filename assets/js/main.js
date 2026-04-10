@@ -504,6 +504,44 @@ const initWavesBlock = () => {
   }
 };
 
+const initHistoryParallax = () => {
+  const holder = document.querySelector(".zunami_visible-lg.zunami-history-blocks-holder");
+  if (!holder) {
+    return;
+  }
+
+  let frameRequested = false;
+  const toggleParallax = () => {
+    const isVisible = holder.offsetParent !== null && holder.clientWidth > 0;
+    if (!isVisible) {
+      holder.classList.remove("zunami-history-blocks-holder_parallax");
+      return;
+    }
+
+    const maxScrollLeft = holder.scrollWidth - holder.clientWidth;
+    const tolerance = 4;
+    const atEnd = maxScrollLeft <= tolerance || holder.scrollLeft >= maxScrollLeft - tolerance;
+
+    holder.classList.toggle("zunami-history-blocks-holder_parallax", atEnd);
+  };
+
+  const requestToggle = () => {
+    if (frameRequested) {
+      return;
+    }
+
+    frameRequested = true;
+    window.requestAnimationFrame(() => {
+      frameRequested = false;
+      toggleParallax();
+    });
+  };
+
+  holder.addEventListener("scroll", requestToggle, { passive: true });
+  window.addEventListener("resize", requestToggle);
+  toggleParallax();
+};
+
 const initShareLinks = () => {
   document.querySelectorAll("[data-share-vk]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -562,4 +600,5 @@ initViewportAnimations();
 initForms();
 initMaps();
 initWavesBlock();
+initHistoryParallax();
 initShareLinks();

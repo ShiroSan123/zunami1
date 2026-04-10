@@ -127,6 +127,9 @@
   scroll-padding-left: var(--site-pad-side);
   scrollbar-width: none;
   overscroll-behavior-x: contain;
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
 .zunami_visible-lg.zunami-history-blocks-holder::-webkit-scrollbar {
@@ -154,6 +157,24 @@
 
 .zunami_visible-lg .zunami-history-block .zunami-history-block__item-content {
   display: none;
+}
+
+@media (max-width: 1199px) {
+  .zunami_visible-lg.zunami-history-blocks-holder.zunami-history-blocks-holder_parallax {
+    position: sticky;
+    top: var(--site-pad-top);
+    z-index: 0;
+  }
+
+  .zunami_visible-lg.zunami-history-blocks-holder.zunami-history-blocks-holder_parallax ~ * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .zunami_visible-lg.zunami-history-blocks-holder.zunami-history-blocks-holder_parallax + .zunami_visible-lg.zunami_non-flex {
+    margin-top: -10rem;
+    padding-top: 10rem;
+  }
 }
 
 .zunami_hidden-lg .zunami-history-block .zunami-button-alt,
@@ -234,6 +255,13 @@
 }
 
 .zunami_hidden-lg .zunami-history-block__next {
+  --history-blog-overlap: 12rem;
+  --history-blog-surface-pad-x: 2.5rem;
+  --history-blog-surface-pad-top: 4rem;
+  --history-blog-surface-pad-bottom: 5rem;
+  --history-blog-gap: 3rem;
+
+  position: relative;
   margin: 0 calc(-1 * var(--site-pad-outerblock)) 2rem;
   padding: 0 var(--site-pad-outerblock);
 }
@@ -241,6 +269,23 @@
 .zunami_hidden-lg .zunami-history-block__next > .wp-block-group__inner-container {
   display: flex;
   flex-direction: column;
+  gap: var(--history-blog-gap);
+}
+
+.zunami_hidden-lg .zunami-history-block__next H3.wp-block-heading {
+  margin: 0;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .zunami-post-grid {
+  padding: 0;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .zunami-post-grid .post {
+  min-width: 0;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .zunami-post-grid + DIV {
+  margin-top: 1rem;
 }
 
 @media (min-width: 480px) {
@@ -291,17 +336,45 @@
 
 @media (min-width: 1180px) {
   .zunami_hidden-lg .zunami-history-block {
+    z-index: 1;
+  }
+
+  .zunami_hidden-lg .zunami-history-block {
     position: sticky;
     top: var(--site-pad-top);
     min-height: 35rem;
     margin-bottom: 42rem;
   }
 
+  .zunami_hidden-lg .zunami-history-block:last-of-type {
+    z-index: 2;
+    margin-bottom: 38rem;
+  }
+
   .zunami_hidden-lg .zunami-history-block__next {
-    position: sticky;
-    top: var(--site-pad-top);
-    padding-top: 3rem;
-    background: var(--color-bg-main);
+    position: relative;
+    z-index: 7;
+    margin-top: calc(-1 * var(--history-blog-overlap));
+    padding-top: var(--history-blog-overlap);
+    background: transparent;
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next > .wp-block-group__inner-container {
+    padding: var(--history-blog-surface-pad-top) var(--history-blog-surface-pad-x) var(--history-blog-surface-pad-bottom);
+    background: linear-gradient(180deg, rgba(245, 246, 252, 0.9) 0%, var(--color-bg-main) 10rem, var(--color-bg-main) 100%);
+    border-radius: 3rem 3rem 0 0;
+    box-shadow: 0 -1.8rem 4rem rgba(15, 23, 42, 0.08);
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next .zunami-post-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 2.4rem;
+    row-gap: 2.4rem;
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next .zunami-post-grid .post {
+    width: auto;
   }
 }
 
@@ -316,5 +389,27 @@
 
   .zunami_hidden-lg .zunami-history-block {
     margin-bottom: 46rem;
+  }
+
+  .zunami_hidden-lg .zunami-history-block:last-of-type {
+    margin-bottom: 42rem;
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next {
+    --history-blog-overlap: 15rem;
+    --history-blog-surface-pad-x: 3rem;
+    --history-blog-surface-pad-top: 4.75rem;
+    --history-blog-surface-pad-bottom: 5.75rem;
+    --history-blog-gap: 3.5rem;
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next > .wp-block-group__inner-container {
+    border-radius: 3.4rem 3.4rem 0 0;
+    box-shadow: 0 -2rem 4.8rem rgba(15, 23, 42, 0.1);
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next .zunami-post-grid {
+    gap: 2.8rem;
+    row-gap: 2.8rem;
   }
 }
