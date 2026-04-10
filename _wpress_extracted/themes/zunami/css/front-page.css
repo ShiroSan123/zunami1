@@ -1,7 +1,11 @@
 :root {
-  --star-sz: 1rem;
-  --hero-copy-max: 26.5rem;
-  --hero-graphic-max: 33rem;
+  --star-sz: 2.8rem;
+  --hero-copy-max: 100%;
+  --hero-graphic-max: 92%;
+  --hero-gap: 4rem;
+  --hero-margin-top: 1rem;
+  --hero-margin-bottom: 6rem;
+  --hero-title-min: 16rem;
   --insurance-section-title-max: 9.5ch;
   --insurance-section-gap: 5rem;
   --insurance-grid-gap: 4rem;
@@ -9,139 +13,152 @@
   --insurance-section-bottom: 7rem;
 }
 
-.home-main-anim-holder {
-  justify-content: space-between;
+.home-main-anim-holder.wp-block-columns.is-not-stacked-on-mobile {
+  flex-direction: column;
+  justify-content: center;
   align-items: center !important;
-  gap: 2.5rem;
-  margin: 2.5rem 0 7rem;
+  gap: var(--hero-gap);
+  margin: var(--hero-margin-top) 0 var(--hero-margin-bottom);
 }
+
 .home-main-anim-holder > .wp-block-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  min-width: 0;
 }
+
 .home-main-anim-holder > .wp-block-column:first-child {
   max-width: var(--hero-copy-max);
-  transform: translateY(0.45rem);
+  align-items: center;
+  text-align: center;
 }
+
 .home-main-anim-holder > .wp-block-column:last-child {
   position: relative;
 }
+
 .animated-title {
-  background: var(--color-light);
-  color: var(--color-white);
-  border-radius: var(--br-xs);
-  padding: 0.65rem 1.1rem 0.6rem;
-  min-width: 12.25rem;
-  align-self: flex-start;
+  align-self: center;
+  min-width: var(--hero-title-min);
+  padding: 1.15rem 1.8rem 1rem;
   line-height: 1;
+  color: var(--color-white);
+  background: var(--color-light);
+  border-radius: var(--br-xs);
   box-shadow: 0 1rem 2.5rem rgba(20, 95, 245, 0.18);
 }
+
 .typing-animation {
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.15rem;
 }
+
 .typing-animation SPAN.typing-text {
   display: inline-block;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   animation: 1s typing steps(10, end);
   animation-play-state: paused;
 }
+
 .typing-animation.in-viewport SPAN.typing-text {
   animation-play-state: running;
 }
+
 .typing-animation SPAN.typing-caret {
   display: inline-block;
   animation: 1s blink step-end infinite;
 }
 
 .home-main-anim-holder .wp-block-heading {
-  margin: 0 0 1.75rem;
+  max-width: 9ch;
+  margin: 0 0 1rem;
   line-height: 0.94;
   letter-spacing: -0.03em;
-  white-space: nowrap;
+  text-align: center;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .home-main-anim-holder .pad-bottom-lg {
   margin: 0;
-  padding-bottom: 1.15rem;
+  padding-bottom: 1.5rem;
 }
 
 .home-main-anim-holder .zunami-button {
-  align-self: flex-start;
-  --button-pad-v: 1rem;
-  --button-pad-h: 1.95rem;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  --button-pad-v: 2.2rem;
+  --button-pad-h: 3.3rem;
 }
 
 .zunami-animation-holder {
   width: 100%;
   max-width: var(--hero-graphic-max);
   margin: 0 auto;
-  transform: translateX(0.85rem);
 }
+
 .zunami-animation-holder SVG {
   display: block;
   width: 100%;
   height: auto;
 }
+
 .zunami-animation-top-stars {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 0 3.1rem 0 0;
+  justify-content: center;
   margin: 0 0 1rem;
+  padding: 0;
 }
-.zunami-animation-top-stars .zunami-rotating-star {
-  transform: translateX(-0.35rem);
-}
+
 .zunami-animation-bottom-stars {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  padding: 0 0.25rem 0 0;
-  margin: 0.95rem 0 0;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0 0;
+  padding: 0;
 }
 
 .zunami-rotating-star {
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--star-sz);
   height: calc(2 * var(--star-sz));
   min-height: calc(2.1 * var(--star-sz));
-  justify-content: center;
-  gap: var(--star-sz);
-  align-items: center;
-  border-radius: var(--star-sz);
-  flex-wrap: nowrap;
-  background: var(--color-white);
   padding: 0 calc(var(--star-sz) * 1.05);
+  background: var(--color-white);
+  border-radius: var(--star-sz);
   box-shadow: 0 0.8rem 2.2rem rgba(0, 0, 0, 0.08);
 }
-.zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
-  margin-top: 0;
-  transform: translate(-1.35rem, -1rem);
-}
-.zunami-animation-bottom-stars .zunami-rotating-star:nth-child(2) {
-  transform: translate(0.75rem, 0.45rem);
-}
+
 .zunami-rotating-star IMG {
   height: 70%;
   animation: 6s star-rotate infinite;
 }
+
 .zunami-rotating-star__caption {
-  font-size: var(--fs-xs);
+  font-size: 3.5rem;
   font-weight: 500;
   line-height: 1;
-  white-space: nowrap;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .home-main-anim-holder + .wp-block-heading {
   max-width: var(--insurance-section-title-max);
   margin: 0 auto var(--insurance-section-gap);
   line-height: 0.96;
+  text-align: center;
   text-wrap: balance;
 }
 
@@ -205,172 +222,197 @@
   margin-top: 0;
 }
 
-@media (min-width: 1600px) {
-  .home-main-anim-holder {
-    margin-bottom: 0;
-    gap: 3.75rem;
-  }
-  .home-main-anim-holder > .wp-block-column:first-child {
-    max-width: 28rem;
-  }
-  .zunami-animation-holder {
-    max-width: 40rem;
-  }
-  .zunami-animation-top-stars {
-    padding-right: 3.6rem;
-  }
+@media (min-width: 480px) {
   :root {
-    --insurance-grid-gap: 1.5rem;
-    --insurance-row-gap: 1.5rem;
-    --insurance-section-gap: 3.5rem;
-    --insurance-section-bottom: 6rem;
+    --star-sz: 2.35rem;
+    --hero-graphic-max: 84%;
+    --hero-gap: 3.6rem;
+    --hero-title-min: 14.25rem;
+    --insurance-section-title-max: 10.5ch;
+    --insurance-section-gap: 4.5rem;
+    --insurance-grid-gap: 3.2rem;
+    --insurance-row-gap: 3.2rem;
   }
-  .home-main-anim-holder + .wp-block-heading {
-    max-width: 10.25ch;
-  }
-}
 
-@media (min-width: 1024px) {
-  :root {
-    --insurance-grid-gap: 1.5rem;
-    --insurance-row-gap: 1.5rem;
-    --insurance-section-gap: 3rem;
-    --insurance-section-bottom: 5.5rem;
+  .animated-title {
+    padding: 1rem 1.55rem 0.9rem;
   }
-}
 
-@media (min-width: 768px) {
-  :root {
-    --insurance-grid-gap: 2rem;
-    --insurance-row-gap: 2rem;
-    --insurance-section-gap: 3.5rem;
+  .home-main-anim-holder .zunami-button {
+    width: auto;
+  }
+
+  .zunami-animation-bottom-stars {
+    gap: 1.6rem 2rem;
   }
 }
 
 @media (min-width: 640px) {
   :root {
+    --star-sz: 2rem;
+    --hero-graphic-max: 34rem;
+    --hero-gap: 3rem;
+    --hero-margin-bottom: 5rem;
+    --hero-title-min: 12.75rem;
+    --insurance-section-gap: 4rem;
     --insurance-grid-gap: 2.4rem;
     --insurance-row-gap: 2.4rem;
-    --insurance-section-gap: 4rem;
+  }
+
+  .home-main-anim-holder .wp-block-heading {
+    max-width: 8.5ch;
+  }
+
+  .home-main-anim-holder .pad-bottom-lg {
+    padding-bottom: 1.25rem;
+  }
+
+  .zunami-animation-bottom-stars {
+    flex-wrap: nowrap;
+    gap: 1.25rem;
   }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 768px) {
   :root {
-    --insurance-grid-gap: 3.2rem;
-    --insurance-row-gap: 3.2rem;
-    --insurance-section-gap: 4.5rem;
+    --hero-graphic-max: 36rem;
+    --hero-gap: 2.75rem;
+    --insurance-section-gap: 3.5rem;
+    --insurance-grid-gap: 2rem;
+    --insurance-row-gap: 2rem;
+  }
+
+  .home-main-anim-holder .wp-block-heading {
+    max-width: 8ch;
   }
 }
 
-@media (max-width: 1199px) {
-  .home-main-anim-holder {
-    gap: 3rem;
-    margin: 1.5rem 0 5.5rem;
+@media (min-width: 1024px) {
+  :root {
+    --star-sz: 1rem;
+    --hero-copy-max: 22rem;
+    --hero-graphic-max: 34rem;
+    --hero-gap: 3rem;
+    --hero-margin-top: 1.5rem;
+    --hero-margin-bottom: 5.5rem;
+    --hero-title-min: 12.25rem;
+    --insurance-section-title-max: 9.5ch;
+    --insurance-section-gap: 3rem;
+    --insurance-grid-gap: 1.5rem;
+    --insurance-row-gap: 1.5rem;
+    --insurance-section-bottom: 5.5rem;
   }
+
+  .home-main-anim-holder.wp-block-columns.is-not-stacked-on-mobile {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .home-main-anim-holder > .wp-block-column:first-child {
-    max-width: 22rem;
+    align-items: flex-start;
+    text-align: left;
     transform: translateY(0.25rem);
   }
-  .home-main-anim-holder .wp-block-heading {
-    margin-bottom: 1.25rem;
+
+  .animated-title {
+    align-self: flex-start;
+    padding: 0.65rem 1.1rem 0.6rem;
   }
+
+  .home-main-anim-holder .wp-block-heading {
+    max-width: none;
+    margin-bottom: 1.25rem;
+    text-align: left;
+    text-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .home-main-anim-holder .pad-bottom-lg {
+    padding-bottom: 1.15rem;
+  }
+
+  .home-main-anim-holder .zunami-button {
+    align-self: flex-start;
+    width: auto;
+    --button-pad-v: 1rem;
+    --button-pad-h: 1.95rem;
+  }
+
+  .zunami-animation-holder {
+    transform: translateX(0.4rem);
+  }
+
+  .zunami-animation-top-stars {
+    justify-content: flex-end;
+    margin-bottom: 0.9rem;
+    padding: 0 2rem 0 0;
+  }
+
+  .zunami-animation-top-stars .zunami-rotating-star {
+    transform: translateX(-0.25rem);
+  }
+
+  .zunami-animation-bottom-stars {
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    padding: 0 0.25rem 0 0;
+  }
+
   .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
     transform: translate(-0.8rem, -0.65rem);
   }
+
   .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(2) {
     transform: translate(0.25rem, 0.25rem);
   }
-  .zunami-animation-bottom-stars {
-    gap: 0.75rem;
-    padding-top: 0.85rem;
-  }
-  .zunami-animation-top-stars {
-    padding-right: 2rem;
-  }
+
   .zunami-rotating-star__caption {
     font-size: 1.5rem;
   }
 }
-@media (max-width: 959px) {
+
+@media (min-width: 1600px) {
   :root {
-    --star-sz: 2rem;
-    --hero-graphic-max: 38rem;
+    --hero-copy-max: 28rem;
+    --hero-graphic-max: 40rem;
+    --hero-gap: 3.75rem;
+    --hero-margin-top: 2.5rem;
+    --hero-margin-bottom: 0;
+    --insurance-section-title-max: 10.25ch;
+    --insurance-section-gap: 3.5rem;
+    --insurance-grid-gap: 1.5rem;
+    --insurance-row-gap: 1.5rem;
+    --insurance-section-bottom: 6rem;
   }
-  .home-main-anim-holder {
-    gap: 2.5rem;
-    margin-bottom: 4rem;
-  }
+
   .home-main-anim-holder > .wp-block-column:first-child {
-    max-width: none;
-    transform: none;
+    transform: translateY(0.45rem);
   }
-  .home-main-anim-holder .animated-title,
-  .home-main-anim-holder .zunami-button {
-    align-self: center;
+
+  .zunami-animation-holder {
+    transform: translateX(0.85rem);
   }
-  .home-main-anim-holder .wp-block-heading {
-    white-space: normal;
-    max-width: 9ch;
-    text-align: center;
+
+  .zunami-animation-top-stars {
+    padding-right: 3.1rem;
     margin-bottom: 1rem;
   }
-  .home-main-anim-holder .pad-bottom-lg {
-    padding-bottom: 1.5rem;
+
+  .zunami-animation-top-stars .zunami-rotating-star {
+    transform: translateX(-0.35rem);
   }
-  .home-main-anim-holder .zunami-button {
-    --button-pad-v: 2.2rem;
-    --button-pad-h: 3.3rem;
-  }
-  .zunami-animation-holder {
-    transform: none;
-  }
+
   .zunami-animation-bottom-stars {
-    justify-content: center;
-    padding: 0;
+    gap: 1.2rem;
+    margin-top: 0.95rem;
   }
-  .zunami-animation-top-stars {
-    justify-content: center;
-    padding: 0;
+
+  .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1) {
+    transform: translate(-1.35rem, -1rem);
   }
-  .zunami-animation-top-stars .zunami-rotating-star,
-  .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(1),
+
   .zunami-animation-bottom-stars .zunami-rotating-star:nth-child(2) {
-    transform: none;
-  }
-  .zunami-rotating-star__caption {
-    font-size: 3.5rem;
-  }
-}
-@media (max-width: 639px) {
-  :root {
-    --star-sz: 3rem;
-    --hero-graphic-max: 92%;
-  }
-  .home-main-anim-holder {
-    gap: 4rem;
-    margin: 1rem 0 6rem;
-  }
-  .animated-title {
-    min-width: 16rem;
-    padding: 1.15rem 1.8rem 1rem;
-  }
-  .zunami-animation-bottom-stars {
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 0;
-  }
-  .home-main-anim-holder.wp-block-columns.is-not-stacked-on-mobile
-    > .wp-block-column {
-    /*flex: 1 0 45rem;*/
-  }
-  .home-main-anim-holder .wp-block-heading {
-    text-align: center;
-    font-size: 7rem;
-    margin-bottom: 2rem;
-  }
-  .home-main-anim-holder .zunami-button {
-    width: 100%;
-    justify-content: center;
+    transform: translate(0.75rem, 0.45rem);
   }
 }

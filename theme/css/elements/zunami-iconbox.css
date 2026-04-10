@@ -5,7 +5,6 @@
   --box-title-height: auto;
   --box-pad: var(--box-pad-md);
   --box-button-gap: 1.5rem;
-
   --fs-iconbox-title: 5.6rem;
   --fs-iconbox: 5rem;
   --fw-h4: 400;
@@ -15,9 +14,11 @@
   display: flex;
   min-height: 100%;
   padding: var(--box-pad);
-  background-color: var(--color-white);
-  border-radius: var(--br-sm);
   overflow: hidden;
+  background-color: var(--color-white);
+  border: 1px solid rgba(20, 95, 245, 0.06);
+  border-radius: var(--br-sm);
+  box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.06);
   transition:
     transform var(--tr),
     box-shadow var(--tr-sm);
@@ -75,10 +76,12 @@
 .zunami-iconbox__title H4 {
   display: block;
   min-height: var(--box-title-height);
+  max-width: 16ch;
   padding-right: 0;
   font-size: var(--fs-iconbox-title);
   line-height: 0.96;
   letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .zunami-iconbox__text {
@@ -156,7 +159,7 @@
 
 @media (min-width: 768px) {
   .zunami-iconbox__title H4 {
-    max-width: none;
+    max-width: 15ch;
   }
 
   .zunami-iconbox__text {

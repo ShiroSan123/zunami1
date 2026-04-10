@@ -147,6 +147,7 @@ H1.page-title {
 
 @media (min-width: 640px) {
   .wp-block-columns.is-not-stacked-on-mobile {
+    flex-direction: row;
     align-items: stretch;
   }
   .wp-block-columns.is-not-stacked-on-mobile > .wp-block-column {
