@@ -57,6 +57,10 @@
       rel="stylesheet"
       href="./theme/css/elements/zunami-item-with-num.css"
     />
+    <link
+      rel="stylesheet"
+      href="./theme/css/elements/zunami-waves-block.css"
+    />
     <link rel="stylesheet" href="./theme/css/elements/hscroll-bar.css" />
     <link rel="stylesheet" href="./assets/css/static-overrides.css" />
   </head>
@@ -579,69 +583,63 @@
             </div>
 
             <h3
-              class="wp-block-heading has-text-align-center animate__animated animate__fadeInUp pad-bottom-xxl"
+              class="wp-block-heading has-text-align-center animate__animated animate__fadeInUp"
             >
               Как брокер&nbsp;<em>Zunami</em> <br />оцифровывает ваш&nbsp;путь
             </h3>
 
-            <div class="wp-block-group hscroll-holder">
-              <p
-                class="has-text-align-center color-alt zunami_visible-lg zunami_non-flex pad-bottom-md"
-              >
-                Интеграция в процессы клиента: API, WEB
-              </p>
-
-              <div class="wp-block-columns hscroll-colomns">
-                <div class="wp-block-column">
-                  <p class="color-alt zunami_hidden-lg">
-                    Интеграция в процессы клиента: <br />API, WEB
-                  </p>
-                </div>
-
-                <div class="wp-block-column">
-                  <div class="item-with-num">
-                    <span>01</span>
-                    <p>Расчет и оформление полисов цифровым путем</p>
-                  </div>
-
-                  <div class="item-with-num">
-                    <span>02</span>
-                    <p>
-                      Антифрод-проверка контрагентов, участвующих в
-                      логистической цепочке
+            <div class="wp-block-group zunami-waves-block" id="waves_container">
+              <div id="waves_placeholder_before" aria-hidden="true"></div>
+                <div id="waves" class="zunami-waves-block__stage">
+                  <div class="zunami-waves-block__content">
+                    <p class="zunami-waves-block__intro">
+                      Интеграция в процессы<br />клиента: API, WEB
                     </p>
+
+                    <div class="zunami-waves-block__items" role="list">
+                      <div class="info_itm" role="listitem">
+                        <span>01</span>
+                        <p>Расчет и оформление полисов цифровым путем</p>
+                      </div>
+
+                      <div class="info_itm" role="listitem">
+                        <span>02</span>
+                        <p>
+                          Антифрод-проверка контрагентов, участвующих в
+                          логистической цепочке
+                        </p>
+                      </div>
+
+                      <div class="info_itm" role="listitem">
+                        <span>03</span>
+                        <p>Формирование документов и подписание ЭЦП</p>
+                      </div>
+
+                      <div class="info_itm" role="listitem">
+                        <span>04</span>
+                        <p>Контроль SLA страховых компаний</p>
+                      </div>
+
+                      <div class="info_itm" role="listitem">
+                        <span>05</span>
+                        <p>
+                          Цифровое урегулирование и автоматическая подача претензий
+                        </p>
+                      </div>
+
+                      <div class="info_itm" role="listitem">
+                        <span>06</span>
+                        <p>BI-аналитика всего процесса страхования</p>
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="item-with-num">
-                    <span>03</span>
-                    <p>Формирование документов и подписание ЭЦП</p>
+                  <div id="waves_line" aria-hidden="true">
+                    <div id="swimmer"></div>
                   </div>
                 </div>
-
-                <div class="wp-block-column">
-                  <div class="item-with-num">
-                    <span>04</span>
-                    <p>Контроль SLA страховых компаний</p>
-                  </div>
-
-                  <div class="item-with-num">
-                    <span>05</span>
-                    <p>
-                      Цифровое урегулирование и автоматическая подача претензий
-                    </p>
-                  </div>
-
-                  <div class="item-with-num">
-                    <span>06</span>
-                    <p>BI-аналитика всего процесса страхования</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="hscroll-bar-holder">
-                <span class="hscroll-bar-pin"></span
-                ><span class="hscroll-bar"></span>
-              </div>
+              <div id="waves_placeholder_pseudo" aria-hidden="true"></div>
+              <div id="waves_placeholder_after" aria-hidden="true"></div>
             </div>
 
             <div class="wp-block-group tops-block tops-block_blue">

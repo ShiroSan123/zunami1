@@ -1,0 +1,338 @@
+:root {
+  --waves-stage-height: 88rem;
+  --waves-stage-top: 0.5rem;
+  --waves-stage-gap: 4.25rem;
+  --waves-stage-bottom-pad: 12rem;
+  --waves-content-max: 19rem;
+  --waves-item-gap: 2.3rem;
+  --waves-item-number-width: 2.2rem;
+  --waves-item-column-gap: 0.7rem;
+  --waves-item-translate: 3rem;
+  --waves-line-height: 5.75rem;
+  --waves-line-bottom: 0;
+  --waves-line-opacity: 0.48;
+  --waves-marker-width: 1.05rem;
+  --waves-marker-height: 23rem;
+  --waves-marker-left: 8.2%;
+}
+
+.zunami-waves-block {
+  position: relative;
+  margin: 3.5rem 0 calc(var(--pad-lg) + 1rem);
+}
+
+#waves_container {
+  position: relative;
+}
+
+#waves_placeholder_before,
+#waves_placeholder_pseudo,
+#waves_placeholder_after {
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+}
+
+#waves {
+  position: relative;
+  width: 100%;
+  height: var(--waves-stage-height);
+  padding: var(--waves-stage-top) 0
+    calc(var(--waves-line-height) + var(--waves-stage-bottom-pad));
+  overflow: hidden;
+  background: var(--color-bg-main);
+}
+
+#waves.fixed {
+  position: fixed;
+  top: var(--site-pad-top);
+  left: var(--waves-fixed-left, 0);
+  width: var(--waves-fixed-width, 100%);
+  z-index: 1;
+}
+
+#waves.ended {
+  position: absolute;
+  top: var(--waves-end-top, 0px);
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.zunami-waves-block__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--waves-stage-gap);
+  width: min(100%, var(--waves-content-max));
+}
+
+.zunami-waves-block__intro {
+  position: relative;
+  max-width: 19rem;
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--color-alt);
+}
+
+.zunami-waves-block__items {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--waves-item-gap);
+  width: 100%;
+}
+
+.info_itm {
+  display: grid;
+  grid-template-columns: var(--waves-item-number-width) minmax(0, 1fr);
+  column-gap: var(--waves-item-column-gap);
+  align-items: start;
+  opacity: 1;
+  transition: opacity 0.45s ease-out;
+  will-change: opacity;
+}
+
+#waves[data-waves-ready="true"] .info_itm {
+  opacity: 0;
+}
+
+.info_itm span {
+  display: inline-block;
+  min-width: 0;
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-main);
+}
+
+.info_itm p {
+  max-width: 22ch;
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  line-height: var(--lh-md);
+  color: var(--color-main);
+}
+
+#waves_line {
+  position: absolute;
+  right: 0;
+  bottom: var(--waves-line-bottom);
+  left: 0;
+  height: var(--waves-line-height);
+  overflow: visible;
+  background: url("../../icons/diagram-line.svg") repeat-x left bottom;
+  background-position: 0 bottom;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  opacity: var(--waves-line-opacity);
+}
+
+#swimmer {
+  position: absolute;
+  bottom: 0;
+  left: var(--waves-marker-left);
+  width: var(--waves-marker-width);
+  height: var(--waves-marker-height);
+  background: url("../../icons/diagram-marker.svg") no-repeat center bottom;
+  background-size: 100% 100%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 480px) {
+  :root {
+    --waves-stage-height: 83rem;
+    --waves-stage-top: 0.6rem;
+    --waves-stage-gap: 4.1rem;
+    --waves-stage-bottom-pad: 11rem;
+    --waves-content-max: 20rem;
+    --waves-item-gap: 2.2rem;
+    --waves-line-height: 6.1rem;
+    --waves-marker-height: 22rem;
+    --waves-marker-left: 7.5%;
+  }
+
+  .zunami-waves-block {
+    margin-top: 4rem;
+  }
+
+  .zunami-waves-block__intro {
+    font-size: var(--fs-sm);
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --waves-stage-height: 71rem;
+    --waves-stage-top: 0.4rem;
+    --waves-stage-gap: 3.5rem;
+    --waves-stage-bottom-pad: 10rem;
+    --waves-content-max: 21rem;
+    --waves-item-gap: 1.95rem;
+    --waves-line-height: 6.6rem;
+    --waves-marker-width: 0.95rem;
+    --waves-marker-height: 22rem;
+    --waves-marker-left: 4.2%;
+  }
+
+  .info_itm p {
+    max-width: 24ch;
+    font-size: var(--fs-base);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --waves-stage-height: 66rem;
+    --waves-stage-gap: 3.25rem;
+    --waves-stage-bottom-pad: 9.5rem;
+    --waves-content-max: 23rem;
+    --waves-item-gap: 1.75rem;
+    --waves-line-height: 6.9rem;
+    --waves-marker-width: 0.9rem;
+    --waves-marker-height: 23rem;
+    --waves-marker-left: 3.7%;
+  }
+
+  .zunami-waves-block {
+    margin-top: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --waves-stage-height: 49rem;
+    --waves-stage-top: 0;
+    --waves-item-translate: 1.35rem;
+    --waves-line-height: 7rem;
+    --waves-line-bottom: 1.5rem;
+    --waves-line-opacity: 0.5;
+    --waves-marker-width: 1.1rem;
+    --waves-marker-height: 24rem;
+    --waves-marker-left: 30.8%;
+  }
+
+  .zunami-waves-block {
+    margin-top: 5.5rem;
+    margin-bottom: 5rem;
+  }
+
+  #waves {
+    padding: 0;
+  }
+
+  .zunami-waves-block__content {
+    position: absolute;
+    top: 6.9rem;
+    left: 0;
+    width: 41rem;
+    max-width: none;
+    gap: 6.9rem;
+  }
+
+  .zunami-waves-block__intro {
+    width: 16.75rem;
+    max-width: none;
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+
+  .zunami-waves-block__items {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: none;
+    min-height: 15rem;
+  }
+
+  .info_itm {
+    position: absolute;
+    width: 16.4rem;
+    column-gap: 0.85rem;
+  }
+
+  .info_itm:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 16rem;
+  }
+
+  .info_itm:nth-child(2) {
+    top: 4.2rem;
+    left: 0;
+    width: 16.7rem;
+  }
+
+  .info_itm:nth-child(3) {
+    top: 9.8rem;
+    left: 0;
+    width: 15.7rem;
+  }
+
+  .info_itm:nth-child(4) {
+    top: 0;
+    left: 20.3rem;
+    width: 15.8rem;
+  }
+
+  .info_itm:nth-child(5) {
+    top: 4.2rem;
+    left: 20.3rem;
+    width: 16.2rem;
+  }
+
+  .info_itm:nth-child(6) {
+    top: 9.8rem;
+    left: 20.3rem;
+    width: 15.8rem;
+  }
+
+  .info_itm p {
+    max-width: none;
+    font-size: var(--fs-md);
+    line-height: 1.28;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --waves-stage-height: 52rem;
+    --waves-line-height: 7.3rem;
+    --waves-line-bottom: 1.8rem;
+    --waves-marker-width: 1.15rem;
+    --waves-marker-height: 25rem;
+    --waves-marker-left: 30.6%;
+  }
+
+  .zunami-waves-block {
+    margin-top: 6rem;
+    margin-bottom: 5.5rem;
+  }
+
+  .zunami-waves-block__content {
+    top: 7.2rem;
+    width: 43rem;
+    gap: 6.9rem;
+  }
+
+  .zunami-waves-block__intro {
+    width: 17rem;
+  }
+
+  .zunami-waves-block__items {
+    width: 100%;
+  }
+
+  .info_itm:nth-child(4),
+  .info_itm:nth-child(5),
+  .info_itm:nth-child(6) {
+    left: 21.2rem;
+  }
+}

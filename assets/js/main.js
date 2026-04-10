@@ -322,6 +322,188 @@ const initMaps = async () => {
   }
 };
 
+const initWavesBlock = () => {
+  const container = document.getElementById("waves_container");
+  const waves = document.getElementById("waves");
+  const wavesBefore = document.getElementById("waves_placeholder_before");
+  const wavesAfter = document.getElementById("waves_placeholder_after");
+  const wavesLine = document.getElementById("waves_line");
+  const swimmer = document.getElementById("swimmer");
+  const items = Array.from(document.querySelectorAll("#waves .info_itm"));
+
+  if (!container || !waves || !wavesBefore || !wavesAfter || !wavesLine || !swimmer || !items.length) {
+    return;
+  }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach((item) => {
+        item.style.opacity = "1";
+      });
+      return;
+    }
+
+  let lastScrollTop = window.scrollY;
+  let stageHeight = 0;
+  let wavesMaxHeight = 0;
+  let waveHeight = 0;
+  let wavePeriod = 1;
+  let frameRequested = false;
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const smoothstep = (value) => {
+    const clampedValue = clamp(value, 0, 1);
+    return clampedValue * clampedValue * (3 - 2 * clampedValue);
+  };
+
+  const setPlaceholderHeight = (node, value) => {
+    node.style.height = `${Math.max(0, value)}px`;
+  };
+
+  const clearPinnedState = () => {
+    waves.classList.remove("fixed");
+    waves.classList.remove("ended");
+    waves.style.removeProperty("--waves-end-top");
+  };
+
+  const syncFixedBox = () => {
+    const rect = container.getBoundingClientRect();
+    waves.style.setProperty("--waves-fixed-left", `${Math.round(rect.left)}px`);
+    waves.style.setProperty("--waves-fixed-width", `${Math.round(rect.width)}px`);
+  };
+
+  const setProgress = (state) => {
+    const progress = clamp(state, 0, 1);
+    const step = 1 / items.length;
+    const stagger = step * 0.82;
+    const fadeSpan = step * 1.35;
+
+    items.forEach((item, index) => {
+      const start = index * stagger;
+      const rawOpacity = (progress - start) / fadeSpan;
+      const opacity = smoothstep(rawOpacity);
+      item.style.opacity = opacity.toFixed(3);
+    });
+
+    const wavesOffset = -progress * 2000;
+    wavesLine.style.backgroundPositionX = `${wavesOffset}px`;
+
+    const wavePeriodPosition = (
+      Math.abs(wavesOffset - 30 - (wavesLine.clientWidth * 0.2)) % wavePeriod
+    ) / wavePeriod;
+    const heightOffset = 0.5 - Math.abs(0.5 - wavePeriodPosition);
+    const pixelOffset = waveHeight * 0.6 * (Math.floor(heightOffset * 10) / 10);
+    swimmer.style.backgroundPositionY = `${pixelOffset}px`;
+  };
+
+  const update = () => {
+    if (!stageHeight) {
+      return;
+    }
+
+    syncFixedBox();
+
+    const scrollTop = Math.max(window.scrollY, 0);
+    const beforeTop = wavesBefore.getBoundingClientRect().top;
+    const scrollSpan = Math.max(wavesMaxHeight - stageHeight, 1);
+
+    if (beforeTop < 0 && Math.abs(beforeTop) < scrollSpan) {
+      setProgress(Math.abs(beforeTop) / scrollSpan);
+    }
+
+    const beforeBottom = beforeTop + wavesBefore.offsetHeight - stageHeight;
+    const afterTop = wavesAfter.getBoundingClientRect().top;
+
+    if (scrollTop > lastScrollTop) {
+      if (beforeTop <= 0 && (beforeBottom > 0 || wavesBefore.offsetHeight === 0) && !waves.classList.contains("fixed")) {
+        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
+        waves.classList.remove("ended");
+        waves.style.removeProperty("--waves-end-top");
+        waves.classList.add("fixed");
+        setPlaceholderHeight(wavesAfter, 0);
+        setProgress(0);
+      } else if (beforeTop > 0) {
+        setPlaceholderHeight(wavesBefore, 0);
+        clearPinnedState();
+        setPlaceholderHeight(wavesAfter, scrollSpan);
+        setProgress(0);
+      }
+
+      if (afterTop < stageHeight && waves.classList.contains("fixed")) {
+        const fixedTop = waves.getBoundingClientRect().top;
+        waves.classList.remove("fixed");
+        waves.classList.add("ended");
+        waves.style.setProperty("--waves-end-top", `${Math.round(scrollSpan + fixedTop)}px`);
+        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
+        setPlaceholderHeight(wavesAfter, 0);
+        setProgress(1);
+      }
+    } else {
+      if (afterTop > stageHeight && beforeTop <= 0 && !waves.classList.contains("fixed")) {
+        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
+        waves.classList.remove("ended");
+        waves.style.removeProperty("--waves-end-top");
+        waves.classList.add("fixed");
+        setPlaceholderHeight(wavesAfter, 0);
+        setProgress(1);
+      } else if (beforeTop > 0) {
+        setPlaceholderHeight(wavesBefore, 0);
+        clearPinnedState();
+        setPlaceholderHeight(wavesAfter, scrollSpan);
+        setProgress(0);
+      }
+    }
+
+    lastScrollTop = scrollTop;
+  };
+
+  const requestUpdate = () => {
+    if (frameRequested) {
+      return;
+    }
+
+    frameRequested = true;
+    window.requestAnimationFrame(() => {
+      frameRequested = false;
+      update();
+    });
+  };
+
+  const calculate = () => {
+    clearPinnedState();
+    waves.dataset.wavesReady = "true";
+    waves.style.removeProperty("--waves-fixed-left");
+    waves.style.removeProperty("--waves-fixed-width");
+
+    setPlaceholderHeight(wavesBefore, 0);
+    setPlaceholderHeight(wavesAfter, 0);
+
+    stageHeight = waves.offsetHeight;
+    wavesMaxHeight = stageHeight * 5;
+    waveHeight = wavesLine.offsetHeight;
+    wavePeriod = (waveHeight / 80) * 130 || 1;
+
+    setPlaceholderHeight(wavesAfter, wavesMaxHeight - stageHeight);
+    setProgress(0);
+    syncFixedBox();
+    update();
+  };
+
+  const requestCalculate = () => {
+    window.requestAnimationFrame(calculate);
+  };
+
+  calculate();
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestCalculate);
+
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(requestCalculate);
+    resizeObserver.observe(container);
+    resizeObserver.observe(wavesLine);
+  }
+};
+
 const initShareLinks = () => {
   document.querySelectorAll("[data-share-vk]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -379,4 +561,5 @@ initAccordions();
 initViewportAnimations();
 initForms();
 initMaps();
+initWavesBlock();
 initShareLinks();

@@ -1,65 +1,65 @@
 .tops-block {
-	--fs-h4: var(--fs-tops);
-	--tops-color: var(--color-main);
-	--tops-border: var(--color-main);
-	--tops-bg: transparanent;
-	--fs-tops:  calc(var(--fs-mpl) * 1.75rem);	/* 28px */
-	--fs-tops-value:  calc(var(--fs-mpl) * 4.5rem);	/* 72px */
+  --fs-h4: var(--fs-tops);
+  --tops-color: var(--color-main);
+  --tops-border: var(--color-main);
+  --tops-bg: transparanent;
+  --fs-tops: calc(var(--fs-mpl) * 1.75rem); /* 28px */
+  --fs-tops-value: calc(var(--fs-mpl) * 4.5rem); /* 72px */
 
-	--color-h4: var(--tops-color);
-	background: var(--tops-bg);
-	color: var(--tops-color);
+  --color-h4: var(--tops-color);
+  background: var(--tops-bg);
+  color: var(--tops-color);
 
-	font-size: var(--fs-base);
-	line-height: var(--lh-sm);
+  font-size: var(--fs-base);
+  line-height: var(--lh-sm);
 
-	padding: calc(var(--site-pad-outerblock) + var(--box-pad-md));
-	border-radius: var(--br-sm);
+  padding: calc(var(--site-pad-outerblock) + var(--box-pad-md));
+  border-radius: var(--br-sm);
 }
 
 .tops-block.tops-block_blue {
-	--tops-color: var(--color-white);
-	--tops-border: var(--color-white);
-	--tops-bg: var(--color-main);
+  --tops-color: var(--color-white);
+  --tops-border: var(--color-white);
+  --tops-bg: var(--color-main);
 }
 
 .home .tops-block {
-	margin: 0 calc(-1 * var(--site-pad-outerblock));
+  margin: 0 calc(-1 * var(--site-pad-outerblock));
 }
 .home .tops-block .wp-block-columns,
 .home .tops-block P {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .tops-col-bordered {
-	border-left: 1px solid var(--tops-border);
-    border-right: 1px solid var(--tops-border);	
+  border-left: 1px solid var(--tops-border);
+  border-right: 1px solid var(--tops-border);
 }
 
 .tops-block H4 {
-	line-height: var(--lh-md);
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-start;
+  line-height: var(--lh-md);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .tops-block H4.has-text-align-center {
-	justify-content: center;
+  justify-content: center;
 }
 
 .tops-block .zunami-countdown {
-	font-size: var(--fs-tops-value);
-	line-height: var(--lh-xs);
+  font-size: var(--fs-tops-value);
+  line-height: var(--lh-xs);
 }
 
 .zunami-countdown {
-	transition: --from 1s;
-	counter-reset: int var(--from);
-	animation: countdown var(--time, 4s) forwards ease-in-out;
-	animation-play-state: paused;
+  transition: --from 1s;
+  counter-reset: int var(--from);
+  animation: countdown var(--time, 4s) forwards ease-in-out;
+  animation-play-state: paused;
 }
 .zunami-countdown.in-viewport {
-	animation-play-state: running;
+  animation-play-state: running;
 }
 
 .zunami-countdown__value {
@@ -69,43 +69,41 @@
   content: counter(int);
 }
 
-
 @media (max-width: 1199px) {
-
-	.page:not(.home) .tops-block {
-	    padding-left: 0;
-	    padding-right: 0;
-	}
-	.tops-block {
-	    --fs-tops-value: 8rem;
-	}
+  .page:not(.home) .tops-block {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .tops-block {
+    --fs-tops-value: 8rem;
+  }
 }
 @media (max-width: 959px) {
-	.tops-block {
-	    font-size: 2.3rem;
-	}
+  .tops-block {
+    font-size: 2.3rem;
+  }
 }
 
 @media (max-width: 639px) {
-	.tops-block {
-	    --fs-tops-value: 18rem;
-	    font-size: 4.5rem;
-		padding-top: 4rem;
-		padding-bottom: 4rem;
-		border-radius: 2rem;
-	}
-	.tops-block .wp-block-column > * {
-		text-align: center;
-		justify-content: center;
-	}
+  .tops-block {
+    --fs-tops-value: 18rem;
+    font-size: 4.5rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    border-radius: 2rem;
+  }
+  .tops-block .wp-block-column > * {
+    text-align: center;
+    justify-content: center;
+  }
 
-	.home .tops-block {
-		margin: 0;
-	}
-	.tops-col-bordered {
-			border-left: none;
-			border-right: none;
-	    border-top: 1px solid var(--tops-border);
-	    border-bottom: 1px solid var(--tops-border);
-	}
+  .home .tops-block {
+    margin: 0;
+  }
+  .tops-col-bordered {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--tops-border);
+    border-bottom: 1px solid var(--tops-border);
+  }
 }

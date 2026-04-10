@@ -146,6 +146,7 @@ function zunami_scripts() {
 	wp_enqueue_style( 'zunami-style-modal-window', get_template_directory_uri() . '/css/elements/modal-window.css', [], _S_VERSION );
 	wp_enqueue_style( 'zunami-style-search-popup', get_template_directory_uri() . '/css/elements/search-popup.css', [], _S_VERSION );
 	wp_enqueue_style( 'zunami-style-zunami-item-with-num', get_template_directory_uri() . '/css/elements/zunami-item-with-num.css', [], _S_VERSION );
+	wp_enqueue_style( 'zunami-style-zunami-waves-block', get_template_directory_uri() . '/css/elements/zunami-waves-block.css', [], _S_VERSION );
 	wp_enqueue_style( 'zunami-style-hscroll-bar', get_template_directory_uri() . '/css/elements/hscroll-bar.css', [], _S_VERSION );
 
 	// wp_enqueue_script( 'zunami-gsap', get_template_directory_uri() . '/js/gsap.min.js', [], _S_VERSION, true );
@@ -196,4 +197,3 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-

@@ -1,0 +1,170 @@
+
+@font-face {    
+	font-family: "Golos";
+	src: url("assets/fonts/Golos-Text_Regular.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;   
+}
+@font-face {    
+	font-family: "Golos";
+	src: url("assets/fonts/Golos-Text_Medium.woff") format("woff");
+	font-weight: 500;
+	font-style: normal;   
+}
+@font-face {    
+	font-family: "Golos";
+	src: url("assets/fonts/Golos-Text_DemiBold.woff") format("woff");
+	font-weight: 600;
+	font-style: normal;   
+}
+
+
+* {
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+	line-height: 1.4em;	
+    --color-black: rgba(0, 0, 0, 0);
+    --color-white: #fff;
+    --color-blue: #145ff5;
+    --color-orange: rgb(255, 90, 0);
+    --color-grey-bg: rgb(245, 246, 252);
+    --color-grey-bg-transparent: rgba(245, 246, 252, 0.1);
+    --color-blue-stroke: #558dff;
+    --color-red: red;
+
+    --max-content-width: 1600px;
+    --content-padding: 20px;
+
+    --font-family: Golos;
+
+    --font-size-h1: 27px;
+    --font-size-h2: 18px;
+    --font-size-p: 15px;
+    --font-size-p-small: 14px;
+
+    --line-height-h1: 100%;
+    --line-height-h2: 110%;
+    --line-height-p: 140%;
+    --line-height-p-small: 150%;
+
+    --font-weight-h1: 500;
+    --font-weight-h2: 500;
+    --font-weight-p: 400;
+    --font-weight-p-small: 400;
+
+    --font-h1: var(--font-weight-h1) var(--font-size-h1)/var(--line-height-h1) var(--font-family);
+    --font-h2: var(--font-weight-h2) var(--font-size-h2)/var(--line-height-h2) var(--font-family);
+    --font-p: var(--font-weight-p) var(--font-size-p)/var(--line-height-p) var(--font-family);
+    --font-p-small: var(--font-weight-p-small) var(--font-size-p-small)/var(--line-height-p-small) var(--font-family);
+
+
+    
+    --menu-height: calc(3 * var(var(--content-padding))); /*fix to real*/
+}
+
+*:focus {
+	outline: none;
+}
+
+
+@media (min-width: 480px) {
+}
+@media (min-width: 640px) {
+}
+@media (min-width: 768px) {    
+}
+@media (min-width: 1024px) {    
+}
+@media (min-width: 1200px) {
+    * {    
+        --content-padding: 40px;
+    }
+}
+@media (min-width: 1400px) {    
+}
+
+/* (--max-content-width + 2 * --content-padding)  */
+@media (min-width: 1640px) {
+    * {
+        --font-size-h1: 70px;
+        --font-size-h2: 32px;
+        --font-size-p: 24px;
+        --font-size-p-small: 19px;
+    }
+    
+}
+body {
+    font-family: 'Golos',Arial,sans-serif;
+    background-color: var(--color-grey-bg);
+}
+
+.color-orange {
+    color: var(--color-orange);
+}
+.color-blue {
+    color: var(--color-blue);
+}
+
+.content_container {
+    position: relative;
+    padding-top: var(--menu-height); /*для правильному скроллу по якорю*/
+    margin-bottom: calc(-1 * var(--menu-height));
+    width: 100%;
+}
+.content {    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--content-padding);
+    gap: var(--content-padding);
+    width: min(100%, 
+            calc(var(--max-content-width) + 2 * var(--content-padding)));
+}
+
+
+#waves_container {
+    gap: 0px;
+}
+#waves {
+    height: 100vh;
+    background-color: var(--color-blue-stroke);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#waves.fixed {
+    position: fixed;
+    top: 0px;
+    width: min(calc(100% -  2 * var(--content-padding)), 
+            calc(var(--max-content-width) + 2 * var(--content-padding)));
+    left: var(--content-padding);
+}
+#waves_placeholder {
+    background-color: var(--color-orange);
+}
+#waves .info_itm {
+    opacity: 0;
+}
+
+#waves_line {
+    position: relative;
+    margin-top: auto;
+    position: relative; 
+    width: 100%;
+    height: 125px;
+    background: url(assets/img/waves.svg);
+    background-position: 0 bottom -10px;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+}
+#swimmer {
+    position: absolute;
+    top: 0px;
+    left: 20%;
+    height: 100%;
+    background-image: url(assets/img/swimmer.svg);
+    width: 20px;
+    background-position: center top ;    
+    background-repeat: no-repeat;
+}
