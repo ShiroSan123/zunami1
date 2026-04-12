@@ -1,6 +1,6 @@
 /* History: desktop (>=1200px) */
 .zunami_hidden-lg {
-  --history-stack-extra: 50vh;
+  --history-stack-extra: 5vh;
 }
 
 .zunami_hidden-lg .zunami-history-stack {
@@ -386,7 +386,8 @@
 }
 
 .zunami_hidden-lg .zunami-history-block__next h3.wp-block-heading {
-  margin: 0;
+  margin-bottom: 4rem;
+  text-align: center;
 }
 
 .zunami_hidden-lg .zunami-history-block__next .zunami-post-grid {
@@ -405,13 +406,11 @@
   .zunami_hidden-lg .zunami-history-block__next {
     position: relative;
     z-index: 7;
-    margin-top: calc(
-      -1 * (var(--history-blog-overlap) + var(--history-stack-extra, 0px))
-    );
-    padding-top: calc(
-      var(--history-blog-overlap) + var(--history-stack-extra, 0px)
-    );
-    background: transparent;
+    margin-top: calc(-1 * (var(--history-stack-extra, 0px)));
+    padding-top: calc(var(--history-stack-extra, 0px));
+    background: #f5f6fc;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .entry-content .zunami_hidden-lg ~ * {
@@ -443,6 +442,65 @@
 
   .zunami_hidden-lg .zunami-history-block__next .zunami-post-grid .post {
     width: auto;
+  }
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box,
+.zunami_hidden-lg .zunami-history-block__next .article-box:visited,
+.zunami_hidden-lg .zunami-history-block__next .article-box:active,
+.zunami_hidden-lg .zunami-history-block__next .article-box:hover {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: none;
+  padding-bottom: 18px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(20, 20, 26, 0.08);
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box-title {
+  margin: 18px 20px 0;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #145ff5;
+  font-weight: 400;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box-content {
+  margin: 10px 20px 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #14141a;
+  font-weight: 300;
+}
+
+.zunami_hidden-lg .zunami-history-block__next .article-box-date {
+  margin: 12px 20px 0;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #145ff5;
+}
+
+@media (max-width: 959px) {
+  .zunami_hidden-lg .zunami-history-block__next .article-box-title {
+    font-size: 16px;
+  }
+
+  .zunami_hidden-lg .zunami-history-block__next .article-box-content {
+    font-size: 14px;
   }
 }
 
