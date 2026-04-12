@@ -773,10 +773,68 @@ const initHistoryStacking = () => {
   }
 
   const sampleBlock = stack.querySelector(".zunami-history-block");
+  const blocks = Array.from(
+    stack.querySelectorAll(".zunami-history-block"),
+  );
+  const nextSection = stack
+    .closest(".zunami_hidden-lg")
+    ?.querySelector(".zunami-history-block__next");
+  const parseSize = (value) => {
+    if (!value) {
+      return 0;
+    }
+
+    const raw = value.trim();
+    if (!raw) {
+      return 0;
+    }
+
+    if (raw.endsWith("px")) {
+      const px = Number(raw.slice(0, -2));
+      return Number.isFinite(px) ? px : 0;
+    }
+
+    if (raw.endsWith("rem")) {
+      const rem = Number(raw.slice(0, -3));
+      const rootSize = Number.parseFloat(
+        getComputedStyle(document.documentElement).fontSize || "16",
+      );
+      return (Number.isFinite(rem) ? rem : 0) * (rootSize || 16);
+    }
+
+    if (raw.endsWith("vh")) {
+      const vh = Number(raw.slice(0, -2));
+      return (Number.isFinite(vh) ? vh : 0) * (window.innerHeight / 100);
+    }
+
+    const fallback = Number(raw);
+    return Number.isFinite(fallback) ? fallback : 0;
+  };
   const updateOffset = () => {
+    blocks.forEach((block) => {
+      const width = block.getBoundingClientRect().width || 1100;
+      const scale = width / 1100;
+      block.style.setProperty("--history-block-scale", scale.toFixed(4));
+    });
+
     const blockHeight = sampleBlock?.getBoundingClientRect().height || 450;
-    const offset = Math.max(0, Math.round((window.innerHeight - blockHeight) / 2));
+    const offset = Math.max(
+      0,
+      Math.round((window.innerHeight - blockHeight) / 2),
+    );
+    const overlapValue = nextSection
+      ? getComputedStyle(nextSection).getPropertyValue("--history-blog-overlap")
+      : "";
+    const overlapPx = parseSize(overlapValue);
+    const extraValue = getComputedStyle(stack).getPropertyValue(
+      "--history-stack-extra",
+    );
+    const extraPx = parseSize(extraValue);
     stack.style.setProperty("--history-stack-top", `${offset}px`);
+    stack.style.setProperty(
+      "--history-stack-tail",
+      `${Math.round(offset + overlapPx + extraPx)}px`,
+    );
   };
 
   updateOffset();
