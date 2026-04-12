@@ -766,6 +766,23 @@ const initHistoryParallax = () => {
   toggleParallax();
 };
 
+const initHistoryStacking = () => {
+  const stack = document.querySelector(".zunami-history-stack");
+  if (!stack) {
+    return;
+  }
+
+  const sampleBlock = stack.querySelector(".zunami-history-block");
+  const updateOffset = () => {
+    const blockHeight = sampleBlock?.getBoundingClientRect().height || 450;
+    const offset = Math.max(0, Math.round((window.innerHeight - blockHeight) / 2));
+    stack.style.setProperty("--history-stack-top", `${offset}px`);
+  };
+
+  updateOffset();
+  window.addEventListener("resize", updateOffset);
+};
+
 const initHistoryPopups = () => {
   const modals = Array.from(
     document.querySelectorAll(".history-modal[data-history-modal]"),
@@ -1006,6 +1023,7 @@ initForms();
 initMaps();
 initWavesBlock();
 initHistoryParallax();
+initHistoryStacking();
 initHistoryPopups();
 initShareLinks();
 initPageProgress();
