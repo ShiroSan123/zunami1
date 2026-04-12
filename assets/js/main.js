@@ -323,137 +323,242 @@ const initMaps = async () => {
 };
 
 const initWavesBlock = () => {
-  const container = document.getElementById("waves_container");
-  const waves = document.getElementById("waves");
-  const wavesBefore = document.getElementById("waves_placeholder_before");
-  const wavesAfter = document.getElementById("waves_placeholder_after");
-  const wavesLine = document.getElementById("waves_line");
-  const swimmer = document.getElementById("swimmer");
-  const items = Array.from(document.querySelectorAll("#waves .info_itm"));
-
-  if (!container || !waves || !wavesBefore || !wavesAfter || !wavesLine || !swimmer || !items.length) {
+  const record = document.getElementById("rec771645295");
+  if (!record) {
     return;
   }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      items.forEach((item) => {
-        item.style.opacity = "1";
-      });
-      return;
+  const artboard = record.querySelector(".t396__artboard");
+  const spacerBefore = record.querySelector(".t396__pin-spacer--before");
+  const spacerAfter = record.querySelector(".t396__pin-spacer--after");
+
+  if (!artboard || !spacerBefore || !spacerAfter) {
+    return;
+  }
+
+  const elements = Array.from(record.querySelectorAll(".tn-elem[data-animate-sbs-opts]"));
+  if (elements.length === 0) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const toNumber = (value, fallback = 0) => {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : fallback;
+  };
+
+  const parseOptions = (raw) => {
+    if (!raw) {
+      return null;
+    }
+    try {
+      return JSON.parse(raw.replace(/'/g, "\""));
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const getResponsiveValue = (el, base, res320, res640) => {
+    const width = window.innerWidth;
+    if (width <= 639 && el.dataset[res320]) {
+      return el.dataset[res320];
+    }
+    if (width <= 1199 && el.dataset[res640]) {
+      return el.dataset[res640];
+    }
+    return el.dataset[base];
+  };
+
+  const normalizeFrame = (frame) => ({
+    mx: toNumber(frame.mx, 0),
+    my: toNumber(frame.my, 0),
+    sx: frame.sx !== undefined ? toNumber(frame.sx, 1) : 1,
+    sy: frame.sy !== undefined ? toNumber(frame.sy, 1) : 1,
+    op: frame.op !== undefined ? toNumber(frame.op, 1) : 1,
+    ro: frame.ro !== undefined ? toNumber(frame.ro, 0) : 0,
+  });
+
+  const buildTimeline = (frames) => {
+    let current = normalizeFrame(frames[0]);
+    let startState = current;
+    const segments = [];
+    let pos = 0;
+
+    for (let i = 1; i < frames.length; i += 1) {
+      const next = normalizeFrame(frames[i]);
+      const delay = toNumber(frames[i].dd, 0);
+      const duration = toNumber(frames[i].di, 0);
+
+      if (delay === 0 && duration === 0) {
+        current = next;
+        startState = current;
+        continue;
+      }
+
+      if (delay > 0) {
+        segments.push({ start: pos, end: pos + delay, from: current, to: current });
+        pos += delay;
+      }
+
+      if (duration > 0) {
+        segments.push({ start: pos, end: pos + duration, from: current, to: next });
+        pos += duration;
+      }
+
+      current = next;
     }
 
-  let lastScrollTop = window.scrollY;
-  let stageHeight = 0;
-  let wavesMaxHeight = 0;
-  let waveHeight = 0;
-  let wavePeriod = 1;
-  let frameRequested = false;
-
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const smoothstep = (value) => {
-    const clampedValue = clamp(value, 0, 1);
-    return clampedValue * clampedValue * (3 - 2 * clampedValue);
+    return {
+      start: startState,
+      end: current,
+      total: pos,
+      segments,
+    };
   };
+
+  const findOpacityStart = (timeline) => {
+    for (const segment of timeline.segments) {
+      if (segment.from.op !== segment.to.op && segment.to.op > segment.from.op) {
+        return segment.start;
+      }
+    }
+    return null;
+  };
+
+  const buildConfig = (el) => {
+    const optsRaw = getResponsiveValue(el, "animateSbsOpts", "animateSbsOptsRes320", "animateSbsOptsRes640");
+    const frames = parseOptions(optsRaw);
+    if (!frames || frames.length === 0) {
+      return null;
+    }
+
+    const trgRaw = getResponsiveValue(el, "animateSbsTrgofst", "animateSbsTrgofstRes320", "animateSbsTrgofstRes640");
+    const trgOffset = toNumber(trgRaw, 0);
+
+    return {
+      el,
+      trgOffset,
+      timeline: buildTimeline(frames),
+    };
+  };
+
+  const applyState = (el, frame) => {
+    const opacity = clamp(frame.op, 0, 1);
+    el.style.opacity = opacity.toFixed(3);
+    el.style.transform = `translate3d(${frame.mx}px, ${frame.my}px, 0) scale(${frame.sx}, ${frame.sy}) rotate(${frame.ro}deg)`;
+  };
+
+  const resolveFrame = (timeline, distance) => {
+    if (distance <= 0 || timeline.total === 0) {
+      return timeline.start;
+    }
+    if (distance >= timeline.total) {
+      return timeline.end;
+    }
+    const progress = distance;
+    for (const segment of timeline.segments) {
+      if (progress >= segment.start && progress <= segment.end) {
+        const span = segment.end - segment.start || 1;
+        const ratio = clamp((progress - segment.start) / span, 0, 1);
+        return {
+          mx: segment.from.mx + (segment.to.mx - segment.from.mx) * ratio,
+          my: segment.from.my + (segment.to.my - segment.from.my) * ratio,
+          sx: segment.from.sx + (segment.to.sx - segment.from.sx) * ratio,
+          sy: segment.from.sy + (segment.to.sy - segment.from.sy) * ratio,
+          op: segment.from.op + (segment.to.op - segment.from.op) * ratio,
+          ro: segment.from.ro + (segment.to.ro - segment.from.ro) * ratio,
+        };
+      }
+    }
+    return timeline.end;
+  };
+
+  let configs = [];
+  let animationSpan = 0;
+  let pinSpan = 0;
+  let artboardHeight = 0;
+  let pinHeight = 0;
+  let frameRequested = false;
+  let pinnedState = "normal";
+  const getRecordTop = () => record.getBoundingClientRect().top + (window.scrollY || 0);
+  let recordTop = 0;
 
   const setPlaceholderHeight = (node, value) => {
     node.style.height = `${Math.max(0, value)}px`;
   };
 
-  const clearPinnedState = () => {
-    waves.classList.remove("fixed");
-    waves.classList.remove("ended");
-    waves.style.removeProperty("--waves-end-top");
-  };
-
   const syncFixedBox = () => {
-    const rect = container.getBoundingClientRect();
-    waves.style.setProperty("--waves-fixed-left", `${Math.round(rect.left)}px`);
-    waves.style.setProperty("--waves-fixed-width", `${Math.round(rect.width)}px`);
+    const rect = record.getBoundingClientRect();
+    artboard.style.setProperty("--t396-fixed-left", `${Math.round(rect.left)}px`);
+    artboard.style.setProperty("--t396-fixed-width", `${Math.round(rect.width)}px`);
   };
 
-  const setProgress = (state) => {
-    const progress = clamp(state, 0, 1);
-    const step = 1 / items.length;
-    const stagger = step * 0.82;
-    const fadeSpan = step * 1.35;
+  const clearPinnedState = () => {
+    artboard.classList.remove("t396__artboard--fixed");
+    artboard.classList.remove("t396__artboard--ended");
+    artboard.style.removeProperty("--t396-end-top");
+  };
 
-    items.forEach((item, index) => {
-      const start = index * stagger;
-      const rawOpacity = (progress - start) / fadeSpan;
-      const opacity = smoothstep(rawOpacity);
-      item.style.opacity = opacity.toFixed(3);
+  const setPinnedState = (nextState, force = false) => {
+    if (!force && pinnedState === nextState) {
+      return;
+    }
+
+    pinnedState = nextState;
+
+    if (nextState === "fixed") {
+      setPlaceholderHeight(spacerBefore, pinHeight);
+      setPlaceholderHeight(spacerAfter, 0);
+      artboard.classList.remove("t396__artboard--ended");
+      artboard.classList.add("t396__artboard--fixed");
+      artboard.style.removeProperty("--t396-end-top");
+      return;
+    }
+
+    if (nextState === "ended") {
+      const fixedTop = artboard.getBoundingClientRect().top;
+      setPlaceholderHeight(spacerBefore, pinHeight);
+      setPlaceholderHeight(spacerAfter, 0);
+      artboard.classList.remove("t396__artboard--fixed");
+      artboard.classList.add("t396__artboard--ended");
+      artboard.style.setProperty("--t396-end-top", `${Math.round(pinSpan + fixedTop)}px`);
+      return;
+    }
+
+    clearPinnedState();
+    setPlaceholderHeight(spacerBefore, 0);
+    setPlaceholderHeight(spacerAfter, pinSpan);
+  };
+
+  const applySbs = (distance) => {
+    configs.forEach((config) => {
+      const localDistance = distance - config.trgOffset;
+      const frame = resolveFrame(config.timeline, localDistance);
+      applyState(config.el, frame);
     });
-
-    const wavesOffset = -progress * 2000;
-    wavesLine.style.backgroundPositionX = `${wavesOffset}px`;
-
-    const wavePeriodPosition = (
-      Math.abs(wavesOffset - 30 - (wavesLine.clientWidth * 0.2)) % wavePeriod
-    ) / wavePeriod;
-    const heightOffset = 0.5 - Math.abs(0.5 - wavePeriodPosition);
-    const pixelOffset = waveHeight * 0.6 * (Math.floor(heightOffset * 10) / 10);
-    swimmer.style.backgroundPositionY = `${pixelOffset}px`;
   };
 
   const update = () => {
-    if (!stageHeight) {
+    if (!artboardHeight) {
       return;
     }
 
     syncFixedBox();
 
-    const scrollTop = Math.max(window.scrollY, 0);
-    const beforeTop = wavesBefore.getBoundingClientRect().top;
-    const scrollSpan = Math.max(wavesMaxHeight - stageHeight, 1);
+    const scrollY = window.scrollY || 0;
+    recordTop = getRecordTop();
+    const distance = clamp(scrollY - recordTop, 0, animationSpan || 1);
 
-    if (beforeTop < 0 && Math.abs(beforeTop) < scrollSpan) {
-      setProgress(Math.abs(beforeTop) / scrollSpan);
-    }
+    applySbs(distance);
 
-    const beforeBottom = beforeTop + wavesBefore.offsetHeight - stageHeight;
-    const afterTop = wavesAfter.getBoundingClientRect().top;
-
-    if (scrollTop > lastScrollTop) {
-      if (beforeTop <= 0 && (beforeBottom > 0 || wavesBefore.offsetHeight === 0) && !waves.classList.contains("fixed")) {
-        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
-        waves.classList.remove("ended");
-        waves.style.removeProperty("--waves-end-top");
-        waves.classList.add("fixed");
-        setPlaceholderHeight(wavesAfter, 0);
-        setProgress(0);
-      } else if (beforeTop > 0) {
-        setPlaceholderHeight(wavesBefore, 0);
-        clearPinnedState();
-        setPlaceholderHeight(wavesAfter, scrollSpan);
-        setProgress(0);
-      }
-
-      if (afterTop < stageHeight && waves.classList.contains("fixed")) {
-        const fixedTop = waves.getBoundingClientRect().top;
-        waves.classList.remove("fixed");
-        waves.classList.add("ended");
-        waves.style.setProperty("--waves-end-top", `${Math.round(scrollSpan + fixedTop)}px`);
-        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
-        setPlaceholderHeight(wavesAfter, 0);
-        setProgress(1);
-      }
+    if (scrollY < recordTop) {
+      setPinnedState("normal");
+    } else if (scrollY >= recordTop + pinSpan) {
+      setPinnedState("ended");
     } else {
-      if (afterTop > stageHeight && beforeTop <= 0 && !waves.classList.contains("fixed")) {
-        setPlaceholderHeight(wavesBefore, wavesMaxHeight);
-        waves.classList.remove("ended");
-        waves.style.removeProperty("--waves-end-top");
-        waves.classList.add("fixed");
-        setPlaceholderHeight(wavesAfter, 0);
-        setProgress(1);
-      } else if (beforeTop > 0) {
-        setPlaceholderHeight(wavesBefore, 0);
-        clearPinnedState();
-        setPlaceholderHeight(wavesAfter, scrollSpan);
-        setProgress(0);
-      }
+      setPinnedState("fixed");
     }
-
-    lastScrollTop = scrollTop;
   };
 
   const requestUpdate = () => {
@@ -469,38 +574,59 @@ const initWavesBlock = () => {
   };
 
   const calculate = () => {
-    clearPinnedState();
-    waves.dataset.wavesReady = "true";
-    waves.style.removeProperty("--waves-fixed-left");
-    waves.style.removeProperty("--waves-fixed-width");
+    configs = elements.map(buildConfig).filter(Boolean);
+    if (configs.length === 0) {
+      return;
+    }
 
-    setPlaceholderHeight(wavesBefore, 0);
-    setPlaceholderHeight(wavesAfter, 0);
+    animationSpan = configs.reduce(
+      (acc, config) => Math.max(acc, config.trgOffset + config.timeline.total),
+      0,
+    );
+    pinSpan = animationSpan;
+    artboardHeight = artboard.offsetHeight;
+    pinHeight = artboardHeight + pinSpan;
+    recordTop = getRecordTop();
 
-    stageHeight = waves.offsetHeight;
-    wavesMaxHeight = stageHeight * 5;
-    waveHeight = wavesLine.offsetHeight;
-    wavePeriod = (waveHeight / 80) * 130 || 1;
+    const targetId = window.innerWidth >= 1200 ? "1719214219036" : "1716205332561";
+    const pinTarget = configs.find((config) => config.el.dataset.elemId === targetId);
+    if (pinTarget) {
+      const opacityStart = findOpacityStart(pinTarget.timeline);
+      if (opacityStart !== null) {
+        pinSpan = Math.max(0, Math.min(animationSpan, pinTarget.trgOffset + opacityStart));
+      } else {
+        pinSpan = Math.max(0, Math.min(animationSpan, pinTarget.trgOffset));
+      }
+      pinHeight = artboardHeight + pinSpan;
+    }
 
-    setPlaceholderHeight(wavesAfter, wavesMaxHeight - stageHeight);
-    setProgress(0);
+    if (prefersReducedMotion) {
+      clearPinnedState();
+      setPlaceholderHeight(spacerBefore, 0);
+      setPlaceholderHeight(spacerAfter, 0);
+      configs.forEach((config) => applyState(config.el, config.timeline.end));
+      return;
+    }
+
+    setPinnedState("normal", true);
+    applySbs(0);
     syncFixedBox();
     update();
   };
 
-  const requestCalculate = () => {
-    window.requestAnimationFrame(calculate);
-  };
-
   calculate();
 
+  if (prefersReducedMotion) {
+    return;
+  }
+
   window.addEventListener("scroll", requestUpdate, { passive: true });
-  window.addEventListener("resize", requestCalculate);
+  window.addEventListener("resize", calculate);
 
   if ("ResizeObserver" in window) {
-    const resizeObserver = new ResizeObserver(requestCalculate);
-    resizeObserver.observe(container);
-    resizeObserver.observe(wavesLine);
+    const resizeObserver = new ResizeObserver(calculate);
+    resizeObserver.observe(record);
+    resizeObserver.observe(artboard);
   }
 };
 

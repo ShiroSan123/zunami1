@@ -19,6 +19,9 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	width: 100%;
+	max-width: var(--site-max-width);
+	margin: 0 auto;
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
 

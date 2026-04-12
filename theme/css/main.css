@@ -13,6 +13,12 @@ body {
     background-color: var(--color-bg-main);
 }
 
+.site {
+  width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+}
+
 body.page,
 body.post {
 	margin: 0;
