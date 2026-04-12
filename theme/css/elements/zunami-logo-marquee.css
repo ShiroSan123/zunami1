@@ -1,0 +1,81 @@
+.zunami-logo-marquee {
+  --logo-gap: 4rem;
+  --logo-height: 4.5rem;
+  --marquee-duration: 24s;
+
+  padding: var(--pad-sm) 0;
+  overflow: hidden;
+}
+
+.zunami-logo-marquee__viewport {
+  overflow: hidden;
+  padding: 0 var(--site-pad-outerblock);
+}
+
+.zunami-logo-marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: logo-marquee var(--marquee-duration) linear infinite;
+}
+
+.zunami-logo-marquee__group {
+  display: flex;
+  align-items: center;
+  gap: var(--logo-gap);
+  padding-right: var(--logo-gap);
+  flex-shrink: 0;
+}
+
+.zunami-logo-marquee__logo {
+  height: var(--logo-height);
+  width: auto;
+  max-width: 22rem;
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: opacity var(--tr-sm), filter var(--tr-sm);
+}
+
+.zunami-logo-marquee__logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1199px) {
+  .zunami-logo-marquee {
+    --logo-gap: 3rem;
+    --logo-height: 4rem;
+    --marquee-duration: 28s;
+  }
+}
+
+@media (max-width: 959px) {
+  .zunami-logo-marquee {
+    --logo-gap: 2.5rem;
+    --logo-height: 3.4rem;
+    --marquee-duration: 30s;
+  }
+}
+
+@media (max-width: 639px) {
+  .zunami-logo-marquee {
+    --logo-gap: 2rem;
+    --logo-height: 3rem;
+    --marquee-duration: 34s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zunami-logo-marquee__track {
+    animation: none;
+  }
+}

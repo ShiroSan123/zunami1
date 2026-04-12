@@ -542,6 +542,98 @@ const initHistoryParallax = () => {
   toggleParallax();
 };
 
+const initHistoryPopups = () => {
+  const modals = Array.from(document.querySelectorAll(".history-modal[data-history-modal]"));
+  if (modals.length === 0) {
+    return;
+  }
+
+  const modalMap = new Map();
+  modals.forEach((modal) => {
+    if (modal.dataset.historyModal) {
+      modalMap.set(modal.dataset.historyModal, modal);
+    }
+  });
+
+  let lastActive = null;
+  const isMobile = () => window.matchMedia("(max-width: 1199px)").matches;
+
+  const closeModal = (modal) => {
+    if (!modal.classList.contains("is-open")) {
+      return;
+    }
+
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("history-modal-open");
+
+    if (lastActive && document.contains(lastActive)) {
+      lastActive.focus();
+    }
+    lastActive = null;
+  };
+
+  const closeAll = () => {
+    modals.forEach(closeModal);
+  };
+
+  const openModal = (modal) => {
+    closeAll();
+    lastActive = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("history-modal-open");
+
+    const closeBtn = modal.querySelector(".history-modal__close");
+    if (closeBtn) {
+      closeBtn.focus();
+    }
+  };
+
+  document.querySelectorAll(".zunami-history-card__link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!isMobile()) {
+        return;
+      }
+
+      const target = link.getAttribute("href") || "";
+      const key = target.replace("#", "");
+      const modal = modalMap.get(key);
+      if (!modal) {
+        return;
+      }
+
+      event.preventDefault();
+      openModal(modal);
+    });
+  });
+
+  modals.forEach((modal) => {
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal(modal);
+      }
+    });
+
+    modal.querySelectorAll("[data-history-modal-close]").forEach((btn) => {
+      btn.addEventListener("click", () => closeModal(modal));
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeAll();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isMobile()) {
+      closeAll();
+    }
+  });
+};
+
 const initShareLinks = () => {
   document.querySelectorAll("[data-share-vk]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -553,6 +645,67 @@ const initShareLinks = () => {
       window.open(shareUrl.toString(), "_blank", "noopener,noreferrer,width=700,height=500");
     });
   });
+};
+
+const initPageProgress = () => {
+  const progress = document.createElement("div");
+  progress.className = "page-progress";
+  progress.innerHTML = '<div class="page-progress__bar"></div>';
+  document.body.appendChild(progress);
+
+  requestAnimationFrame(() => {
+    progress.classList.add("page-progress_visible");
+  });
+
+  window.addEventListener("load", () => {
+    progress.classList.add("page-progress_done");
+    setTimeout(() => {
+      progress.classList.add("page-progress_hidden");
+    }, 150);
+    setTimeout(() => {
+      progress.remove();
+    }, 600);
+  });
+};
+
+const initPageTransitions = () => {
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const link = target.closest("a");
+    if (!link) {
+      return;
+    }
+
+    if (link.target === "_blank" || link.hasAttribute("download")) {
+      return;
+    }
+
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) {
+      return;
+    }
+
+    let url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (error) {
+      return;
+    }
+
+    if (url.origin !== window.location.origin) {
+      return;
+    }
+
+    event.preventDefault();
+    document.documentElement.classList.add("page-fadeout");
+    setTimeout(() => {
+      window.location.href = url.href;
+    }, 250);
+  }, { capture: true });
 };
 
 const initEvents = () => {
@@ -601,4 +754,7 @@ initForms();
 initMaps();
 initWavesBlock();
 initHistoryParallax();
+initHistoryPopups();
 initShareLinks();
+initPageProgress();
+initPageTransitions();

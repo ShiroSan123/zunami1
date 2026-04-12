@@ -1,0 +1,47 @@
+.page-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  pointer-events: none;
+  z-index: 1200;
+}
+
+.page-progress__bar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-main);
+  transform-origin: 0 50%;
+  transform: scaleX(0.02);
+  transition: transform 0.6s ease-out;
+}
+
+.page-progress.page-progress_visible .page-progress__bar {
+  transform: scaleX(0.7);
+}
+
+.page-progress.page-progress_done .page-progress__bar {
+  transform: scaleX(1);
+  transition: transform 0.35s ease-out;
+}
+
+.page-progress.page-progress_hidden {
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+}
+
+body {
+  transition: opacity 0.25s ease-out;
+}
+
+html.page-fadeout body {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-progress__bar {
+    transition: none;
+  }
+  body {
+    transition: none;
+  }
+}
