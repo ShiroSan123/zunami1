@@ -193,7 +193,46 @@ const initAccordions = () => {
     return;
   }
 
-  items.forEach((item) => {
+  const setItemState = (item, isOpen) => {
+    item.classList.toggle("is-open", isOpen);
+    const panel = item.querySelector(".wp-block-accordion-panel");
+    const button = item.querySelector(".wp-block-accordion-heading__toggle");
+
+    if (button) {
+      button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+
+    if (panel) {
+      panel.setAttribute("aria-hidden", isOpen ? "false" : "true");
+      if (isOpen) {
+        panel.style.maxHeight = `${panel.scrollHeight}px`;
+      } else {
+        panel.style.maxHeight = "0px";
+      }
+    }
+  };
+
+  const itemList = Array.from(items);
+  itemList.forEach((item, index) => {
+    const button = item.querySelector(".wp-block-accordion-heading__toggle");
+    const panel = item.querySelector(".wp-block-accordion-panel");
+    if (button && panel && !panel.id) {
+      panel.id = `faq-panel-${index + 1}`;
+      button.setAttribute("aria-controls", panel.id);
+    }
+  });
+
+  itemList.forEach((item) =>
+    setItemState(item, item.classList.contains("is-open")),
+  );
+
+  let hasOpen = itemList.some((item) => item.classList.contains("is-open"));
+  if (!hasOpen && itemList[0]) {
+    setItemState(itemList[0], true);
+    hasOpen = true;
+  }
+
+  itemList.forEach((item) => {
     const button = item.querySelector(".wp-block-accordion-heading__toggle");
     if (!button) {
       return;
@@ -202,13 +241,8 @@ const initAccordions = () => {
     button.addEventListener("click", () => {
       const isOpen = item.classList.contains("is-open");
 
-      items.forEach((openedItem) => {
-        if (openedItem !== item) {
-          openedItem.classList.remove("is-open");
-        }
-      });
-
-      item.classList.toggle("is-open", !isOpen);
+      itemList.forEach((openedItem) => setItemState(openedItem, false));
+      setItemState(item, !isOpen);
     });
   });
 };

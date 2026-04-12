@@ -155,15 +155,17 @@
 }
 
 .home-main-anim-holder + .wp-block-heading {
-  max-width: var(--insurance-section-title-max);
-  margin: 0 auto var(--insurance-section-gap);
+  margin: 100px auto var(--insurance-section-gap);
   line-height: 0.96;
   text-align: center;
   text-wrap: balance;
 }
 
 .home-main-anim-holder + .wp-block-heading + .wp-block-columns,
-.home-main-anim-holder + .wp-block-heading + .wp-block-columns + .wp-block-columns,
+.home-main-anim-holder
+  + .wp-block-heading
+  + .wp-block-columns
+  + .wp-block-columns,
 .home-main-anim-holder
   + .wp-block-heading
   + .wp-block-columns
@@ -174,7 +176,10 @@
   margin: 0 0 var(--insurance-row-gap);
 }
 
-.home-main-anim-holder + .wp-block-heading + .wp-block-columns > .wp-block-column,
+.home-main-anim-holder
+  + .wp-block-heading
+  + .wp-block-columns
+  > .wp-block-column,
 .home-main-anim-holder
   + .wp-block-heading
   + .wp-block-columns
