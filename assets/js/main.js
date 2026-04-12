@@ -28,16 +28,18 @@ const selectors = {
 let searchIndex = null;
 let mapLoader = null;
 
-const normalizeSearchValue = (value) => value.toLowerCase().replace(/\s+/g, " ").trim();
+const normalizeSearchValue = (value) =>
+  value.toLowerCase().replace(/\s+/g, " ").trim();
 
 const toggleMobileMenu = (forceState) => {
   if (!selectors.header) {
     return;
   }
 
-  const nextState = typeof forceState === "boolean"
-    ? forceState
-    : !selectors.header.classList.contains("menu-open");
+  const nextState =
+    typeof forceState === "boolean"
+      ? forceState
+      : !selectors.header.classList.contains("menu-open");
 
   selectors.header.classList.toggle("menu-open", nextState);
 };
@@ -47,9 +49,10 @@ const toggleSearchPopup = (forceState) => {
     return;
   }
 
-  const nextState = typeof forceState === "boolean"
-    ? forceState
-    : !selectors.searchPopup.classList.contains("search-popup_open");
+  const nextState =
+    typeof forceState === "boolean"
+      ? forceState
+      : !selectors.searchPopup.classList.contains("search-popup_open");
 
   selectors.searchPopup.classList.toggle("search-popup_open", nextState);
   selectors.searchResults.classList.toggle(
@@ -75,9 +78,10 @@ const toggleModal = (forceState) => {
     return;
   }
 
-  const nextState = typeof forceState === "boolean"
-    ? forceState
-    : !selectors.modal.classList.contains("modal-open");
+  const nextState =
+    typeof forceState === "boolean"
+      ? forceState
+      : !selectors.modal.classList.contains("modal-open");
 
   selectors.modal.classList.toggle("modal-open", nextState);
 };
@@ -101,10 +105,12 @@ const renderSearchResults = (results, query) => {
     return;
   }
 
-  const items = results.map((item) => {
-    const href = toSitePath(item.route);
-    return `<a class="search-res-post" href="${href}">${item.title}</a>`;
-  }).join("");
+  const items = results
+    .map((item) => {
+      const href = toSitePath(item.route);
+      return `<a class="search-res-post" href="${href}">${item.title}</a>`;
+    })
+    .join("");
 
   selectors.searchResultsText.innerHTML = `
     <div class="search-res-count">Результатов: <strong>${results.length}</strong></div>
@@ -142,10 +148,14 @@ const handleSearch = async (event) => {
 
   try {
     const index = await ensureSearchIndex();
-    const results = index.filter((item) => {
-      const haystack = normalizeSearchValue(`${item.title} ${item.excerpt || ""}`);
-      return haystack.includes(query);
-    }).slice(0, 12);
+    const results = index
+      .filter((item) => {
+        const haystack = normalizeSearchValue(
+          `${item.title} ${item.excerpt || ""}`,
+        );
+        return haystack.includes(query);
+      })
+      .slice(0, 12);
 
     renderSearchResults(results, query);
   } catch (error) {
@@ -162,13 +172,17 @@ const initLoadMore = () => {
   }
 
   selectors.loadMore.addEventListener("click", () => {
-    const hiddenCards = Array.from(document.querySelectorAll("article[data-is-hidden]"));
+    const hiddenCards = Array.from(
+      document.querySelectorAll("article[data-is-hidden]"),
+    );
     hiddenCards.slice(0, 9).forEach((card) => {
       card.removeAttribute("data-is-hidden");
     });
 
     if (!document.querySelector("article[data-is-hidden]")) {
-      selectors.loadMore.closest(".load-more-holder")?.setAttribute("hidden", "hidden");
+      selectors.loadMore
+        .closest(".load-more-holder")
+        ?.setAttribute("hidden", "hidden");
     }
   });
 };
@@ -218,14 +232,17 @@ const initViewportAnimations = () => {
     return;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        markInViewport(entry.target);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          markInViewport(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 },
+  );
 
   nodes.forEach((node) => observer.observe(node));
 };
@@ -236,7 +253,9 @@ const initForms = () => {
       event.preventDefault();
       form.classList.remove("invalid", "unaccepted");
 
-      const requiredCheckboxes = Array.from(form.querySelectorAll('input[type="checkbox"][required]'));
+      const requiredCheckboxes = Array.from(
+        form.querySelectorAll('input[type="checkbox"][required]'),
+      );
       if (requiredCheckboxes.some((checkbox) => !checkbox.checked)) {
         form.classList.add("unaccepted");
       }
@@ -295,20 +314,21 @@ const initMaps = async () => {
 
   try {
     const ymaps3 = await loadYandexMaps(mapNode.dataset.apikey || "");
-    const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } = ymaps3;
+    const {
+      YMap,
+      YMapDefaultSchemeLayer,
+      YMapDefaultFeaturesLayer,
+      YMapMarker,
+    } = ymaps3;
     const center = [Number(mapNode.dataset.lon), Number(mapNode.dataset.lat)];
     const zoom = Number(mapNode.dataset.zoom || 14);
 
-    const map = new YMap(
-      mapNode,
-      { location: { center, zoom } },
-      [
-        new YMapDefaultSchemeLayer({
-          customization: [{ stylers: [{ saturation: -1 }, { lightness: 0.15 }] }],
-        }),
-        new YMapDefaultFeaturesLayer({}),
-      ],
-    );
+    const map = new YMap(mapNode, { location: { center, zoom } }, [
+      new YMapDefaultSchemeLayer({
+        customization: [{ stylers: [{ saturation: -1 }, { lightness: 0.15 }] }],
+      }),
+      new YMapDefaultFeaturesLayer({}),
+    ]);
 
     const marker = document.createElement("div");
     marker.className = "ya-map-marker";
@@ -336,12 +356,16 @@ const initWavesBlock = () => {
     return;
   }
 
-  const elements = Array.from(record.querySelectorAll(".tn-elem[data-animate-sbs-opts]"));
+  const elements = Array.from(
+    record.querySelectorAll(".tn-elem[data-animate-sbs-opts]"),
+  );
   if (elements.length === 0) {
     return;
   }
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const toNumber = (value, fallback = 0) => {
     const num = Number(value);
@@ -353,7 +377,7 @@ const initWavesBlock = () => {
       return null;
     }
     try {
-      return JSON.parse(raw.replace(/'/g, "\""));
+      return JSON.parse(raw.replace(/'/g, '"'));
     } catch (error) {
       return null;
     }
@@ -397,12 +421,22 @@ const initWavesBlock = () => {
       }
 
       if (delay > 0) {
-        segments.push({ start: pos, end: pos + delay, from: current, to: current });
+        segments.push({
+          start: pos,
+          end: pos + delay,
+          from: current,
+          to: current,
+        });
         pos += delay;
       }
 
       if (duration > 0) {
-        segments.push({ start: pos, end: pos + duration, from: current, to: next });
+        segments.push({
+          start: pos,
+          end: pos + duration,
+          from: current,
+          to: next,
+        });
         pos += duration;
       }
 
@@ -419,7 +453,10 @@ const initWavesBlock = () => {
 
   const findOpacityStart = (timeline) => {
     for (const segment of timeline.segments) {
-      if (segment.from.op !== segment.to.op && segment.to.op > segment.from.op) {
+      if (
+        segment.from.op !== segment.to.op &&
+        segment.to.op > segment.from.op
+      ) {
         return segment.start;
       }
     }
@@ -427,19 +464,31 @@ const initWavesBlock = () => {
   };
 
   const buildConfig = (el) => {
-    const optsRaw = getResponsiveValue(el, "animateSbsOpts", "animateSbsOptsRes320", "animateSbsOptsRes640");
+    const optsRaw = getResponsiveValue(
+      el,
+      "animateSbsOpts",
+      "animateSbsOptsRes320",
+      "animateSbsOptsRes640",
+    );
     const frames = parseOptions(optsRaw);
     if (!frames || frames.length === 0) {
       return null;
     }
 
-    const trgRaw = getResponsiveValue(el, "animateSbsTrgofst", "animateSbsTrgofstRes320", "animateSbsTrgofstRes640");
+    const trgRaw = getResponsiveValue(
+      el,
+      "animateSbsTrgofst",
+      "animateSbsTrgofstRes320",
+      "animateSbsTrgofstRes640",
+    );
     const trgOffset = toNumber(trgRaw, 0);
 
     return {
       el,
       trgOffset,
       timeline: buildTimeline(frames),
+      isText: el.dataset.elemType === "text",
+      hasAnimHidden: el.classList.contains("t396__elem--anim-hidden"),
     };
   };
 
@@ -481,7 +530,11 @@ const initWavesBlock = () => {
   let pinHeight = 0;
   let frameRequested = false;
   let pinnedState = "normal";
-  const getRecordTop = () => record.getBoundingClientRect().top + (window.scrollY || 0);
+  let fixedTop = 0;
+  let isMobile = window.innerWidth <= 639;
+  const mobileTextBaseOpacity = 0.2;
+  const getRecordTop = () =>
+    record.getBoundingClientRect().top + (window.scrollY || 0);
   let recordTop = 0;
 
   const setPlaceholderHeight = (node, value) => {
@@ -490,8 +543,14 @@ const initWavesBlock = () => {
 
   const syncFixedBox = () => {
     const rect = record.getBoundingClientRect();
-    artboard.style.setProperty("--t396-fixed-left", `${Math.round(rect.left)}px`);
-    artboard.style.setProperty("--t396-fixed-width", `${Math.round(rect.width)}px`);
+    artboard.style.setProperty(
+      "--t396-fixed-left",
+      `${Math.round(rect.left)}px`,
+    );
+    artboard.style.setProperty(
+      "--t396-fixed-width",
+      `${Math.round(rect.width)}px`,
+    );
   };
 
   const clearPinnedState = () => {
@@ -502,6 +561,9 @@ const initWavesBlock = () => {
 
   const setPinnedState = (nextState, force = false) => {
     if (!force && pinnedState === nextState) {
+      if (nextState === "fixed") {
+        fixedTop = artboard.getBoundingClientRect().top;
+      }
       return;
     }
 
@@ -513,20 +575,21 @@ const initWavesBlock = () => {
       artboard.classList.remove("t396__artboard--ended");
       artboard.classList.add("t396__artboard--fixed");
       artboard.style.removeProperty("--t396-end-top");
+      fixedTop = artboard.getBoundingClientRect().top;
       return;
     }
 
     if (nextState === "ended") {
-      const fixedTop = artboard.getBoundingClientRect().top;
       setPlaceholderHeight(spacerBefore, pinHeight);
       setPlaceholderHeight(spacerAfter, 0);
       artboard.classList.remove("t396__artboard--fixed");
       artboard.classList.add("t396__artboard--ended");
-      artboard.style.setProperty("--t396-end-top", `${Math.round(pinSpan + fixedTop)}px`);
+      artboard.style.setProperty("--t396-end-top", `${Math.round(pinSpan)}px`);
       return;
     }
 
     clearPinnedState();
+    fixedTop = 0;
     setPlaceholderHeight(spacerBefore, 0);
     setPlaceholderHeight(spacerAfter, pinSpan);
   };
@@ -535,7 +598,17 @@ const initWavesBlock = () => {
     configs.forEach((config) => {
       const localDistance = distance - config.trgOffset;
       const frame = resolveFrame(config.timeline, localDistance);
-      applyState(config.el, frame);
+      let nextFrame = frame;
+
+      if (isMobile && config.isText && config.hasAnimHidden) {
+        const gatedOpacity = localDistance < 0 ? 0 : frame.op;
+        const easedOpacity =
+          mobileTextBaseOpacity +
+          (1 - mobileTextBaseOpacity) * clamp(gatedOpacity, 0, 1);
+        nextFrame = { ...frame, op: easedOpacity };
+      }
+
+      applyState(config.el, nextFrame);
     });
   };
 
@@ -554,7 +627,15 @@ const initWavesBlock = () => {
 
     if (scrollY < recordTop) {
       setPinnedState("normal");
-    } else if (scrollY >= recordTop + pinSpan) {
+      return;
+    }
+
+    if (pinnedState === "normal") {
+      setPinnedState("fixed");
+    }
+
+    const endPoint = recordTop + pinSpan - fixedTop;
+    if (scrollY >= endPoint) {
       setPinnedState("ended");
     } else {
       setPinnedState("fixed");
@@ -574,6 +655,7 @@ const initWavesBlock = () => {
   };
 
   const calculate = () => {
+    isMobile = window.innerWidth <= 639;
     configs = elements.map(buildConfig).filter(Boolean);
     if (configs.length === 0) {
       return;
@@ -588,12 +670,24 @@ const initWavesBlock = () => {
     pinHeight = artboardHeight + pinSpan;
     recordTop = getRecordTop();
 
-    const targetId = window.innerWidth >= 1200 ? "1719214219036" : "1716205332561";
-    const pinTarget = configs.find((config) => config.el.dataset.elemId === targetId);
+    const targetId =
+      window.innerWidth >= 1200 ? "1719214219036" : "1716205332561";
+    const pinTarget = configs.find(
+      (config) => config.el.dataset.elemId === targetId,
+    );
     if (pinTarget) {
       const opacityStart = findOpacityStart(pinTarget.timeline);
       if (opacityStart !== null) {
-        pinSpan = Math.max(0, Math.min(animationSpan, pinTarget.trgOffset + opacityStart));
+        const revealOffset = Math.round(
+          window.innerHeight * (window.innerWidth >= 1200 ? 0.45 : 0.55),
+        );
+        pinSpan = Math.max(
+          0,
+          Math.min(
+            animationSpan,
+            pinTarget.trgOffset + opacityStart + revealOffset,
+          ),
+        );
       } else {
         pinSpan = Math.max(0, Math.min(animationSpan, pinTarget.trgOffset));
       }
@@ -631,7 +725,9 @@ const initWavesBlock = () => {
 };
 
 const initHistoryParallax = () => {
-  const holder = document.querySelector(".zunami_visible-lg.zunami-history-blocks-holder");
+  const holder = document.querySelector(
+    ".zunami_visible-lg.zunami-history-blocks-holder",
+  );
   if (!holder) {
     return;
   }
@@ -646,7 +742,9 @@ const initHistoryParallax = () => {
 
     const maxScrollLeft = holder.scrollWidth - holder.clientWidth;
     const tolerance = 4;
-    const atEnd = maxScrollLeft <= tolerance || holder.scrollLeft >= maxScrollLeft - tolerance;
+    const atEnd =
+      maxScrollLeft <= tolerance ||
+      holder.scrollLeft >= maxScrollLeft - tolerance;
 
     holder.classList.toggle("zunami-history-blocks-holder_parallax", atEnd);
   };
@@ -669,7 +767,9 @@ const initHistoryParallax = () => {
 };
 
 const initHistoryPopups = () => {
-  const modals = Array.from(document.querySelectorAll(".history-modal[data-history-modal]"));
+  const modals = Array.from(
+    document.querySelectorAll(".history-modal[data-history-modal]"),
+  );
   if (modals.length === 0) {
     return;
   }
@@ -705,7 +805,10 @@ const initHistoryPopups = () => {
 
   const openModal = (modal) => {
     closeAll();
-    lastActive = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    lastActive =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
 
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
@@ -768,7 +871,11 @@ const initShareLinks = () => {
       shareUrl.searchParams.set("url", window.location.href);
       shareUrl.searchParams.set("title", document.title);
       shareUrl.searchParams.set("noparse", "true");
-      window.open(shareUrl.toString(), "_blank", "noopener,noreferrer,width=700,height=500");
+      window.open(
+        shareUrl.toString(),
+        "_blank",
+        "noopener,noreferrer,width=700,height=500",
+      );
     });
   });
 };
@@ -795,49 +902,63 @@ const initPageProgress = () => {
 };
 
 const initPageTransitions = () => {
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
-    }
+  document.addEventListener(
+    "click",
+    (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
 
-    const link = target.closest("a");
-    if (!link) {
-      return;
-    }
+      const link = target.closest("a");
+      if (!link) {
+        return;
+      }
 
-    if (link.target === "_blank" || link.hasAttribute("download")) {
-      return;
-    }
+      if (link.target === "_blank" || link.hasAttribute("download")) {
+        return;
+      }
 
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) {
-      return;
-    }
+      const href = link.getAttribute("href");
+      if (
+        !href ||
+        href.startsWith("#") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("javascript:")
+      ) {
+        return;
+      }
 
-    let url;
-    try {
-      url = new URL(href, window.location.href);
-    } catch (error) {
-      return;
-    }
+      let url;
+      try {
+        url = new URL(href, window.location.href);
+      } catch (error) {
+        return;
+      }
 
-    if (url.origin !== window.location.origin) {
-      return;
-    }
+      if (url.origin !== window.location.origin) {
+        return;
+      }
 
-    event.preventDefault();
-    document.documentElement.classList.add("page-fadeout");
-    setTimeout(() => {
-      window.location.href = url.href;
-    }, 250);
-  }, { capture: true });
+      event.preventDefault();
+      document.documentElement.classList.add("page-fadeout");
+      setTimeout(() => {
+        window.location.href = url.href;
+      }, 250);
+    },
+    { capture: true },
+  );
 };
 
 const initEvents = () => {
   selectors.mobileToggle?.addEventListener("click", () => toggleMobileMenu());
-  selectors.searchOpen?.addEventListener("click", () => toggleSearchPopup(true));
-  selectors.searchClose?.addEventListener("click", () => toggleSearchPopup(false));
+  selectors.searchOpen?.addEventListener("click", () =>
+    toggleSearchPopup(true),
+  );
+  selectors.searchClose?.addEventListener("click", () =>
+    toggleSearchPopup(false),
+  );
   selectors.searchForm?.addEventListener("submit", handleSearch);
   selectors.searchInput?.addEventListener("input", () => {
     if (!selectors.searchInput?.value.trim()) {
@@ -845,7 +966,9 @@ const initEvents = () => {
     }
   });
   selectors.modalOpen?.addEventListener("click", () => toggleModal(true));
-  selectors.modal?.querySelector("[data-modal-close]")?.addEventListener("click", () => toggleModal(false));
+  selectors.modal
+    ?.querySelector("[data-modal-close]")
+    ?.addEventListener("click", () => toggleModal(false));
 
   document.addEventListener("click", (event) => {
     const target = event.target;
@@ -853,7 +976,10 @@ const initEvents = () => {
       return;
     }
 
-    if (target.closest('a[href="#main_popup"]') || target.closest('button[data-href="#main_popup"]')) {
+    if (
+      target.closest('a[href="#main_popup"]') ||
+      target.closest('button[data-href="#main_popup"]')
+    ) {
       event.preventDefault();
       toggleModal(true);
     }
