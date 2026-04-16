@@ -7,7 +7,9 @@
   border-top: 1px solid #558dff;
 }
 
-.wp-block-accordion-item .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon {
+.wp-block-accordion-item
+  .wp-block-accordion-heading
+  .wp-block-accordion-heading--toggle-icon {
   display: none;
 }
 
@@ -15,7 +17,7 @@
   margin: 0;
 }
 
-.wp-block-accordion-heading__toggle {
+.wp-block-accordion-heading--toggle {
   --faq-icon-color: #145ff5;
   --faq-icon-vert: 12px;
   position: relative;
@@ -35,7 +37,7 @@
   cursor: pointer;
 }
 
-.wp-block-accordion-heading__toggle::after {
+.wp-block-accordion-heading--toggle::after {
   content: "";
   position: absolute;
   right: 0;
@@ -53,15 +55,15 @@
   transition: background 0.2s ease;
 }
 
-.wp-block-accordion-heading__toggle:hover {
+.wp-block-accordion-heading--toggle:hover {
   --faq-icon-color: #558dff;
 }
 
-.wp-block-accordion-item.is-open .wp-block-accordion-heading__toggle {
+.wp-block-accordion-item.is-open .wp-block-accordion-heading--toggle {
   --faq-icon-vert: 0px;
 }
 
-.wp-block-accordion-heading__toggle-title {
+.wp-block-accordion-heading--toggle-title {
   font-size: inherit;
   line-height: inherit;
   font-weight: inherit;
@@ -83,7 +85,7 @@
 }
 
 @media (max-width: 480px), (orientation: landscape) and (max-height: 480px) {
-  .wp-block-accordion-heading__toggle {
+  .wp-block-accordion-heading--toggle {
     font-size: 16px;
     padding: 18px 36px 18px 0;
   }

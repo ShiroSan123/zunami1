@@ -196,7 +196,7 @@ const initAccordions = () => {
   const setItemState = (item, isOpen) => {
     item.classList.toggle("is-open", isOpen);
     const panel = item.querySelector(".wp-block-accordion-panel");
-    const button = item.querySelector(".wp-block-accordion-heading__toggle");
+    const button = item.querySelector(".wp-block-accordion-heading--toggle");
 
     if (button) {
       button.setAttribute("aria-expanded", isOpen ? "true" : "false");
@@ -214,7 +214,7 @@ const initAccordions = () => {
 
   const itemList = Array.from(items);
   itemList.forEach((item, index) => {
-    const button = item.querySelector(".wp-block-accordion-heading__toggle");
+    const button = item.querySelector(".wp-block-accordion-heading--toggle");
     const panel = item.querySelector(".wp-block-accordion-panel");
     if (button && panel && !panel.id) {
       panel.id = `faq-panel-${index + 1}`;
@@ -233,7 +233,7 @@ const initAccordions = () => {
   }
 
   itemList.forEach((item) => {
-    const button = item.querySelector(".wp-block-accordion-heading__toggle");
+    const button = item.querySelector(".wp-block-accordion-heading--toggle");
     if (!button) {
       return;
     }
@@ -382,9 +382,9 @@ const initWavesBlock = () => {
     return;
   }
 
-  const artboard = record.querySelector(".t396__artboard");
-  const spacerBefore = record.querySelector(".t396__pin-spacer--before");
-  const spacerAfter = record.querySelector(".t396__pin-spacer--after");
+  const artboard = record.querySelector(".t396--artboard");
+  const spacerBefore = record.querySelector(".t396--pin-spacer--before");
+  const spacerAfter = record.querySelector(".t396--pin-spacer--after");
 
   if (!artboard || !spacerBefore || !spacerAfter) {
     return;
@@ -522,7 +522,7 @@ const initWavesBlock = () => {
       trgOffset,
       timeline: buildTimeline(frames),
       isText: el.dataset.elemType === "text",
-      hasAnimHidden: el.classList.contains("t396__elem--anim-hidden"),
+      hasAnimHidden: el.classList.contains("t396--elem--anim-hidden"),
     };
   };
 
@@ -588,8 +588,8 @@ const initWavesBlock = () => {
   };
 
   const clearPinnedState = () => {
-    artboard.classList.remove("t396__artboard--fixed");
-    artboard.classList.remove("t396__artboard--ended");
+    artboard.classList.remove("t396--artboard--fixed");
+    artboard.classList.remove("t396--artboard--ended");
     artboard.style.removeProperty("--t396-end-top");
   };
 
@@ -606,8 +606,8 @@ const initWavesBlock = () => {
     if (nextState === "fixed") {
       setPlaceholderHeight(spacerBefore, pinHeight);
       setPlaceholderHeight(spacerAfter, 0);
-      artboard.classList.remove("t396__artboard--ended");
-      artboard.classList.add("t396__artboard--fixed");
+      artboard.classList.remove("t396--artboard--ended");
+      artboard.classList.add("t396--artboard--fixed");
       artboard.style.removeProperty("--t396-end-top");
       fixedTop = artboard.getBoundingClientRect().top;
       return;
@@ -616,8 +616,8 @@ const initWavesBlock = () => {
     if (nextState === "ended") {
       setPlaceholderHeight(spacerBefore, pinHeight);
       setPlaceholderHeight(spacerAfter, 0);
-      artboard.classList.remove("t396__artboard--fixed");
-      artboard.classList.add("t396__artboard--ended");
+      artboard.classList.remove("t396--artboard--fixed");
+      artboard.classList.add("t396--artboard--ended");
       artboard.style.setProperty("--t396-end-top", `${Math.round(pinSpan)}px`);
       return;
     }
@@ -807,12 +807,10 @@ const initHistoryStacking = () => {
   }
 
   const sampleBlock = stack.querySelector(".zunami-history-block");
-  const blocks = Array.from(
-    stack.querySelectorAll(".zunami-history-block"),
-  );
+  const blocks = Array.from(stack.querySelectorAll(".zunami-history-block"));
   const nextSection = stack
     .closest(".zunami_hidden-lg")
-    ?.querySelector(".zunami-history-block__next");
+    ?.querySelector(".zunami-history-block--next");
   const parseSize = (value) => {
     if (!value) {
       return 0;
@@ -923,13 +921,13 @@ const initHistoryPopups = () => {
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("history-modal-open");
 
-    const closeBtn = modal.querySelector(".history-modal__close");
+    const closeBtn = modal.querySelector(".history-modal--close");
     if (closeBtn) {
       closeBtn.focus();
     }
   };
 
-  document.querySelectorAll(".zunami-history-card__link").forEach((link) => {
+  document.querySelectorAll(".zunami-history-card--link").forEach((link) => {
     link.addEventListener("click", (event) => {
       if (!isMobile()) {
         return;
@@ -992,7 +990,7 @@ const initShareLinks = () => {
 const initPageProgress = () => {
   const progress = document.createElement("div");
   progress.className = "page-progress";
-  progress.innerHTML = '<div class="page-progress__bar"></div>';
+  progress.innerHTML = '<div class="page-progress--bar"></div>';
   document.body.appendChild(progress);
 
   requestAnimationFrame(() => {

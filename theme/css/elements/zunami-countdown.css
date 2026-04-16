@@ -62,10 +62,10 @@
   animation-play-state: running;
 }
 
-.zunami-countdown__value {
+.zunami-countdown--value {
 }
 
-.zunami-countdown__value::after {
+.zunami-countdown--value::after {
   content: counter(int);
 }
 

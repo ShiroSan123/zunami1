@@ -70,7 +70,8 @@
 
 
 :root {
-	--fs-h1: var(--fs-xxl);
+	/* H1: 24px -> 42px */
+	--fs-h1: 2.625rem;
 	--fw-h1: 500;
 	--color-h1: var(--color-main);
 
@@ -146,5 +147,6 @@
 		--box-pad-md: 4rem;
 		--site-pad-outerblock: 4rem;
 		--fs-xxl: 8.5rem;
+		--fs-h1: 1.5rem;
 	}
 }
