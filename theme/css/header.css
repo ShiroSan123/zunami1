@@ -1,8 +1,8 @@
 :root {
-	--top-icon-h: 1.4rem;
-	--logo-w: 7.5rem;
+	--top-icon-h: 4.5rem;
+	--logo-w: 15rem;
 	--fs-menu-item: var(--fs-xs);
-	--fs-header-btn: .91rem;
+	--fs-header-btn: 1.8rem;
 }
 
 .site-header-holder {
@@ -22,16 +22,15 @@
 	width: 100%;
 	max-width: var(--site-max-width);
 	margin: 0 auto;
-	padding-top: 1.25rem;
-	padding-bottom: 1.25rem;
+	padding-top: var(--site-pad-side);
+	padding-bottom: var(--site-pad-side);
 
     padding-left: var(--site-pad-side);
     padding-right: var(--site-pad-side);
     backdrop-filter: blur(8px);
     background: var(--color-bg);
+	--color-bg: #f8f8f8;
 }
-
-
 
 .site-header .custom-logo-link {
 	display: block;
@@ -41,10 +40,9 @@
 	width: var(--logo-w);
 }
 
-
 .site-header .main-navigation {
 	width: auto;
-	padding-left: 5rem;
+	padding-left: 0;
 }
 .main-navigation > DIV {
 	display: flex;
@@ -92,19 +90,19 @@
 	opacity: 1;
 }
 
-
 .top-icons {
 	display: flex;
-	gap: 1rem;
+	gap: 4rem;
 }
 .top-icons .zunami-button {
     --button-bgcolor: var(--color-main);
     --button-color: var(--color-white);
 
-    --button-pad-h: 1.4rem;
-    --button-pad-v: .66rem;
+    --button-pad-h: 2rem;
+    --button-pad-v: 2rem;
     --button-fs: var(--fs-header-btn);
     --button-radius: 1;
+	display: none;
 }
 .top-icons .zunami-button:hover {
     --button-bgcolor: var(--color-white);
@@ -120,9 +118,8 @@
 	height: var(--top-icon-h);
 }
 #mobile_menu_open {
-	display: none;
+	display: block;
 }
-
 
 .mobile-menu-holder {
 	display: none;
@@ -144,9 +141,8 @@
     align-items: center;
 }
 
-
 .mobile-navigation  {
-	--fs-menu-item: 3rem;
+	--fs-menu-item: 5rem;
 }
 .mobile-navigation .menu {
 	display: flex;
@@ -178,88 +174,119 @@
     text-decoration: none;
 }
 .mobile-menu-sidebar {
-	--fs-p: 1.5rem;
+	--fs-p: 2.5rem;
 	padding-bottom: 5rem;
 }
 
 .mobile-soc-icons {
 	display: flex;
 	flex-flow: row nowrap;
-	gap: 1rem;
+	gap: 4rem;
 	justify-content: center;
 	align-items: center;
 }
 .mobile-soc-icon {
-	width: 2rem;
+	width: 5rem;
 }
 
-@media (max-width: 1199px) {
-	:root {
-		--top-icon-h: 2.4rem;
-		--logo-w: 9.5rem;
-		--fs-header-btn: 1.8rem;
-	}
-	.site-header {
-		padding-top: 2rem;
-		padding-bottom: 2rem;
-	}
-	.site-header .main-navigation {
-		padding-left: 0;
-	}
-	.top-icons .zunami-button {
-	    --button-pad-h: 2rem;
-	    --button-pad-v: 2rem;
-	}
+#site-navigation {
+	display: none;
 }
 
-@media (max-width: 959px) {
+@media (min-width: 640px) {
 	:root {
 		--top-icon-h: 2.4rem;
 		--logo-w: 8rem;
+		--fs-header-btn: 1.8rem;
 	}
-	.top-icons .zunami-button {
-		display: none;
-	}
-	#mobile_menu_open {
-		display: block;
-	}
-	#site-navigation {
-		display: none;
-	}
-	.site-header {
-		--color-bg: #f8f8f8;
-		padding-top: var(--site-pad-side);
-		padding-bottom: var(--site-pad-side);
-	}
+
 	.top-icons {
 		gap: 2rem;
 	}
+
+	.mobile-navigation {
+	    --fs-menu-item: 3rem;
+	}
+
+	.mobile-menu-sidebar {
+		--fs-p: 1.5rem;
+	}
+
 	.mobile-soc-icons {
 		gap: 2rem;
 	}
+
 	.mobile-soc-icon {
 		width: 3rem;
 	}
 }
 
-@media (max-width: 639px) {
+@media (min-width: 960px) {
 	:root {
-		--top-icon-h: 4.5rem;
-		--logo-w: 15rem;
+		--top-icon-h: 2.4rem;
+		--logo-w: 9.5rem;
+		--fs-header-btn: 1.8rem;
 	}
+
+	.site-header {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		--color-bg: #f8f8f880;
+	}
+
 	.top-icons {
-		gap: 4rem;
+		gap: 1rem;
 	}
+
+	.top-icons .zunami-button {
+		display: inline-flex;
+		--button-pad-h: 2rem;
+		--button-pad-v: 2rem;
+	}
+
+	#mobile_menu_open {
+		display: none;
+	}
+
+	#site-navigation {
+		display: block;
+	}
+
 	.mobile-navigation {
-	    --fs-menu-item: 5rem;
+	    --fs-menu-item: 3rem;
 	}
+
 	.mobile-menu-sidebar {
-		--fs-p: 2.5rem;
+		--fs-p: 1.5rem;
 	}
+
 	.mobile-soc-icons {
-		gap: 4rem;
+		gap: 1rem;
 	}
+
 	.mobile-soc-icon {
-		width: 5rem;
+		width: 2rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	:root {
+		--top-icon-h: 1.4rem;
+		--logo-w: 7.5rem;
+		--fs-header-btn: .91rem;
+	}
+
+	.site-header {
+		padding-top: 1.25rem;
+		padding-bottom: 1.25rem;
+	}
+
+	.site-header .main-navigation {
+		padding-left: 5rem;
+	}
+
+	.top-icons .zunami-button {
+		--button-pad-h: 1.4rem;
+		--button-pad-v: .66rem;
 	}
 }

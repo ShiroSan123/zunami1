@@ -3,9 +3,9 @@
 .zunami-button {
     --button-bgcolor: var(--color-light);
     --button-color: var(--color-white);
-    --button-pad-v: .9rem;
-    --button-pad-h: 1.75rem;
-    --button-fs: var(--fs-md);
+    --button-pad-v: 3rem;
+    --button-pad-h: 4rem;
+    --button-fs: var(--fs-xs);
     --button-radius: .25;
 }
 .zunami-button:hover {
@@ -13,9 +13,9 @@
     --button-color: var(--color-light);    
 }
 .zunami-button.zunami-button_simple {
-    --button-pad-v: 1.3rem;
-    --button-pad-h: 3rem;
-    --button-radius: .13;
+    --button-pad-v: 3.5rem;
+    --button-pad-h: 5rem;
+    --button-radius: .2;
 }
 .zunami-button.zunami-button_simple:hover {
     --button-bgcolor: var(--color-light);
@@ -45,7 +45,7 @@
 
     padding: var(--button-pad-v) var(--button-pad-h);
 
-    transition: background-color var(--tr) opacity var(--tr);
+    transition: background-color var(--tr), opacity var(--tr);
 
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -60,11 +60,11 @@
     align-items: center;
     justify-content: center;
 
-    width: 2rem;
-    height: 2rem;
+    width: calc(2 * var(--button-fs));
+    height: calc(2 * var(--button-fs));
     border-radius: 50%;
 
-    background: var(--button-color);;    
+    background: var(--button-color);
 }
 .zunami-button:hover .button-arrow::after {
     animation: btn-arrow-move var(--tr) linear 0 1;
@@ -73,13 +73,14 @@
 .zunami-button .button-arrow::after {
     content: "";
     display: block;
-    width: 1rem;
-    height: 1rem;
-    background-color: var(--button-bgcolor);;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--button-bgcolor);
     -webkit-mask-image: url('../../icons/button-arrow.svg');
     mask-image: url('../../icons/button-arrow.svg');
     mask-repeat: no-repeat;
     mask-position: center;
+    mask-size: 1.5rem;
 }
 
 .zunami-button.zunami-button_simple:hover {
@@ -109,29 +110,16 @@
 }
 .zunami-button-alt::after {
     position: relative;
-    padding-left: 2rem;
-    width: 4rem;
-    height: 2rem;
+    padding-left: 4rem;
+    width: 8rem;
+    height: 4rem;
     content: "";
     background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSI+DQoJPHBhdGggZD0iTTkgMThDNC4wMjkyIDE4IC0xLjc2MTIyZS0wNyAxMy45NzA4IC0zLjkzNDAyZS0wNyA5Qy02LjEwNjgzZS0wNyA0LjAyOTIxIDQuMDI5MiAyLjE3MjIzZS0wNiA5IDEuOTU0OTVlLTA2QzEzLjk3MDggMS43Mzc2N2UtMDYgMTggNC4wMjkyMSAxOCA5QzE4IDEzLjk3MDggMTMuOTY3OSAxOCA5IDE4WiIgZmlsbD0iIzE0NUZGNSIgY2xhc3M9ImJ0bi1hbHQtYXJyb3ctYmciPjwvcGF0aD4NCgk8cGF0aCBkPSJNMTEuMjI0NyA5LjM5NjczQzExLjM1NTIgOS4yNTk1MSAxMS4zNTUyIDkuMDMwODEgMTEuMjI0NyA4Ljg5MzU5TDcuODM1NTIgNS4zMjg3MkM3LjcwNTA2IDUuMTkxNSA3LjQ4ODYgNS4xOTE1IDcuMzU4MTMgNS4zMjg3MkM3LjIyNDcgNS40NjU5NCA3LjIyNDcgNS42OTQ2NCA3LjM1ODEzIDUuODMxODZMMTAuNTA3MSA5LjE0NTE2TDcuMzU4MTMgMTIuNDU4NUM3LjIyNDcgMTIuNTk1NyA3LjIyNDcgMTIuODI0NCA3LjM1ODEzIDEyLjk2MTZDNy40ODg2IDEzLjA5ODggNy43MDUwNiAxMy4wOTg4IDcuODM1NTMgMTIuOTYxNkwxMS4yMjQ3IDkuMzk2NzNaIiBmaWxsPSIjRjVGNkZDIiBjbGFzcz0iYnRuLWFsdC1hcnJvdy1jb2xvciI+PC9wYXRoPg0KPC9zdmc+IA==") center center no-repeat;
     display: inline-block;
 }
 
 
-@media (max-width: 1199px) {
-    .zunami-button {
-        --button-pad-v: 1.5rem;
-        --button-pad-h: 2.5rem;
-        --button-fs: 1.8rem;
-    }
-    .zunami-button.zunami-button_simple {
-        /*--button-pad-v: 1.3rem;*/
-        /*--button-pad-h: 3rem;*/
-    }
-
-
-}
-@media (max-width: 959px) {
+@media (min-width: 640px) {
     .zunami-button {
         --button-pad-v: 2.5rem;
         --button-pad-h: 3.5rem;
@@ -142,36 +130,35 @@
         --button-pad-h: 4rem;
         --button-radius: .18;
     }
-    .zunami-button .button-arrow {
+    .zunami-button-alt::after {
+        padding-left: 2rem;
         width: 4rem;
-        height: 4rem;
-    }
-    .zunami-button .button-arrow::after {
-        width: 2rem;
         height: 2rem;
-        mask-size: 1.5rem;
     }
 }
 
-@media (max-width: 639px) {
+@media (min-width: 960px) {
     .zunami-button {
-        --button-pad-v: 3rem;
-        --button-pad-h: 4rem;
-        --button-fs: var(--fs-xs);
-    }
-    .zunami-button .button-arrow::after {
-        width: 2rem;
-        height: 2rem;
-        mask-size: 1.5rem;
+        --button-pad-v: 1.5rem;
+        --button-pad-h: 2.5rem;
+        --button-fs: 1.8rem;
     }
     .zunami-button.zunami-button_simple {
-        --button-pad-v: 3.5rem;
-        --button-pad-h: 5rem;
-        --button-radius: .2;
+        --button-pad-v: 1.3rem;
+        --button-pad-h: 3rem;
+        --button-radius: .13;
     }
-    .zunami-button-alt::after {
-        padding-left: 4rem;
-        width: 8rem;
-        height: 4rem;
+    .zunami-button .button-arrow::after {
+        width: 1rem;
+        height: 1rem;
+        mask-size: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .zunami-button {
+        --button-pad-v: .9rem;
+        --button-pad-h: 1.75rem;
+        --button-fs: var(--fs-md);
     }
 }
