@@ -885,7 +885,8 @@ em {
   background: linear-gradient(180deg, #fff3eb, #ffffff);
 }
 
-.wp-block-accordion-heading--toggle {
+.wp-block-accordion-heading--toggle,
+.wp-block-accordion-heading__toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -899,7 +900,8 @@ em {
   font-weight: 700;
 }
 
-.wp-block-accordion-heading--toggle-icon {
+.wp-block-accordion-heading--toggle-icon,
+.wp-block-accordion-heading__toggle-icon {
   color: var(--color-accent);
 }
 

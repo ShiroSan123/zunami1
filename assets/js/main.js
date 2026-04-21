@@ -196,10 +196,15 @@ const initAccordions = () => {
     return;
   }
 
+  const getAccordionButton = (item) =>
+    item.querySelector(
+      ".wp-block-accordion-heading--toggle, .wp-block-accordion-heading__toggle",
+    );
+
   const setItemState = (item, isOpen) => {
     item.classList.toggle("is-open", isOpen);
     const panel = item.querySelector(".wp-block-accordion-panel");
-    const button = item.querySelector(".wp-block-accordion-heading--toggle");
+    const button = getAccordionButton(item);
 
     if (button) {
       button.setAttribute("aria-expanded", isOpen ? "true" : "false");
@@ -217,7 +222,7 @@ const initAccordions = () => {
 
   const itemList = Array.from(items);
   itemList.forEach((item, index) => {
-    const button = item.querySelector(".wp-block-accordion-heading--toggle");
+    const button = getAccordionButton(item);
     const panel = item.querySelector(".wp-block-accordion-panel");
     if (button && panel && !panel.id) {
       panel.id = `faq-panel-${index + 1}`;
@@ -236,7 +241,7 @@ const initAccordions = () => {
   }
 
   itemList.forEach((item) => {
-    const button = item.querySelector(".wp-block-accordion-heading--toggle");
+    const button = getAccordionButton(item);
     if (!button) {
       return;
     }

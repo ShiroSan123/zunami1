@@ -3,10 +3,6 @@
   padding-bottom: 5rem;
 }
 .entry-title {
-  /*font-size: var(--fs-xxl);*/
-  /*color: var(--color-main);*/
-  /*line-height: var(--lh-md);*/
-  /*font-weight: 500;*/
   margin: 0;
   text-align: center;
 }
@@ -16,9 +12,7 @@
 .page-addapproval .entry-title {
   font-size: var(--fs-legal-title);
   line-height: 1.1;
-  font-weight: 700;
-}
-.entry-breadcrumps {
+  font-weight: 500;
 }
 .entry-header > H1.page-title {
   margin: 0;
@@ -56,7 +50,7 @@
 .single-post H2.wp-block-heading,
 .single-post H3.wp-block-heading {
   font-size: var(--fs-h4);
-  color: var(--color-black);
+  color: var(--color-base);
   margin: 2rem 0;
 }
 
