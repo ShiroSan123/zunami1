@@ -29,6 +29,7 @@
 	--fs-xxs: calc(var(--fs-mpl) * .75rem);		/* 12px */
 	--fs-xs: calc(var(--fs-mpl) * .875rem);		/* 14px */
 	--fs-sm: calc(var(--fs-mpl) * .9375rem);	/* 15px */
+	--fs-legal: 15px;
 	--fs-base: calc(var(--fs-mpl) * 1rem);		/* 16px */
 	--fs-md: calc(var(--fs-mpl) * 1.125rem);	/* 18px */
 	--fs-lg: calc(var(--fs-mpl) * 1.2rem);		/* 20px */
@@ -36,6 +37,34 @@
 	--fs-xxl: 8.5rem;
 	--fs-home-heading: 5rem;
 	--fs-post-title: calc(var(--fs-mpl) * 2.25rem);	/* 36px */
+
+	--h1-mobile: 4.4rem;
+	--h2-mobile: 3.2rem;
+	--h3-mobile: 2.4rem;
+	--h4-mobile: 2rem;
+	--h5-mobile: 1.8rem;
+	--h6-mobile: 1.6rem;
+	--display-xl-mobile: 5.2rem;
+
+	--h1-tablet: 5.6rem;
+	--h2-tablet: 4rem;
+	--h3-tablet: 2.8rem;
+	--h4-tablet: 2.2rem;
+	--h5-tablet: 1.8rem;
+	--h6-tablet: 1.6rem;
+	--display-xl-tablet: 7.2rem;
+
+	--h1-desktop: 7.2rem;
+	--h2-desktop: 4.8rem;
+	--h3-desktop: 3.2rem;
+	--h4-desktop: 2.4rem;
+	--h5-desktop: 2rem;
+	--h6-desktop: 1.6rem;
+	--display-xl-desktop: 9.6rem;
+
+	--legal-title-mobile: 2.4rem;
+	--legal-title-tablet: 3.6rem;
+	--legal-title-desktop: 5rem;
 }
 
 :root {
@@ -62,25 +91,32 @@
 }
 
 :root {
-	--fs-h1: var(--fs-home-heading);
-	--fw-h1: 500;
+	--fs-h1: var(--h1-mobile);
+	--fw-h1: 700;
 	--color-h1: var(--color-main);
 
-	--fs-h2: var(--fs-xxl);
-	--fw-h2: 500;
+	--fs-h2: var(--h2-mobile);
+	--fw-h2: 600;
 	--color-h2: var(--color-main);
 
-	--fs-h3: var(--fs-xxl);
-	--fw-h3: 500;
+	--fs-h3: var(--h3-mobile);
+	--fw-h3: 600;
 	--color-h3: var(--color-main);
 
-	--fs-h4: var(--fs-md);
-	--fw-h4: 400;
+	--fs-h4: var(--h4-mobile);
+	--fw-h4: 600;
 	--color-h4: var(--color-base);
 
-	--fs-h5: var(--fs-md);
-	--fw-h5: 400;
+	--fs-h5: var(--h5-mobile);
+	--fw-h5: 600;
 	--color-h5: var(--color-base);
+
+	--fs-h6: var(--h6-mobile);
+	--fw-h6: 600;
+	--color-h6: var(--color-base);
+
+	--fs-display-xl: var(--display-xl-mobile);
+	--fs-legal-title: var(--legal-title-mobile);
 
 	/*--fs-p: var(--fs-sm);*/
 	/*--fw-p: 400;*/
@@ -102,7 +138,19 @@
 		--fs-mpl: 2.6;
 		--fs-xxl: 5.5rem;
 		--fs-home-heading: 5rem;
-		--fw-h5: 400;
+	}
+}
+
+@media (min-width: 768px) {
+	:root {
+		--fs-h1: var(--h1-tablet);
+		--fs-h2: var(--h2-tablet);
+		--fs-h3: var(--h3-tablet);
+		--fs-h4: var(--h4-tablet);
+		--fs-h5: var(--h5-tablet);
+		--fs-h6: var(--h6-tablet);
+		--fs-display-xl: var(--display-xl-tablet);
+		--fs-legal-title: var(--legal-title-tablet);
 	}
 }
 
@@ -118,7 +166,6 @@
 		--fs-mpl: 2.3;
 		--fs-xxl: 5.5rem;
 		--fs-home-heading: 4rem;
-		--fw-h5: 400;
 	}
 }
 
@@ -134,7 +181,14 @@
 		--fs-mpl: 1.321;
 		--fs-xxl: calc(var(--fs-mpl) * 3.125rem);
 		--fs-home-heading: calc(var(--fs-mpl) * 2.625rem);
-		--fw-h5: 500;
+		--fs-h1: var(--h1-desktop);
+		--fs-h2: var(--h2-desktop);
+		--fs-h3: var(--h3-desktop);
+		--fs-h4: var(--h4-desktop);
+		--fs-h5: var(--h5-desktop);
+		--fs-h6: var(--h6-desktop);
+		--fs-display-xl: var(--display-xl-desktop);
+		--fs-legal-title: var(--legal-title-desktop);
 	}
 }
 

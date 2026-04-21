@@ -10,6 +10,14 @@
   margin: 0;
   text-align: center;
 }
+
+.page-politica .entry-title,
+.page-approval .entry-title,
+.page-addapproval .entry-title {
+  font-size: var(--fs-legal-title);
+  line-height: 1.1;
+  font-weight: 700;
+}
 .entry-breadcrumps {
 }
 .entry-header > H1.page-title {

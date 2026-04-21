@@ -16,6 +16,14 @@
   border: 0;
   padding-left: 0;
   padding-right: 0;
+  font-size: var(--fs-legal);
+  line-height: var(--lh-lg);
+}
+.form-field.form-field_acceptance LABEL,
+.form-field.form-field_acceptance LABEL SPAN,
+.form-field.form-field_acceptance LABEL A {
+  font-size: var(--fs-legal);
+  line-height: var(--lh-lg);
 }
 .form-field LABEL {
   position: relative;

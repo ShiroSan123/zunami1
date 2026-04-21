@@ -1,0 +1,68 @@
+<header class="site-navbar" data-navbar>
+  <div class="site-navbar__inner section-shell">
+    <a class="site-navbar__brand" href="{{root}}index.html" aria-label="Zunami">
+      <img
+        class="site-navbar__logo site-navbar__logo--light"
+        src="https://static.tildacdn.com/tild6531-3637-4031-b963-393134343035/LOGO_HORIZONTAL_1.svg"
+        alt="Zunami"
+      />
+      <img
+        class="site-navbar__logo site-navbar__logo--dark"
+        src="https://static.tildacdn.com/tild3164-6263-4330-a534-313764303139/LOGO_HORIZONTAL_1.svg"
+        alt="Zunami"
+      />
+    </a>
+
+    <nav class="site-navbar__nav" aria-label="Основная навигация">
+      <a data-nav-link="company" href="{{root}}company/index.html">О компании</a>
+      <a data-nav-link="uslugi" href="{{root}}uslugi/index.html">Услуги</a>
+      <a data-nav-link="blog" href="{{root}}blog/index.html">Блог</a>
+      <a data-nav-link="contacts" href="{{root}}contacts/index.html">Контакты</a>
+    </nav>
+
+    <div class="site-navbar__actions">
+      <button
+        class="site-navbar__search"
+        type="button"
+        aria-label="Поиск"
+        data-search-button
+      >
+        <img src="{{root}}theme/icons/search.svg" alt="" aria-hidden="true" />
+      </button>
+      <button class="button-primary" type="button" data-open-modal>
+        Отправить заявку
+      </button>
+      <button
+        class="site-navbar__burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-button
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+    <div class="mobile-menu__panel">
+      <nav class="mobile-menu__nav" aria-label="Мобильная навигация">
+        <a data-nav-link="company" href="{{root}}company/index.html">О компании</a>
+        <a data-nav-link="uslugi" href="{{root}}uslugi/index.html">Услуги</a>
+        <a data-nav-link="blog" href="{{root}}blog/index.html">Блог</a>
+        <a data-nav-link="contacts" href="{{root}}contacts/index.html">Контакты</a>
+      </nav>
+
+      <button class="button-primary mobile-menu__cta" type="button" data-open-modal>
+        Отправить заявку
+      </button>
+
+      <p class="mobile-menu__address">
+        236040, Калининград, пл. Победы, д. 10, офис 518А
+      </p>
+    </div>
+  </div>
+</header>

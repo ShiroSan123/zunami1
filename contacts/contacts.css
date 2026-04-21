@@ -1,0 +1,229 @@
+:root {
+  --contacts-bg: #f5f6fc;
+  --contacts-title-size: 1.25rem;
+  --contacts-block-title-size: 1.125rem;
+  --contacts-body-size: 0.75rem;
+  --contacts-check-size: 0.5rem;
+  --contacts-form-width: 18.125rem;
+}
+
+.page-contacts {
+  background: var(--contacts-bg);
+}
+
+.contacts-page {
+  background: var(--contacts-bg);
+}
+
+.contacts-page__shell {
+  padding-top: calc(var(--nav-height) + var(--space-lg));
+  padding-bottom: var(--space-xs);
+}
+
+.contacts-page__title {
+  margin-bottom: var(--space-xl);
+  font-size: var(--contacts-title-size);
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--c-dark);
+}
+
+.contacts-layout {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.contacts-card,
+.contacts-form-block {
+  max-inline-size: 20.5em;
+}
+
+.contacts-card__title,
+.contacts-form-block__title {
+  font-size: var(--contacts-block-title-size);
+  line-height: 1.05;
+  font-weight: 400;
+  color: var(--c-dark);
+}
+
+.contacts-card__title {
+  margin-bottom: var(--space-md);
+}
+
+.contacts-card__text {
+  display: grid;
+  gap: var(--space-2xs);
+  font-size: var(--contacts-body-size);
+  line-height: 1.45;
+  color: var(--c-dark);
+}
+
+.contacts-card__text--links {
+  gap: var(--space-sm);
+}
+
+.contacts-card__link {
+  color: #145ff5;
+}
+
+.contacts-form-block__title {
+  max-inline-size: 16.5em;
+  margin-bottom: var(--space-md);
+}
+
+.contacts-form {
+  display: grid;
+  gap: var(--space-xs);
+  max-inline-size: var(--contacts-form-width);
+}
+
+.contacts-form .form-field {
+  gap: 0;
+}
+
+.contacts-form .form-input {
+  padding: 1em 1.1667em;
+  border: 0;
+  border-radius: 0.6667em;
+  font-size: var(--contacts-body-size);
+  line-height: 1;
+  color: #14141a;
+  background: var(--c-bg-white);
+}
+
+.contacts-form .form-input::placeholder {
+  color: #14141a;
+  opacity: 1;
+}
+
+.contacts-form .form-input:focus {
+  outline: 1px solid #145ff5;
+}
+
+.checkbox-field--compact {
+  gap: var(--space-2xs);
+  align-items: flex-start;
+  font-size: var(--contacts-check-size);
+  line-height: 1.45;
+  color: var(--c-dark);
+}
+
+.checkbox-field--compact input {
+  width: 1.25em;
+  height: 1.25em;
+  margin-top: 0.35em;
+}
+
+.checkbox-field--compact .text-link {
+  color: #145ff5;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.contacts-form__submit {
+  align-self: start;
+  justify-self: start;
+  margin-top: var(--space-2xs);
+  padding: 0.75em 1.714em;
+  border-radius: 0.5714em;
+  font-size: var(--contacts-body-size);
+  font-weight: 500;
+  background: #145ff5;
+}
+
+.contacts-form .form-status {
+  font-size: var(--contacts-body-size);
+}
+
+.contacts-card--office {
+  order: 1;
+}
+
+.contacts-card--hours {
+  order: 2;
+}
+
+.contacts-card--reach {
+  order: 3;
+}
+
+.contacts-form-block {
+  order: 4;
+}
+
+@media (min-width: 640px) {
+  .contacts-page__shell {
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-md);
+  }
+
+  .contacts-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(18.4375rem, 18.4375rem);
+    column-gap: var(--space-md);
+    row-gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .contacts-card--office {
+    grid-column: 1;
+    order: 1;
+  }
+
+  .contacts-card--hours {
+    grid-column: 1;
+    order: 2;
+  }
+
+  .contacts-card--reach {
+    grid-column: 1;
+    order: 3;
+    margin-top: var(--space-lg);
+  }
+
+  .contacts-form-block {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    order: 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contacts-page__shell {
+    padding-top: calc(var(--nav-height) + var(--space-2xl));
+    padding-bottom: var(--space-md);
+  }
+
+  .contacts-page__title {
+    margin-bottom: var(--space-xl);
+  }
+
+  .contacts-layout {
+    grid-template-columns: minmax(18em, 20.0625em) minmax(18em, 20.0625em) minmax(17em, 18.5625em);
+    column-gap: 2.4375rem;
+    row-gap: 0;
+  }
+
+  .contacts-card,
+  .contacts-form-block {
+    margin-top: 0;
+  }
+
+  .contacts-card--reach {
+    grid-column: 1;
+    margin-top: 0;
+  }
+
+  .contacts-card--office {
+    grid-column: 2;
+  }
+
+  .contacts-card--hours {
+    grid-column: 2;
+    margin-top: 8.5625rem;
+  }
+
+  .contacts-form-block {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}

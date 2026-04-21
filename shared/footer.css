@@ -1,0 +1,134 @@
+.site-footer {
+  padding: 0 0 var(--space-md);
+  background: var(--c-bg-light);
+  color: var(--c-white);
+}
+
+.site-footer__inner {
+  padding: var(--space-lg) var(--px-page) var(--space-xl);
+  border-radius: var(--radius-md);
+  background: #145ff5;
+}
+
+.site-footer__top {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.site-footer__brand img {
+  width: 5em;
+}
+
+.site-footer__nav {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.site-footer__nav a,
+.site-footer__text a,
+.site-footer__bottom a {
+  color: var(--c-white);
+  transition: color 0.25s ease;
+}
+
+.site-footer__nav a {
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.site-footer__nav a:hover,
+.site-footer__text a:hover,
+.site-footer__bottom a:hover {
+  color: #dce8ff;
+}
+
+.site-footer__contacts {
+  display: grid;
+  gap: var(--space-md);
+  padding-top: var(--space-lg);
+}
+
+.site-footer__label {
+  margin-bottom: var(--space-xs);
+  font-size: 1.125rem;
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-white);
+}
+
+.site-footer__text {
+  display: grid;
+  gap: var(--space-2xs);
+  max-inline-size: 24em;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.site-footer__bottom {
+  display: grid;
+  gap: var(--space-sm);
+  padding-top: var(--space-lg);
+  font-size: 0.625rem;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.site-footer__vk img {
+  width: 1.875rem;
+}
+
+@media (min-width: 640px) {
+  .site-footer__inner {
+    padding-top: var(--space-xl);
+  }
+
+  .site-footer__top {
+    grid-template-columns: minmax(10rem, 11rem) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .site-footer__nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-lg);
+    row-gap: var(--space-xs);
+  }
+
+  .site-footer__contacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-footer {
+    padding-bottom: var(--space-lg);
+  }
+
+  .site-footer__inner {
+    padding: 2.8125rem 4.375rem 5.5rem;
+  }
+
+  .site-footer__brand img {
+    width: 5.625rem;
+  }
+
+  .site-footer__nav {
+    grid-template-columns: repeat(6, auto);
+    align-items: start;
+    justify-content: start;
+    gap: 0 1.75rem;
+  }
+
+  .site-footer__contacts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 2.75rem;
+  }
+
+  .site-footer__bottom {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.05fr) minmax(0, 0.85fr) auto auto;
+    align-items: start;
+    column-gap: 1rem;
+    row-gap: var(--space-xs);
+    padding-top: 2.875rem;
+  }
+}

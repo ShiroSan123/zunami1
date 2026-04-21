@@ -31,41 +31,83 @@ H4,
 H5,
 H6,
 P {
-  line-height: var(--lh-sm);
   margin: 0 0 var(--mg-sm);
 }
 
-H1 {
+H1,
+.hero-title {
   font-size: var(--fs-h1);
+  line-height: 1;
   font-weight: var(--fw-h1);
   color: var(--color-h1);
 }
-H2 {
+
+H2,
+.section-title {
   font-size: var(--fs-h2);
+  line-height: 1.15;
   font-weight: var(--fw-h2);
   color: var(--color-h2);
 }
-H3 {
+
+H3,
+.card-title {
   font-size: var(--fs-h3);
+  line-height: 1.25;
   font-weight: var(--fw-h3);
   color: var(--color-h3);
   margin: 10rem 0;
 }
-H4 {
+
+H4,
+.faq-title,
+.subsection-title {
   font-size: var(--fs-h4);
+  line-height: 1.3;
   font-weight: var(--fw-h4);
   color: var(--color-h4);
 }
 H5 {
   font-size: var(--fs-h5);
+  line-height: 1.35;
   font-weight: var(--fw-h5);
   color: var(--color-h5);
   margin-bottom: 2rem;
 }
+H6 {
+  font-size: var(--fs-h6);
+  line-height: 1.4;
+  font-weight: var(--fw-h6);
+  color: var(--color-h6);
+}
 P {
+  line-height: var(--lh-sm);
   font-size: var(--fs-p);
   font-weight: var(--fw-p);
   color: var(--color-p);
+}
+
+.page-politica .entry-content,
+.page-approval .entry-content,
+.page-addapproval .entry-content {
+  font-size: var(--fs-legal);
+  line-height: var(--lh-lg);
+}
+
+.page-politica .entry-content P,
+.page-politica .entry-content LI,
+.page-approval .entry-content P,
+.page-approval .entry-content LI,
+.page-addapproval .entry-content P,
+.page-addapproval .entry-content LI {
+  font-size: var(--fs-legal);
+  line-height: var(--lh-lg);
+}
+
+.display-xl {
+  font-size: var(--fs-display-xl);
+  line-height: 0.95;
+  font-weight: 700;
 }
 
 [data-is-hidden] {

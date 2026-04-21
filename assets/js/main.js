@@ -1,12 +1,15 @@
 const rootPrefix = document.documentElement.dataset.rootPrefix || "./";
 
-const toSitePath = (route = "") => {
+const toSitePath = (route = "", type = "page") => {
   if (!route) {
-    return rootPrefix;
+    return `${rootPrefix}index.html`;
   }
 
   const cleanRoute = route.replace(/^\/+|\/+$/g, "");
-  return `${rootPrefix}${cleanRoute}/`;
+  if (type === "post") {
+    return `${rootPrefix}news/${cleanRoute}/index.html`;
+  }
+  return `${rootPrefix}${cleanRoute}/index.html`;
 };
 
 const selectors = {
@@ -107,7 +110,7 @@ const renderSearchResults = (results, query) => {
 
   const items = results
     .map((item) => {
-      const href = toSitePath(item.route);
+      const href = toSitePath(item.route, item.type);
       return `<a class="search-res-post" href="${href}">${item.title}</a>`;
     })
     .join("");

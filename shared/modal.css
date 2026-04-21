@@ -1,0 +1,67 @@
+.site-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.site-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--c-overlay);
+}
+
+.site-modal__dialog {
+  position: relative;
+  width: min(100%, 34rem);
+  border-radius: var(--radius-lg);
+  background: var(--c-bg-white);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(1rem);
+  transition: transform 0.25s ease;
+}
+
+.site-modal.is-open .site-modal__dialog {
+  transform: translateY(0);
+}
+
+.site-modal__close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--c-gray);
+}
+
+.site-modal__body {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-md);
+}
+
+.site-modal__title {
+  max-inline-size: 12em;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.site-modal__submit {
+  justify-self: stretch;
+}
+
+@media (min-width: 640px) {
+  .site-modal__body {
+    padding-inline: var(--space-lg);
+  }
+}

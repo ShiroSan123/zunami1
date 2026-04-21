@@ -1,0 +1,59 @@
+<div class="site-modal" data-modal aria-hidden="true">
+  <div class="site-modal__overlay" data-close-modal></div>
+  <div class="site-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="site-modal__close" type="button" data-close-modal aria-label="Закрыть">
+      ×
+    </button>
+
+    <div class="site-modal__body">
+      <h2 class="site-modal__title" id="modal-title">Создание заявки</h2>
+
+      <form class="form-grid js-static-form" data-success-message="Спасибо! Заявка отправлена.">
+        <div class="form-field">
+          <label class="field-label" for="modal-name">Имя*</label>
+          <input class="form-input" id="modal-name" name="name" type="text" required />
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="modal-phone">Телефон*</label>
+          <input class="form-input" id="modal-phone" name="phone" type="tel" required />
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="modal-email">e-mail*</label>
+          <input class="form-input" id="modal-email" name="email" type="email" required />
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="modal-company">Ваша компания</label>
+          <input class="form-input" id="modal-company" name="company" type="text" />
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="modal-business">Вид бизнеса*</label>
+          <input class="form-input" id="modal-business" name="business" type="text" required />
+        </div>
+
+        <label class="checkbox-field">
+          <input type="checkbox" name="approval" required />
+          <span>
+            Я даю согласие на обработку персональных данных в соответствии с
+            <a class="text-link" href="{{root}}approval/index.html">согласием</a> и
+            <a class="text-link" href="{{root}}politica/index.html">политикой</a>
+          </span>
+        </label>
+
+        <label class="checkbox-field">
+          <input type="checkbox" name="mailing" />
+          <span>
+            Я даю согласие на получение рекламной и информационной рассылки согласно
+            <a class="text-link" href="{{root}}addapproval/index.html">условиям</a>
+          </span>
+        </label>
+
+        <button class="button-primary site-modal__submit" type="submit">Отправить</button>
+        <p class="form-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>
