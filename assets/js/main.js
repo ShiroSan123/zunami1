@@ -313,6 +313,57 @@ const initForms = () => {
   });
 };
 
+const buildFooterMenuMarkup = (items) =>
+  items
+    .map(
+      (item) => `
+        <li class="menu-item${item.className ? ` ${item.className}` : ""}">
+          <a href="${toSitePath(item.route)}">${item.label}</a>
+        </li>
+      `,
+    )
+    .join("");
+
+const initInternalPageFooter = () => {
+  if (
+    document.body.classList.contains("home") ||
+    document.body.classList.contains("single-post")
+  ) {
+    return;
+  }
+
+  const footer = document.querySelector(".site-footer");
+  if (!footer) {
+    return;
+  }
+
+  const columns = footer.querySelectorAll(".footer-column");
+  if (columns.length < 3) {
+    return;
+  }
+
+  const mainMenu = columns[1].querySelector(".widget_nav_menu .menu");
+  if (mainMenu) {
+    mainMenu.innerHTML = buildFooterMenuMarkup([
+      { label: "О компании", route: "company" },
+      { label: "Услуги", route: "uslugi" },
+      { label: "Раскрытие информации", route: "info" },
+      { label: "Реквизиты", route: "company/requisites" },
+      { label: "Блог", route: "blog" },
+      { label: "Контакты", route: "contacts" },
+    ]);
+  }
+
+  const metaColumn = columns[2];
+  if (!metaColumn.querySelector("[data-footer-date-info]")) {
+    const dateWidget = document.createElement("div");
+    dateWidget.className = "widget widget_date_info";
+    dateWidget.dataset.footerDateInfo = "true";
+    dateWidget.innerHTML = "<p>Дата обновления информации:</p>";
+    metaColumn.append(dateWidget);
+  }
+};
+
 const loadYandexMaps = (apiKey) => {
   if (window.ymaps3) {
     return Promise.resolve(window.ymaps3);
@@ -758,6 +809,82 @@ const initWavesBlock = () => {
   }
 };
 
+const initWavesStickyRelease = () => {
+  const record = document.getElementById("rec771645295");
+  if (!record || window.innerWidth < 1200) {
+    return;
+  }
+
+  const children = Array.from(record.children);
+  if (children.length === 0) {
+    record.style.position = "relative";
+    return;
+  }
+
+  let released = false;
+  let frameId = 0;
+  let frameScheduled = false;
+  let observer = null;
+
+  const releaseSticky = () => {
+    if (released) {
+      return;
+    }
+
+    released = true;
+    record.style.position = "relative";
+
+    if (observer) {
+      observer.disconnect();
+    }
+
+    if (frameId) {
+      window.cancelAnimationFrame(frameId);
+    }
+
+    frameScheduled = false;
+  };
+
+  const areAllChildrenVisible = () =>
+    children.every((child) => getComputedStyle(child).opacity === "1");
+
+  const checkChildrenOpacity = () => {
+    if (window.innerWidth < 1200) {
+      if (observer) {
+        observer.disconnect();
+      }
+      return;
+    }
+
+    if (areAllChildrenVisible()) {
+      releaseSticky();
+      return;
+    }
+
+    frameScheduled = true;
+    frameId = window.requestAnimationFrame(() => {
+      frameScheduled = false;
+      checkChildrenOpacity();
+    });
+  };
+
+  observer = new MutationObserver(() => {
+    if (!released && !frameScheduled && window.innerWidth >= 1200) {
+      checkChildrenOpacity();
+    }
+  });
+
+  children.forEach((child) => {
+    observer.observe(child, {
+      attributes: true,
+      attributeFilter: ["style", "class"],
+      subtree: true,
+    });
+  });
+
+  checkChildrenOpacity();
+};
+
 const initHistoryParallax = () => {
   const holder = document.querySelector(
     ".zunami_visible-lg.zunami-history-blocks-holder",
@@ -1106,12 +1233,14 @@ const initEvents = () => {
 };
 
 initEvents();
+initInternalPageFooter();
 initLoadMore();
 initAccordions();
 initViewportAnimations();
 initForms();
 initMaps();
 initWavesBlock();
+initWavesStickyRelease();
 initHistoryParallax();
 initHistoryStacking();
 initHistoryPopups();

@@ -85,6 +85,17 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+@media (min-width: 1200px) {
+  #rec771645295 {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 50;
+  }
+}
 @media screen and (max-width: 1199px) {
   #rec771645295 .t396--artboard,
   #rec771645295 .t396--filter,
